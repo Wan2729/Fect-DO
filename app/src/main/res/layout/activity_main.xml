@@ -5,14 +5,41 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello World!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+        tools:context=".MainActivity"
+        android:background="#0000ff"
 
+
+>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="300dp"
+            android:layout_height="450dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.495" app:layout_constraintVertical_bias="0.238">
+
+        <ImageView
+                android:background="#000000"
+                android:layout_width="match_parent"
+                android:layout_height="175dp" app:srcCompat="@drawable/ic_launcher_background"
+                android:id="@+id/fectDoDesignBanner"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.0"/>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" app:srcCompat="@drawable/ic_launcher_background"
+                android:id="@+id/signUpButton"
+                app:layout_constraintStart_toEndOf="@+id/loginButton"
+                app:layout_constraintTop_toBottomOf="@+id/fectDoDesignBanner"
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.659" app:layout_constraintVertical_bias="0.347"/>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" app:srcCompat="@drawable/ic_launcher_background"
+                android:id="@+id/loginButton"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fectDoDesignBanner"
+                app:layout_constraintHorizontal_bias="0.14" app:layout_constraintVertical_bias="0.347"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
