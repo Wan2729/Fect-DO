@@ -1,6 +1,7 @@
 package com.example.fectdo;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,7 +10,7 @@ import android.os.Bundle;
 public class SignUpPage extends AppCompatActivity {
 
     EditText username,password,confirmPassword,phoneNumber,emailAddress;
-    ImageButton signUp;
+    Button signUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +22,7 @@ public class SignUpPage extends AppCompatActivity {
         confirmPassword = (EditText) findViewById(R.id.confirmPassword);
         phoneNumber = (EditText) findViewById(R.id.phoneNumber);
         emailAddress = (EditText) findViewById(R.id.emailAddress);
-        signUp = (ImageButton) findViewById(R.id.logIn);
+        signUp = (Button) findViewById(R.id.logIn);
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

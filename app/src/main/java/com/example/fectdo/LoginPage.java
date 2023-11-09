@@ -1,6 +1,7 @@
 package com.example.fectdo;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +9,7 @@ import android.os.Bundle;
 
 public class LoginPage extends AppCompatActivity {
 
-    ImageButton logIn;
+    Button logIn;
     EditText usernameLoginPage;
     EditText passwordLogInPage;
 
@@ -17,7 +18,7 @@ public class LoginPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
 
-        logIn = (ImageButton) findViewById(R.id.logIn);
+        logIn = (Button) findViewById(R.id.buttonLogin);
         usernameLoginPage = (EditText) findViewById(R.id.etUsername);
         passwordLogInPage = (EditText) findViewById(R.id.etPassword);
 
