@@ -15,11 +15,11 @@ public class LoginPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login_page);
 
         logIn = (ImageButton) findViewById(R.id.logIn);
-        usernameLoginPage = (EditText) findViewById(R.id.usernameLogInPage);
-        passwordLogInPage = (EditText) findViewById(R.id.passwordLogInPage);
+        usernameLoginPage = (EditText) findViewById(R.id.etUsername);
+        passwordLogInPage = (EditText) findViewById(R.id.etPassword);
 
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
