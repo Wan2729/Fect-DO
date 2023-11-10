@@ -5,7 +5,7 @@
     android:id="@+id/logI"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wallpaper3">
+    android:background="@color/white">
 
     <Button
         android:id="@+id/logIn"
@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="550dp"
-        android:background="@drawable/whitebox"
-        android:backgroundTint="#125488"
+        android:background="@drawable/login_btn"
         android:text="Sign Up"
-        app:backgroundTint="@color/blue_1"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.975"
         app:layout_constraintStart_toStartOf="parent"
