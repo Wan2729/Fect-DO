@@ -24,9 +24,9 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
 
-        logIn = (Button) findViewById(R.id.loginBtn);
-        usernameLoginPage = (EditText) findViewById(R.id.usernameET);
-        passwordLogInPage = (EditText) findViewById(R.id.passwordET);
+        logIn = findViewById(R.id.loginBtn);
+        usernameLoginPage = findViewById(R.id.usernameET);
+        passwordLogInPage = findViewById(R.id.passwordET);
 
         logIn.setOnClickListener(this);
     }
