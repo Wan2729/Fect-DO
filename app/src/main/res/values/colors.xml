@@ -8,5 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue_soft">#29cce3</color>
-    <color name="blue_1">#125488</color>
+    <color name="yale_blue">#125488</color>
+    <color name="prussian_blue">#0A3150</color>
 </resources>
