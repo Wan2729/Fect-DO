@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -16,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"></ImageView>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/loginTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="30dp"
@@ -30,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent"></TextView>
 
     <EditText
-        android:id="@+id/etUsername"
+        android:id="@+id/usernameET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
@@ -41,10 +40,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/loginTV" />
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/passwordET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
@@ -57,10 +56,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameET" />
 
     <Button
-        android:id="@+id/btnShow"
+        android:id="@+id/showBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
@@ -69,22 +68,37 @@
         android:text="Show"
         android:textAllCaps="false"
         android:textColor="#125488"
-        app:layout_constraintBottom_toBottomOf="@+id/etPassword"
-        app:layout_constraintEnd_toEndOf="@+id/etPassword"
-        app:layout_constraintTop_toTopOf="@+id/etPassword" />
+        app:layout_constraintBottom_toBottomOf="@+id/passwordET"
+        app:layout_constraintEnd_toEndOf="@+id/passwordET"
+        app:layout_constraintTop_toTopOf="@+id/passwordET" />
 
     <Button
-        android:id="@+id/buttonLogin"
+        android:id="@+id/loginBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="60dp"
-        android:background="@drawable/whitebox"
-        android:backgroundTint="#125488"
+        android:background="@drawable/login_btn"
+        android:fontFamily="@font/inter_semibold"
         android:text="Login"
-        app:backgroundTint="@color/blue_1"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword"></Button>
+        app:layout_constraintTop_toBottomOf="@+id/passwordET"></Button>
+
+    <Button
+        android:id="@+id/forgotPasswordBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:text="Forgot your password?"
+        android:textAllCaps="false"
+        android:fontFamily="sans-serif-black"
+        android:letterSpacing="0.05"
+        android:textColor="@color/white"
+        android:layout_marginTop="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginBtn"></Button>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
