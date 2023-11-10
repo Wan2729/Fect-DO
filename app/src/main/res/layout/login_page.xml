@@ -81,6 +81,7 @@
         android:background="@drawable/login_btn"
         android:fontFamily="@font/inter_semibold"
         android:text="Login"
+        android:textStyle="bold"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
