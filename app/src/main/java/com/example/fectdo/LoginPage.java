@@ -9,7 +9,7 @@ import android.os.Bundle;
 
 public class LoginPage extends AppCompatActivity {
 
-    Button logIn;
+   Button logIn;
     EditText usernameLoginPage;
     EditText passwordLogInPage;
 
