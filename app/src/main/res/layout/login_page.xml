@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,118 +9,80 @@
         android:id="@+id/loginBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/wallpaper2"></ImageView>
+        android:background="@drawable/wallpaper2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
 
-    <RelativeLayout
-        android:layout_width="307dp"
-        android:layout_height="578dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="81dp">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="30dp"
+        android:text="Log In"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:fontFamily="sans-serif-black"
+        android:textSize="45dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
 
-        <Button
-            android:id="@+id/btnForgotPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/edit_text_box"
+        android:hint="Username/Email"
+        android:paddingHorizontal="9dp"
+        android:paddingVertical="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="62dp"
-            android:layout_marginBottom="70dp"
-            android:background="#00FFFFFF"
-            android:text="Forgot Password"
-            app:backgroundTint="#00FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.707"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="478dp" />
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:background="@drawable/edit_text_box"
+        android:paddingHorizontal="9dp"
+        android:paddingVertical="10dp"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etUsername" />
 
-        <Button
-            android:id="@+id/buttonLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="145dp"
-            android:background="@drawable/whitebox"
-            android:backgroundTint="#125488"
-            android:text="Login"
-            app:backgroundTint="@color/blue_1"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteY="435dp"></Button>
+    <Button
+        android:id="@+id/btnShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:fontFamily="sans-serif-medium"
+        android:text="Show"
+        android:textAllCaps="false"
+        android:textColor="#125488"
+        app:layout_constraintBottom_toBottomOf="@+id/etPassword"
+        app:layout_constraintEnd_toEndOf="@+id/etPassword"
+        app:layout_constraintTop_toTopOf="@+id/etPassword" />
 
-        <Button
-            android:id="@+id/btnShow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="244dp"
-            android:layout_marginEnd="1dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:fontFamily="@font/inter_medium"
-            android:text="Show"
-            android:textAllCaps="false"
-            android:textColor="#125488"
-            tools:layout_editor_absoluteX="196dp"
-            tools:layout_editor_absoluteY="369dp" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="Login"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/button"
+        android:backgroundTint="#125488"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPassword"></Button>
 
-        <EditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginBottom="220dp"
-            android:background="@drawable/whitebox"
-            android:fontFamily="@font/inter_medium"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:paddingHorizontal="9dp"
-            android:paddingVertical="10dp"
-            android:textColor="#59000000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/etUsername"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginEnd="-3dp"
-            android:layout_marginBottom="285dp"
-            android:background="@drawable/whitebox"
-            android:fontFamily="@font/inter_medium"
-            android:hint="Username/Email"
-            android:paddingHorizontal="9dp"
-            android:paddingVertical="10dp"
-            android:textColor="#59000000"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="192dp" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="117dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="38dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/inter_semibold"
-            android:paddingVertical="30dp"
-            android:text="Log In"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="45dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteY="3dp"></TextView>
-
-    </RelativeLayout>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
