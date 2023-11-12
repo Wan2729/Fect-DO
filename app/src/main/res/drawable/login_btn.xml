@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
-    <gradient
-        android:startColor="@color/yale_blue"
-        android:endColor="@color/prussian_blue"
-        android:angle="90"
-        android:centerX="10dp"></gradient>
-    <corners android:radius="25dp"></corners>
-    <size android:height="50dp"></size>
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="@color/yale_blue"
+                android:endColor="@color/prussian_blue"
+                android:angle="90"></gradient>
+            <corners android:radius="25dp"></corners>
+            <size android:height="50dp"></size>
+        </shape>
+    </item>
+</selector>
