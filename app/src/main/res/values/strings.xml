@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Fect-Do</string>
     <string name="underlined_dynamic_text"><u>%s</u></string>
+    <string name="edittext_hint"><font size="15">Write Your Answer Here</font></string>
 </resources>
