@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
-            android:text="Mathematics"
+            android:text="Chemistry"
             android:textAlignment="center"
             android:textColor="@color/prussian_blue"
             android:textSize="30sp"
@@ -73,49 +73,49 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/chapter1Math"
+                    android:id="@+id/chapter1Chem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Chapter 1" />
 
                 <Button
-                    android:id="@+id/chapter2Math"
+                    android:id="@+id/chapter2Chem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Chapter 2" />
 
                 <Button
-                    android:id="@+id/chapter3Math"
+                    android:id="@+id/chapter3Chem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Chapter 3" />
 
                 <Button
-                    android:id="@+id/chapter4Math"
+                    android:id="@+id/chapter4Chem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="chapter 4" />
 
                 <Button
-                    android:id="@+id/chapter5Math"
+                    android:id="@+id/chapter5Chem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Chapter 5" />
 
                 <Button
-                    android:id="@+id/chapter6Math"
+                    android:id="@+id/chapter6Chem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Chapter 6" />
 
                 <Button
-                    android:id="@+id/chapter7Math"
+                    android:id="@+id/chapter7Chem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Chapter 7" />
 
                 <Button
-                    android:id="@+id/chapter8Math"
+                    android:id="@+id/chapter8Chem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Chapter 8" />
@@ -123,7 +123,7 @@
         </ScrollView>
 
         <VideoView
-            android:id="@+id/videoViewMath"
+            android:id="@+id/videoViewChem"
             android:layout_width="wrap_content"
             android:layout_height="206dp"
             app:layout_constraintBottom_toTopOf="@+id/scrollView2"
