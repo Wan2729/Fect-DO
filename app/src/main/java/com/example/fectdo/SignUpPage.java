@@ -20,7 +20,7 @@ public class SignUpPage extends AppCompatActivity {
         username = (EditText) findViewById(R.id.usernameSignUpPage);
         password = (EditText) findViewById(R.id.passwordSignUpPage);
         confirmPassword = (EditText) findViewById(R.id.confirmPassword);
-        phoneNumber = (EditText) findViewById(R.id.phoneNumber);
+        phoneNumber = (EditText) findViewById(R.id.username);
         emailAddress = (EditText) findViewById(R.id.emailAddress);
         signUp = (Button) findViewById(R.id.signupBtn);
         signUp.setOnClickListener(new View.OnClickListener() {

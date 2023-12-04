@@ -17,6 +17,15 @@
         android:theme="@style/Theme.FectDo"
         tools:targetApi="31">
         <activity
+            android:name=".SignUpUserrname"
+            android:exported="false" />
+        <activity
+            android:name=".SignUpOTP"
+            android:exported="false" />
+        <activity
+            android:name=".SignUpPhoneNumber"
+            android:exported="false" />
+        <activity
             android:name=".Enroll"
             android:exported="false" />
         <activity

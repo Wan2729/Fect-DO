@@ -28,7 +28,7 @@ public class WelcomePage extends AppCompatActivity implements View.OnClickListen
     }
 
     public void goToSignUpPage(){
-        Intent intent = new Intent(this, SignUpPage.class);
+        Intent intent = new Intent(this, SignUpPhoneNumber.class);
         WelcomePage.this.startActivity(intent);
     }
 
