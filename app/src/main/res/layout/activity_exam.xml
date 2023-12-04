@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Exam">
+
+    <TextView
+        android:id="@+id/textViewExam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50sp"
+        android:fontFamily="sans-serif-black"
+        android:text="ڤڤريکساءن"
+        android:textSize="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="@id/guideline10"
+        app:layout_constraintRight_toRightOf="@id/guideline90"
+        app:layout_constraintTop_toTopOf="@id/guideline45H">
+
+        <Button
+            android:id="@+id/btnAnswerA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Answer A"
+            android:textSize="20sp"
+            android:backgroundTint="@color/design_default_color_primary_variant"/>
+
+        <Button
+            android:id="@+id/btnAnswerB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Answer B"
+            android:textSize="20sp"
+            android:backgroundTint="@color/design_default_color_primary_variant"
+            android:layout_marginTop="20dp" />
+
+        <Button
+            android:id="@+id/btnAnswerC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Answer C"
+            android:textSize="20sp"
+            android:backgroundTint="@color/design_default_color_primary_variant"
+            android:layout_marginTop="20dp" />
+
+        <Button
+            android:id="@+id/btnAnswerD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Answer D"
+            android:textSize="20sp"
+            android:backgroundTint="@color/design_default_color_primary_variant"
+            android:layout_marginTop="20dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="ستروسڽ"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/linear"
+        app:layout_constraintStart_toStartOf="@+id/linear"
+        app:layout_constraintTop_toBottomOf="@+id/linear" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline45H"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline90"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <TextView
+        android:id="@+id/soalan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/linear"
+        app:layout_constraintEnd_toStartOf="@+id/guideline90"
+        app:layout_constraintStart_toStartOf="@+id/guideline10"
+        app:layout_constraintTop_toBottomOf="@+id/textViewExam" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
