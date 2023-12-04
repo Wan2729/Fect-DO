@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "10873665190",
+    "project_id": "fect-do-174ff",
+    "storage_bucket": "fect-do-174ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10873665190:android:fdc62168f3b67d3d75a667",
+        "android_client_info": {
+          "package_name": "com.example.fectdo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALN-uN_NjMoOe-NHjtsUzZJ4wla-tb9K4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
