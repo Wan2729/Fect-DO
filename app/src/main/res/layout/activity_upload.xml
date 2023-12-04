@@ -100,6 +100,7 @@
         android:textColorHint="#7E000000" />
 
     <WebView
+        android:id="@+id/webview"
         android:layout_width="334dp"
         android:layout_height="246dp"
         android:layout_alignParentStart="true"
