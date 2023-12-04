@@ -25,7 +25,7 @@
             android:layout_marginTop="25dp"
             android:background="@color/picton_blue"
             android:fontFamily="sans-serif"
-            android:text="Enroll > Mathematics"
+            android:text="Enroll > Chemistry"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
