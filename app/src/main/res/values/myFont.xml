@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="myHeader">
+
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">30dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="myText">
+
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+</resources>

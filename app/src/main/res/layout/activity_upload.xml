@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wallpaper6"
+    tools:context=".UploadActivity">
+
+    <TextView
+        android:id="@+id/textView7"
+        style="@style/myHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="62dp"
+        android:layout_marginEnd="140dp"
+        android:text="Upload" />
+
+    <TextView
+        android:id="@+id/textView8"
+        style="@style/myText"
+        android:layout_width="265dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="116dp"
+        android:layout_marginEnd="56dp"
+        android:text="Please submit subject deatil below:" />
+
+    <EditText
+        android:id="@+id/editTextText"
+        style="@style/myText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="157dp"
+        android:background="@drawable/whitebox"
+        android:ems="10"
+        android:hint="Subject"
+        android:inputType="text"
+        android:paddingLeft="20dp"
+        android:textColorHint="#7E000000" />
+
+    <EditText
+        android:id="@+id/editTextText2"
+        style="@style/myText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="222dp"
+        android:background="@drawable/whitebox"
+        android:ems="10"
+        android:hint="Topic"
+        android:inputType="text"
+        android:paddingLeft="20dp"
+        android:textColorHint="#7E000000" />
+
+    <EditText
+        android:id="@+id/editTextText3"
+        style="@style/myText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="285dp"
+        android:background="@drawable/whitebox"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="text"
+        android:paddingLeft="20dp"
+        android:textColorHint="#7E000000" />
+
+    <EditText
+        android:id="@+id/editTextText4"
+        style="@style/myText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="352dp"
+        android:background="@drawable/whitebox"
+        android:ems="10"
+        android:hint="Description"
+        android:inputType="text"
+        android:paddingLeft="20dp"
+        android:textColorHint="#7E000000" />
+
+    <WebView
+        android:layout_width="334dp"
+        android:layout_height="246dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="55dp"
+        android:layout_marginBottom="64dp" />
+
+</RelativeLayout>
