@@ -5,7 +5,6 @@
     style="@style/myHeader"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wallpaper10"
     tools:context=".Enroll">
 
     <TextView
@@ -18,7 +17,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="167dp"
         android:layout_marginTop="41dp"
-        android:text="Enroll" />
+        android:text="Enroll"
+        android:textColor="#125488"
+        android:textStyle="bold"/>
 
     <EditText
         android:id="@+id/editTextText5"
@@ -37,8 +38,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="175dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="170dp"
         android:orientation="vertical">
 
         <TextView
@@ -47,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:text="Subject"
+            android:text="My Course"
             android:textSize="24sp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -87,52 +88,6 @@
                 app:srcCompat="@drawable/btnmath" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/textView11"
-            style="@style/myText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Course"
-            android:textSize="24sp" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="162dp">
-
-            <ImageView
-                android:id="@+id/btnChemKinetics"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnChemKinetics2"
-                app:layout_constraintStart_toEndOf="@+id/btnElectricity"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/btnchemical_kinetics" />
-
-            <ImageView
-                android:id="@+id/btnChemKinetics2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/btnthermal" />
-
-            <ImageView
-                android:id="@+id/btnElectricity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/btnelectricity" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <ImageButton
             android:id="@+id/btnCareer"
             android:layout_width="match_parent"
@@ -141,6 +96,25 @@
             android:layout_marginRight="80dp"
             android:background="#00FFFFFF"
             android:src="@drawable/btncareer" />
+
+        <TextView
+            android:id="@+id/textView11"
+            style="@style/myText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text=""
+            android:textSize="24sp" />
+
+
+        <ImageButton
+            android:id="@+id/btnUpload"
+            android:layout_width="220dp"
+            android:layout_height="79dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:background="#00FFFFFF"
+            android:src="@drawable/btn_upload" />
 
     </LinearLayout>
 
