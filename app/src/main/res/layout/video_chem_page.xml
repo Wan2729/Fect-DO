@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".course.VideoMathPage">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/wallpaper10"
-        android:scaleType="fitXY"
-        >
-    </ImageView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -76,49 +69,21 @@
                     android:id="@+id/chapter1Chem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Chapter 1" />
+                    android:text="Pengenalan kepada kimia" />
 
                 <Button
                     android:id="@+id/chapter2Chem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Chapter 2" />
+                    android:text="jirim dan struktur atom" />
 
                 <Button
                     android:id="@+id/chapter3Chem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Chapter 3" />
+                    android:text="Jadual berkala unsur" />
 
-                <Button
-                    android:id="@+id/chapter4Chem"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="chapter 4" />
 
-                <Button
-                    android:id="@+id/chapter5Chem"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Chapter 5" />
-
-                <Button
-                    android:id="@+id/chapter6Chem"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Chapter 6" />
-
-                <Button
-                    android:id="@+id/chapter7Chem"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Chapter 7" />
-
-                <Button
-                    android:id="@+id/chapter8Chem"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Chapter 8" />
             </LinearLayout>
         </ScrollView>
 

@@ -16,7 +16,7 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="140dp"
         android:background="@drawable/login_btn"
-        android:text="LET MI IN"
+        android:text="LET ME IN!"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

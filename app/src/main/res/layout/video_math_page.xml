@@ -6,13 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".course.VideoMathPage">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/wallpaper10"
-        android:scaleType="fitXY"
-        >
-    </ImageView>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -76,49 +70,21 @@
                     android:id="@+id/chapter1Math"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Chapter 1" />
+                    android:text="Nombor Bulat" />
 
                 <Button
                     android:id="@+id/chapter2Math"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Chapter 2" />
+                    android:text="Nombor asas" />
 
                 <Button
                     android:id="@+id/chapter3Math"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Chapter 3" />
+                    android:text="Kamiran tak tentu" />
 
-                <Button
-                    android:id="@+id/chapter4Math"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="chapter 4" />
 
-                <Button
-                    android:id="@+id/chapter5Math"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Chapter 5" />
-
-                <Button
-                    android:id="@+id/chapter6Math"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Chapter 6" />
-
-                <Button
-                    android:id="@+id/chapter7Math"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Chapter 7" />
-
-                <Button
-                    android:id="@+id/chapter8Math"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Chapter 8" />
             </LinearLayout>
         </ScrollView>
 
