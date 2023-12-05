@@ -1,5 +1,6 @@
 package com.example.fectdo.general;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -8,7 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.fectdo.Enroll;
 import com.example.fectdo.R;
+import com.example.fectdo.course.ExamMainPage;
 
 public class LoginPage extends AppCompatActivity implements View.OnClickListener {
     Button logIn;
@@ -44,5 +47,10 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
             //kalu tkde account, yo akan kluarkan mesej ni
             Toast.makeText(this, "You email/username does not exist", Toast.LENGTH_LONG);
         }
+    }
+
+    public void goToNextPage(View view){
+        Intent intent = new Intent(this, Enroll.class);
+        startActivity(intent);
     }
 }

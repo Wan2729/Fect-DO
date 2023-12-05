@@ -34,45 +34,44 @@
             android:id="@+id/btnAnswerA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Answer A"
-            android:textSize="20sp"
+            android:background="@drawable/round_shape_button"
             android:backgroundTint="#125488"
+            android:text="Answer A"
             android:textColor="@color/white"
-            android:background="@drawable/RoundShapeBtn"
-            />
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btnAnswerB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Answer B"
-            android:textSize="20sp"
-            android:backgroundTint="#125488"
-            android:textColor="@color/white"
             android:layout_marginTop="20dp"
-            android:background="@drawable/RoundShapeBtn"/>
+            android:background="@drawable/round_shape_button"
+            android:backgroundTint="#125488"
+            android:text="Answer B"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btnAnswerC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Answer C"
-            android:textSize="20sp"
-            android:backgroundTint="#125488"
-            android:textColor="@color/white"
             android:layout_marginTop="20dp"
-            android:background="@drawable/RoundShapeBtn"/>
+            android:background="@drawable/round_shape_button"
+            android:backgroundTint="#125488"
+            android:text="Answer C"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btnAnswerD"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Answer D"
-            android:textSize="20sp"
-            android:backgroundTint="#125488"
-            android:textColor="@color/white"
             android:layout_marginTop="20dp"
-            android:background="@drawable/RoundShapeBtn"/>
+            android:background="@drawable/round_shape_button"
+            android:backgroundTint="#125488"
+            android:text="Answer D"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <Button
@@ -80,9 +79,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="Next"
+        android:background="@drawable/round_shape_button"
         android:backgroundTint="#125488"
-        android:background="@drawable/RoundShapeBtn"
+        android:text="Next"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
