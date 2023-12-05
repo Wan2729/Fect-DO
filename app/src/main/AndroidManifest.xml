@@ -17,6 +17,9 @@
         android:theme="@style/Theme.FectDo"
         tools:targetApi="31">
         <activity
+            android:name=".course.VideoPhysicsPage"
+            android:exported="false" />
+        <activity
             android:name=".course.Exam"
             android:exported="false" />
         <activity
