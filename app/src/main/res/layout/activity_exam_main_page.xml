@@ -39,7 +39,6 @@
         android:text="MULA"
         android:backgroundTint="#125488"
         android:textColor="@color/white"
-        android:background="@drawable/RoundShapeBtn"
         android:fadingEdgeLength="50dp"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="@+id/textView2"

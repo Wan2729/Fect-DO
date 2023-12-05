@@ -103,6 +103,7 @@ public class SignUpOTP extends AppCompatActivity {
                 if(task.isSuccessful()){
                     AndroidUtil.showToast(getApplicationContext(),"OTP verification success");
                     Intent intent = new Intent(SignUpOTP.this,SignUpUserrname.class);
+                    intent.putExtra("phone",phoneNumber);
                     startActivity(intent);
                 }else {
                     AndroidUtil.showToast(getApplicationContext(),"OTP verification failed");

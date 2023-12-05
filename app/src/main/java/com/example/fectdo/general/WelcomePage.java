@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.fectdo.R;
+import com.example.fectdo.course.Enroll;
+import com.example.fectdo.utils.FirebaseUtil;
 
 public class WelcomePage extends AppCompatActivity implements View.OnClickListener {
     Button signUpButton, loginButton;
@@ -22,6 +24,13 @@ public class WelcomePage extends AppCompatActivity implements View.OnClickListen
 
         signUpButton.setOnClickListener(this);
         loginButton.setOnClickListener(this);
+
+        if(FirebaseUtil.isLoggedIn()){
+            startActivity(new Intent(WelcomePage.this, Enroll.class));
+        }else {
+            startActivity(new Intent(WelcomePage.this,SignUpPhoneNumber.class));
+        }
+        finish();
     }
 
     public void goToLogInPage(){
