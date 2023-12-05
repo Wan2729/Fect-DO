@@ -37,6 +37,7 @@
             android:text="Answer A"
             android:textSize="20sp"
             android:backgroundTint="#125488"
+            android:background="@drawable/roundshapebutton"
             android:textColor="@color/white"
             />
 
@@ -47,6 +48,7 @@
             android:text="Answer B"
             android:textSize="20sp"
             android:backgroundTint="#125488"
+            android:background="@drawable/roundshapebutton"
             android:textColor="@color/white"
             android:layout_marginTop="20dp"/>
 
@@ -57,6 +59,7 @@
             android:text="Answer C"
             android:textSize="20sp"
             android:backgroundTint="#125488"
+            android:background="@drawable/roundshapebutton"
             android:textColor="@color/white"
             android:layout_marginTop="20dp"/>
 
@@ -67,6 +70,7 @@
             android:text="Answer D"
             android:textSize="20sp"
             android:backgroundTint="#125488"
+            android:background="@drawable/roundshapebutton"
             android:textColor="@color/white"
             android:layout_marginTop="20dp"/>
     </LinearLayout>
@@ -78,6 +82,7 @@
         android:layout_marginBottom="10dp"
         android:text="Next"
         android:backgroundTint="#125488"
+        android:background="@drawable/roundshapebutton"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
