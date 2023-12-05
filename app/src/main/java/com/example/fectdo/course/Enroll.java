@@ -1,8 +1,10 @@
-package com.example.fectdo;
+package com.example.fectdo.course;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.fectdo.R;
 
 public class Enroll extends AppCompatActivity {
 

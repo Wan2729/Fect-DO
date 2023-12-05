@@ -32,7 +32,7 @@
             android:name=".general.SignUpPhoneNumber"
             android:exported="false" />
         <activity
-            android:name=".Enroll"
+            android:name=".course.Enroll"
             android:exported="false" />
         <activity
             android:name=".course.VideoChemPage"
