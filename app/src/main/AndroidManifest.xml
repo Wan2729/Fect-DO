@@ -17,34 +17,34 @@
         android:theme="@style/Theme.FectDo"
         tools:targetApi="31">
         <activity
-            android:name=".Exam"
+            android:name=".course.Exam"
             android:exported="false" />
         <activity
-            android:name=".ExamMainPage"
+            android:name=".course.ExamMainPage"
             android:exported="false" />
         <activity
-            android:name=".SignUpUserrname"
+            android:name=".general.SignUpUserrname"
             android:exported="false" />
         <activity
-            android:name=".SignUpOTP"
+            android:name=".general.SignUpOTP"
             android:exported="false" />
         <activity
-            android:name=".SignUpPhoneNumber"
+            android:name=".general.SignUpPhoneNumber"
             android:exported="false" />
         <activity
             android:name=".Enroll"
             android:exported="false" />
         <activity
-            android:name=".VideoChemPage"
+            android:name=".course.VideoChemPage"
             android:exported="false" />
         <activity
-            android:name=".UploadActivity"
+            android:name=".course.UploadActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginPage"
+            android:name=".general.LoginPage"
             android:exported="false" />
         <activity
-            android:name=".WelcomePage"
+            android:name=".general.WelcomePage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,7 +53,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignUpPage"
+            android:name=".general.SignUpPage"
             android:label="@string/app_name" />
 
         <meta-data

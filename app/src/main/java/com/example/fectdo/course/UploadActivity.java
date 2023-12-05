@@ -1,4 +1,4 @@
-package com.example.fectdo;
+package com.example.fectdo.course;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.example.fectdo.R;
 
 public class UploadActivity extends AppCompatActivity {
     private WebView mywebView;

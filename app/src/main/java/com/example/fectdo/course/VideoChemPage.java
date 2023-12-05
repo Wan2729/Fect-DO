@@ -1,14 +1,16 @@
-package com.example.fectdo;
+package com.example.fectdo.course;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class SignUpUserrname extends AppCompatActivity {
+import com.example.fectdo.R;
+
+public class VideoChemPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up_userrname);
+        setContentView(R.layout.video_chem_page);
     }
 }

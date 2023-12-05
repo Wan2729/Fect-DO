@@ -1,4 +1,4 @@
-package com.example.fectdo;
+package com.example.fectdo.general;
 
 import android.view.View;
 import android.widget.Button;
@@ -7,6 +7,8 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import com.example.fectdo.R;
 
 public class LoginPage extends AppCompatActivity implements View.OnClickListener {
     Button logIn;

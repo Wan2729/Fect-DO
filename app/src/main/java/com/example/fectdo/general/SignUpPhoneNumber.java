@@ -1,4 +1,4 @@
-package com.example.fectdo;
+package com.example.fectdo.general;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.android.material.textfield.TextInputEditText;
+import com.example.fectdo.R;
 import com.hbb20.CountryCodePicker;
 
 public class SignUpPhoneNumber extends AppCompatActivity {
