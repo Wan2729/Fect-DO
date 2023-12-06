@@ -5,8 +5,9 @@
     style="@style/myHeader"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/wallpaper10"
     tools:context=".course.Enroll">
-
+    <!--
     <TextView
         android:id="@+id/textView9"
         style="@style/myHeader"
@@ -19,7 +20,7 @@
         android:layout_marginTop="41dp"
         android:text="Enroll"
         android:textColor="#125488"
-        android:textStyle="bold"/>
+        android:textStyle="bold"/>-->
 
     <EditText
         android:id="@+id/editTextText5"
@@ -34,12 +35,12 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="469dp"
+        android:layout_height="468dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="170dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="171dp"
         android:orientation="vertical">
 
         <TextView
@@ -97,15 +98,6 @@
             android:background="#00FFFFFF"
             android:src="@drawable/btncareer" />
 
-        <TextView
-            android:id="@+id/textView11"
-            style="@style/myText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text=""
-            android:textSize="24sp" />
-
 
         <ImageButton
             android:id="@+id/btnUpload"
@@ -114,7 +106,7 @@
             android:layout_marginLeft="80dp"
             android:layout_marginRight="80dp"
             android:background="#00FFFFFF"
-            android:src="@drawable/btn_upload" />
+            android:src="@drawable/sharingbutton" />
 
     </LinearLayout>
 

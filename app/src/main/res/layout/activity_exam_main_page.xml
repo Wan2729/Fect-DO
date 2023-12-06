@@ -38,6 +38,7 @@
         android:layout_marginTop="100dp"
         android:text="MULA"
         android:backgroundTint="#125488"
+        android:background="@drawable/roundshapebutton"
         android:textColor="@color/white"
         android:fadingEdgeLength="50dp"
         android:textSize="17sp"
