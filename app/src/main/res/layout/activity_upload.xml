@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/wallpaper6"
     tools:context=".course.UploadActivity">
 
-    <TextView
+    <!--<TextView
         android:id="@+id/textView7"
         style="@style/myHeader"
         android:layout_width="wrap_content"
@@ -18,7 +19,7 @@
         android:layout_marginEnd="140dp"
         android:text="Upload"
         android:textColor="#125488"
-        android:textStyle="bold"/>
+        android:textStyle="bold"/>-->
 
     <TextView
         android:id="@+id/textView8"
@@ -31,7 +32,7 @@
         android:layout_marginTop="116dp"
         android:layout_marginEnd="56dp"
         android:text="Please submit subject detail below:"
-        android:textColor="#125488"/>
+        android:textStyle="bold"/>
 
     <EditText
         android:id="@+id/editTextText"
