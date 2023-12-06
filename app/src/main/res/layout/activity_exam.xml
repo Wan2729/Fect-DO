@@ -7,7 +7,7 @@
     android:background="@drawable/wallpaper6"
     tools:context=".course.Exam">
 
-    <!--<TextView
+    <TextView
         android:id="@+id/textViewExam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />-->
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 
@@ -78,18 +78,19 @@
 
     <Button
         android:id="@+id/btnSubmit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="161dp"
+        android:layout_height="51dp"
         android:layout_marginBottom="10dp"
-        android:text="Next"
-        android:backgroundTint="#125488"
         android:background="@drawable/roundshapebutton"
+        android:backgroundTint="#125488"
+        android:text="Next"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/linear"
         app:layout_constraintStart_toStartOf="@+id/linear"
-        app:layout_constraintTop_toBottomOf="@+id/linear" />
+        app:layout_constraintTop_toBottomOf="@+id/linear"
+        app:layout_constraintVertical_bias="0.295" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline45H"
