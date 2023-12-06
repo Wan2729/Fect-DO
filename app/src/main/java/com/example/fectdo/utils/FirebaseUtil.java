@@ -17,4 +17,8 @@ public class FirebaseUtil {
     public static boolean isLoggedIn(){
         return currentUserId()!=null;
     }
+
+    public static void logOut(){
+        FirebaseAuth.getInstance().signOut();
+    }
 }

@@ -118,4 +118,12 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/logoutBtn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:srcCompat="@drawable/baseline_logout_24"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"/>
+
 </RelativeLayout>
