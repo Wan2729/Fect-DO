@@ -10,9 +10,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/fd"
+        android:icon="@drawable/icon_logo_fd"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/fd"
+        android:roundIcon="@drawable/icon_logo_fd"
         android:supportsRtl="true"
         android:theme="@style/Theme.FectDo"
         tools:targetApi="31">
@@ -39,6 +39,9 @@
             android:exported="false" />
         <activity
             android:name=".course.VideoChemPage"
+            android:exported="false" />
+        <activity
+            android:name=".course.VideoMathPage"
             android:exported="false" />
         <activity
             android:name=".course.UploadActivity"
