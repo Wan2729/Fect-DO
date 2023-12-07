@@ -34,28 +34,24 @@ public class Enroll extends AppCompatActivity {
             }
         });
 
+
         final ImageView NextpagePhysics = findViewById(R.id.btnPhysics);
+        final ImageView NextpageChemistry = findViewById(R.id.btnChem);
+        final ImageView NextpageMathematic = findViewById(R.id.btnMath);
         NextpagePhysics.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 nextpagephy();
             }
-
         });
-
-        final ImageView NextpageChemistry = findViewById(R.id.btnChem);
         NextpageChemistry.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 nextpagechem();
             }
-
         });
-
-        final ImageView NextpageMathematic = findViewById(R.id.btnMath);
         NextpageMathematic.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 nextpagemath();
             }
-
         });
     }
 
