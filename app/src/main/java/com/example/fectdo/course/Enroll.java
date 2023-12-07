@@ -38,6 +38,7 @@ public class Enroll extends AppCompatActivity {
         final ImageView NextpagePhysics = findViewById(R.id.btnPhysics);
         final ImageView NextpageChemistry = findViewById(R.id.btnChem);
         final ImageView NextpageMathematic = findViewById(R.id.btnMath);
+        final ImageView LetsUpload = findViewById(R.id.btnUpload);
         NextpagePhysics.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 nextpagephy();
@@ -53,6 +54,11 @@ public class Enroll extends AppCompatActivity {
                 nextpagemath();
             }
         });
+        LetsUpload.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                letupload();
+            }
+        });
     }
 
     void nextpagephy(){
@@ -66,5 +72,9 @@ public class Enroll extends AppCompatActivity {
     void nextpagemath(){
         Intent Mathematic=new Intent(this, VideoMathPage.class);
         startActivity(Mathematic);
+    }
+    void letupload(){
+        Intent upload=new Intent(this, UploadActivity.class);
+        startActivity(upload);
     }
 }
