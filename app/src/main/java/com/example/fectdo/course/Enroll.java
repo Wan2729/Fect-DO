@@ -33,5 +33,42 @@ public class Enroll extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        final ImageView NextpagePhysics = findViewById(R.id.btnPhysics);
+        NextpagePhysics.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                nextpagephy();
+            }
+
+        });
+
+        final ImageView NextpageChemistry = findViewById(R.id.btnChem);
+        NextpageChemistry.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                nextpagechem();
+            }
+
+        });
+
+        final ImageView NextpageMathematic = findViewById(R.id.btnMath);
+        NextpageMathematic.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                nextpagemath();
+            }
+
+        });
+    }
+
+    void nextpagephy(){
+        Intent Physic=new Intent(this, VideoPhysicsPage.class);
+        startActivity(Physic);
+    }
+    void nextpagechem(){
+        Intent Chemistry=new Intent(this, VideoChemPage.class);
+        startActivity(Chemistry);
+    }
+    void nextpagemath(){
+        Intent Mathematic=new Intent(this, VideoMathPage.class);
+        startActivity(Mathematic);
     }
 }

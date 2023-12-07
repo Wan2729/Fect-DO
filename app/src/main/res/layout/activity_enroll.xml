@@ -67,19 +67,19 @@
                 app:srcCompat="@drawable/btnphysics" />
 
             <ImageView
-                android:id="@+id/btnChemKinetic"
+                android:id="@+id/btnChem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnThermal"
+                app:layout_constraintEnd_toStartOf="@+id/btnMath"
                 app:layout_constraintStart_toEndOf="@+id/btnPhysics"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/btnchem" />
 
             <ImageView
-                android:id="@+id/btnThermal"
+                android:id="@+id/btnMath"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
