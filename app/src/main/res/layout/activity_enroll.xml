@@ -240,6 +240,11 @@
                 android:drawableLeft="@drawable/hanif_icon"
                 />
 
+    <Button
+        android:id="@+id/dummyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 
         </LinearLayout>
     </ScrollView>

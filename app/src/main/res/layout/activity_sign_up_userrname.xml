@@ -58,6 +58,7 @@
             android:background="@drawable/whitebox"
             android:hint="username"
             android:paddingLeft="15dp"
+            android:inputType="text"
             android:textColor="#000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
