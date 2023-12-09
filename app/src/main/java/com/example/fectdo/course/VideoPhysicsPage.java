@@ -72,7 +72,6 @@ public class VideoPhysicsPage extends AppCompatActivity {
     }
 
     private void handleLogout() {
-        FirebaseUtil.logOut();
         Intent intent = new Intent(VideoPhysicsPage.this, Enroll.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

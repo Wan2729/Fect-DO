@@ -1,41 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/wallpaper10"
     tools:context=".course.VideoMathPage">
-
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <!--<TextView
-            android:id="@+id/textView"
-            android:layout_width="210dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="25dp"
-            android:background="@color/picton_blue"
-            android:fontFamily="sans-serif"
-            android:text="Enroll > Mathematics"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginTop="25dp"
-            android:text="Back"
-            android:fontFamily="sans-serif"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:background="@color/picton_blue"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></Button>-->
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
         <TextView
             android:id="@+id/textView2"
@@ -73,18 +46,21 @@
                     android:id="@+id/chapter1Math"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="chapter1Math"
                     android:text="Nombor Bulat" />
 
                 <Button
                     android:id="@+id/chapter2Math"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="chapter2Math"
                     android:text="Nombor asas" />
 
                 <Button
                     android:id="@+id/chapter3Math"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="chapter3Math"
                     android:text="Kamiran tak tentu" />
 
 
@@ -122,6 +98,6 @@
             app:layout_constraintHorizontal_bias="0.929"
             app:layout_constraintStart_toStartOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
