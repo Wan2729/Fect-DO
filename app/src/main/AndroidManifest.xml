@@ -17,6 +17,15 @@
         android:theme="@style/Theme.FectDo"
         tools:targetApi="31">
         <activity
+            android:name=".general.ForgotPassword"
+            android:exported="false" />
+        <activity
+            android:name=".general.SignUpUsernameEmailPassword"
+            android:exported="false" />
+        <activity
+            android:name=".general.LoginEmailPassword"
+            android:exported="false" />
+        <activity
             android:name=".course.VideoPhysicsPage"
             android:exported="false" />
         <activity

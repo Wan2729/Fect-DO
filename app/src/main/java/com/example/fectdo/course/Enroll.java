@@ -9,7 +9,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.fectdo.R;
+import com.example.fectdo.general.LoginEmailPassword;
 import com.example.fectdo.general.SignUpPhoneNumber;
+import com.example.fectdo.general.SignUpUsernameEmailPassword;
 import com.example.fectdo.general.SignUpUserrname;
 import com.example.fectdo.utils.FirebaseUtil;
 
@@ -28,7 +30,7 @@ public class Enroll extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseUtil.logOut();
-                Intent intent = new Intent(Enroll.this, SignUpPhoneNumber.class);
+                Intent intent = new Intent(Enroll.this, LoginEmailPassword.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }

@@ -6,6 +6,7 @@ public class UserModel {
     private String phone;
     private String username;
     private Timestamp createdTimestamp;
+    private String emailAddress;
 
     public UserModel() {
     }
@@ -14,6 +15,15 @@ public class UserModel {
         this.phone = phone;
         this.username = username;
         this.createdTimestamp = createdTimestamp;
+    }
+
+
+
+    public UserModel(String phone, String username, Timestamp createdTimestamp, String emailAddress) {
+        this.phone = phone;
+        this.username = username;
+        this.createdTimestamp = createdTimestamp;
+        this.emailAddress = emailAddress;
     }
 
     public String getPhone() {
@@ -38,5 +48,13 @@ public class UserModel {
 
     public void setCreatedTimestamp(Timestamp createdTimestamp) {
         this.createdTimestamp = createdTimestamp;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 }

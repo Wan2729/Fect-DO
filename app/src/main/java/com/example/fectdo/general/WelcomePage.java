@@ -26,7 +26,7 @@ public class WelcomePage extends AppCompatActivity {
                 if (FirebaseUtil.isLoggedIn()) {
                     startActivity(new Intent(WelcomePage.this, Enroll.class));
                 } else {
-                    startActivity(new Intent(WelcomePage.this, SignUpPhoneNumber.class));
+                    startActivity(new Intent(WelcomePage.this, LoginEmailPassword.class));
                 }
                 finish();
             }
