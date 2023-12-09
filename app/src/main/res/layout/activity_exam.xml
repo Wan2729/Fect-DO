@@ -37,8 +37,7 @@
             android:layout_height="wrap_content"
             android:text="Answer A"
             android:textSize="20sp"
-            android:backgroundTint="@color/yale_blue"
-            android:background="@drawable/roundshapebutton"
+            android:background="@drawable/btn_round_exam"
             android:textColor="@color/white"
             />
 
@@ -48,8 +47,7 @@
             android:layout_height="wrap_content"
             android:text="Answer B"
             android:textSize="20sp"
-            android:backgroundTint="@color/yale_blue"
-            android:background="@drawable/roundshapebutton"
+            android:background="@drawable/btn_round_exam"
             android:textColor="@color/white"
             android:layout_marginTop="20dp"/>
 
@@ -59,8 +57,7 @@
             android:layout_height="wrap_content"
             android:text="Answer C"
             android:textSize="20sp"
-            android:backgroundTint="@color/yale_blue"
-            android:background="@drawable/roundshapebutton"
+            android:background="@drawable/btn_round_exam"
             android:textColor="@color/white"
             android:layout_marginTop="20dp"/>
 
@@ -70,8 +67,7 @@
             android:layout_height="wrap_content"
             android:text="Answer D"
             android:textSize="20sp"
-            android:backgroundTint="@color/yale_blue"
-            android:background="@drawable/roundshapebutton"
+            android:background="@drawable/btn_round_exam"
             android:textColor="@color/white"
             android:layout_marginTop="20dp"/>
     </LinearLayout>
@@ -119,9 +115,11 @@
         android:layout_height="0dp"
         android:text="TextView"
         android:fontFamily="sans-serif-black"
+        android:textColor="@color/black"
         android:textSize="15sp"
         android:background="@drawable/question_box"
         android:gravity="center"
+        android:paddingHorizontal="10dp"
         app:layout_constraintDimensionRatio="1:.45"
         app:layout_constraintBottom_toTopOf="@+id/linear"
         app:layout_constraintEnd_toStartOf="@+id/guideline90"
