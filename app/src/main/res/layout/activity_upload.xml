@@ -49,6 +49,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/whitebox"
         android:ems="10"
         android:hint="Subject"
@@ -56,7 +57,7 @@
         android:paddingLeft="20dp"
         android:textColorHint="#7E000000"
         app:layout_constraintStart_toStartOf="@+id/textView8"
-        tools:layout_editor_absoluteY="176dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <EditText
         android:id="@+id/editTextText2"
@@ -66,19 +67,17 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="222dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/whitebox"
         android:ems="10"
         android:hint="Topic"
         android:inputType="text"
         android:paddingLeft="20dp"
         android:textColorHint="#7E000000"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText4"
         app:layout_constraintEnd_toEndOf="@+id/editTextText"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editTextText"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.222" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
 
     <EditText
         android:id="@+id/editTextText3"
@@ -88,6 +87,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
         android:background="@drawable/whitebox"
         android:ems="10"
         android:hint="Name"
@@ -95,8 +95,9 @@
         android:paddingLeft="20dp"
         android:textColorHint="#7E000000"
         app:layout_constraintEnd_toEndOf="@+id/editTextText2"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editTextText2"
-        tools:layout_editor_absoluteY="315dp" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
 
     <EditText
         android:id="@+id/editTextText4"
@@ -115,9 +116,10 @@
         android:textColorHint="#7E000000"
         app:layout_constraintBottom_toTopOf="@+id/webview"
         app:layout_constraintEnd_toEndOf="@+id/editTextText3"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editTextText3"
         app:layout_constraintTop_toBottomOf="@+id/editTextText3"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.729" />
 
     <WebView
         android:id="@+id/webview"
