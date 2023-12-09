@@ -23,7 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-public class SignUpUsernameEmailPassword extends AppCompatActivity {
+public class
+SignUpUsernameEmailPassword extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     EditText emailInput;

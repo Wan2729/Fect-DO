@@ -45,7 +45,8 @@
             android:exported="false" />
         <activity
             android:name=".course.Enroll"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity
             android:name=".course.VideoChemPage"
             android:exported="false" />
