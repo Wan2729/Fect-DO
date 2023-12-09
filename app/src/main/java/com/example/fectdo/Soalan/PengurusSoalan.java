@@ -13,22 +13,37 @@ public class PengurusSoalan {
 
     public void setSoalanLalai(){
         String soalan, jawapan;
-        jumlahSoalan = 3;
+        jumlahSoalan = 6;
 
-        soalan = "ڤرکاتاءن کيميا براصل دري ڤرکاتاءن ________.";
-        jawapan = "عرب";
-        senaraiJawapan = new String[]{"عرب", "يوناني", "قدح", "جاوا"};
+        soalan = "Hitung 72 – 4(8 + 56 ÷ 8)";
+        jawapan = "12";
+        senaraiJawapan = new String[]{"12", "13", "14", "15"};
         senaraiSoalan[0] = new Soalan(soalan, jawapan, senaraiJawapan);
 
-        soalan = "ساتو فکتور يڠ دتتڤکن سڤنجڠ ايکسڤيريمن.";
-        jawapan = "دمالرکن";
-        senaraiJawapan = new String[]{"دمانيڤولاسي", "دمالرکن", "برݢرق بالس", "دمنسوهکن"};
+        soalan = "Bundarkan 75496 kepada ribu yang terdekat.";
+        jawapan = "75000";
+        senaraiJawapan = new String[]{"80000", "70000", "75000", "76000"};
         senaraiSoalan[1] = new Soalan(soalan, jawapan, senaraiJawapan);
 
-        soalan = "اڤکه اکتيۏيتي يڠ واجر دلاکوکن ترهادڤ سموا جنيس کمالڠن؟";
-        jawapan = "لاڤورن";
-        senaraiJawapan = new String[]{"باسوه مات", "کلوار معمل", "ݢڠݢم دان تاريق", "لاڤورن"};
+        soalan = "Pak Samad mempunyai 3 orang anak dan Mak Salmah mempunyai 3 orang anak. Berapakan jumlah anak mereka?!!!!";
+        jawapan = "3";
+        senaraiJawapan = new String[]{"6", "5", "4", "3"};
         senaraiSoalan[2] = new Soalan(soalan, jawapan, senaraiJawapan);
+
+        soalan = "Jika 5³ + 4 × 5 + x = 1043₅, cari nilai bagi x.";
+        jawapan = "3";
+        senaraiJawapan = new String[]{"4", "3", "1", "0"};
+        senaraiSoalan[3] = new Soalan(soalan, jawapan, senaraiJawapan);
+
+        soalan = "Cari nilai bagi digit 1 , dalam asas sepuluh, dalam nombor 4310₅.";
+        jawapan = "5";
+        senaraiJawapan = new String[]{"1", "5", "25", "125"};
+        senaraiSoalan[4] = new Soalan(soalan, jawapan, senaraiJawapan);
+
+        soalan = "100100₂ − 10100₂ = 10000₂";
+        jawapan = "3";
+        senaraiJawapan = new String[]{"10000₂", "10100₂", "100000₂", "100001₂"};
+        senaraiSoalan[5] = new Soalan(soalan, jawapan, senaraiJawapan);
     }
 
     public String getSenaraiSoalan(int index) {
