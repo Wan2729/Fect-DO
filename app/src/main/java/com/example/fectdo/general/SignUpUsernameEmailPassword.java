@@ -119,9 +119,6 @@ public class SignUpUsernameEmailPassword extends AppCompatActivity {
                         }
                     }
                 });
-
-                startActivity(new Intent(this, Enroll.class));
-                finish();
             } else {
                 Toast.makeText(this, "Sign Up Failed", Toast.LENGTH_LONG).show();
             }
