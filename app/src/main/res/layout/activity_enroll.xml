@@ -36,11 +36,12 @@
         android:layout_above="@+id/scrollView2"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="24dp"
         android:text="My Course"
         android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText5"
-        tools:layout_editor_absoluteX="34dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText5" />
 
     <ScrollView
         android:id="@+id/scrollView2"
