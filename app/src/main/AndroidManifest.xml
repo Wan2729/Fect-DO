@@ -55,7 +55,8 @@
             android:exported="false" />
         <activity
             android:name=".course.UploadActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".general.LoginPage"
             android:exported="false" />
