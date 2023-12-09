@@ -1,9 +1,13 @@
 package com.example.fectdo.course;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,49 +23,43 @@ public class Enroll extends AppCompatActivity {
 
     ImageView logoutBtn;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enroll);
 
-        logoutBtn = findViewById(R.id.logoutBtn);
-
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseUtil.logOut();
-                Intent intent = new Intent(Enroll.this, LoginEmailPassword.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-
-        final ImageView NextpagePhysics = findViewById(R.id.btnPhysics);
-        final ImageView NextpageChemistry = findViewById(R.id.btnChem);
-        final ImageView NextpageMathematic = findViewById(R.id.btnMath);
-        final ImageView LetsUpload = findViewById(R.id.btnUpload);
-        NextpagePhysics.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                nextpagephy();
-            }
-        });
-        NextpageChemistry.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                nextpagechem();
-            }
-        });
-        NextpageMathematic.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                nextpagemath();
-            }
-        });
-        LetsUpload.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                letupload();
-            }
-        });
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logoutBtn:
+                handleLogout();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void handleLogout() {
+        FirebaseUtil.logOut();
+        Intent intent = new Intent(Enroll.this, LoginEmailPassword.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+
 
     void nextpagephy(){
         Intent Physic=new Intent(this, VideoPhysicsPage.class);
