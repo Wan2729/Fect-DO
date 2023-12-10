@@ -7,19 +7,9 @@
     android:background="@drawable/wallpaper6"
     tools:context=".course.UploadActivity">
 
-    <!--<TextView
-        android:id="@+id/textView7"
-        style="@style/myHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="62dp"
-        android:layout_marginEnd="140dp"
-        android:text="Upload"
-        android:textColor="#125488"
-        android:textStyle="bold"/>-->
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
     <TextView
         android:id="@+id/textView8"
@@ -29,58 +19,54 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="116dp"
-        android:layout_marginBottom="280dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="59dp"
         android:text="Please submit subject detail below:"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/webview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.109"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.115" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/inputSubject"
         style="@style/myText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/whitebox"
         android:ems="10"
         android:hint="Subject"
         android:inputType="text"
         android:paddingLeft="20dp"
         android:textColorHint="#7E000000"
-        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/inputTopic"
         style="@style/myText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/whitebox"
         android:ems="10"
         android:hint="Topic"
         android:inputType="text"
         android:paddingLeft="20dp"
         android:textColorHint="#7E000000"
-        app:layout_constraintEnd_toEndOf="@+id/editTextText"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextText"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintStart_toStartOf="@+id/inputSubject"
+        app:layout_constraintTop_toBottomOf="@+id/inputSubject" />
 
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/inputDescription"
         style="@style/myText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,49 +76,52 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/whitebox"
         android:ems="10"
-        android:hint="Name"
-        android:inputType="text"
-        android:paddingLeft="20dp"
-        android:textColorHint="#7E000000"
-        app:layout_constraintEnd_toEndOf="@+id/editTextText2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextText2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
-
-    <EditText
-        android:id="@+id/editTextText4"
-        style="@style/myText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="40dp"
-        android:background="@drawable/whitebox"
-        android:ems="10"
         android:hint="Description"
         android:inputType="text"
         android:paddingLeft="20dp"
         android:textColorHint="#7E000000"
-        app:layout_constraintBottom_toTopOf="@+id/webview"
-        app:layout_constraintEnd_toEndOf="@+id/editTextText3"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextText3"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3"
-        app:layout_constraintVertical_bias="0.729" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputTopic" />
 
-    <WebView
-        android:id="@+id/webview"
-        android:layout_width="328dp"
-        android:layout_height="179dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="38dp"
-        android:layout_marginEnd="38dp"
-        android:layout_marginBottom="84dp"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/BottomFragment"
+        android:name="com.example.fectdo.general.BottomMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"></androidx.fragment.app.FragmentContainerView>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txt_pdf"
+        android:layout_width="307dp"
+        android:layout_height="122dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputDescription">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="114dp"
+            android:background="@drawable/upload_file"
+            android:textColorHint="#7C7C7C" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/buttonUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:background="#B000D508"
+        android:onClick="uploadFile"
+        android:text="Submit"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_pdf" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
