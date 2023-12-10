@@ -121,6 +121,8 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
                     }
                 });
             } else {
+                signUpBtn.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(this, "Sign Up Failed", Toast.LENGTH_LONG).show();
             }
         });
