@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.fectdo">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission><!-- Permission for internet -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Permission for internet -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FectDo"
         tools:targetApi="31">
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingActivity"
+            android:exported="false" />
         <activity
             android:name=".general.ForgotPassword"
             android:exported="false" />
@@ -47,7 +53,7 @@
         <activity
             android:name=".course.Enroll"
             android:exported="false"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".course.VideoChemPage"
             android:exported="false" />

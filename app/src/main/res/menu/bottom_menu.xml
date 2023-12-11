@@ -3,16 +3,16 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/icon_setting"
+        android:checked="true"
+        android:icon="@drawable/icon_home"
+        android:title="Home" />
+    <item
+        android:id="@+id/navigation_setting"
+        android:icon="@drawable/setting_icon"
         android:title="Setting" />
 
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/icon_home"
-        android:title="Home" />
-
-    <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_profile"
         android:icon="@drawable/icon_profile2"
         android:title="Profile" />
 

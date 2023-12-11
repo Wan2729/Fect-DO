@@ -1,5 +1,6 @@
 package com.example.fectdo.course;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -13,7 +14,10 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
 
+import com.example.fectdo.ProfileActivity;
 import com.example.fectdo.R;
+import com.example.fectdo.SettingActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class VideoMathPage extends AppCompatActivity {
 String video;
@@ -29,10 +33,39 @@ String video;
                 LetsgoExam();
             }
         });
+        loadInitialImage();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        loadInitialImage();
+        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        // Handle item selection
+                        switch (item.getItemId()) {
+                            case R.id.navigation_home:
+                                // Intent for Home
+                                Intent homeIntent = new Intent(VideoMathPage.this, Enroll.class);
+                                startActivity(homeIntent);
+                                return true;
+                            case R.id.navigation_setting:
+                                // Intent for Setting
+                                Intent settingIntent = new Intent(VideoMathPage.this, SettingActivity.class);
+                                startActivity(settingIntent);
+                                return true;
+                            case R.id.navigation_profile:
+                                // Intent for Profile
+                                Intent profileIntent = new Intent(VideoMathPage.this, ProfileActivity.class);
+                                startActivity(profileIntent);
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                }
+        );
+
 
     }
 
@@ -75,7 +108,7 @@ String video;
         startActivity(intent);
     }
 
-    public void chapter1Math(View view){
+    public void chapter1MathClick(View view){
         WebView webView = findViewById(R.id.videoViewMath);
         video = "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/2D6mtRpUyQs?si=LDwSv9AsS3LQtApG\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
         webView.loadData(video,"text/html","utf-8");
@@ -83,7 +116,7 @@ String video;
         webView.setWebChromeClient(new WebChromeClient());
     }
 
-    public void chapter2Math(View view){
+    public void chapter2MathClick(View view){
         WebView webView = findViewById(R.id.videoViewMath);
         video="<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/-8ha8zemljc?si=umf-VTGOEN8wCqJH\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
         webView.loadData(video,"text/html","utf-8");
@@ -91,7 +124,7 @@ String video;
         webView.setWebChromeClient(new WebChromeClient());
     }
 
-    public void chapter3Math(View view){
+    public void chapter3MathClick(View view){
         WebView webView = findViewById(R.id.videoViewMath);
         video="<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/x7oyHEc9Ba8?si=_K2ylQcZLLnJfaII\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
         webView.loadData(video,"text/html","utf-8");

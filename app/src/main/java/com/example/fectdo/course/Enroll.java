@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 
 import com.example.fectdo.CourseDataBase.Course;
+import com.example.fectdo.ProfileActivity;
 import com.example.fectdo.R;
+import com.example.fectdo.SettingActivity;
 import com.example.fectdo.general.LoginEmailPassword;
 import com.example.fectdo.general.SignUpPhoneNumber;
 import com.example.fectdo.general.SignUpUsernameEmailPassword;
@@ -25,6 +27,7 @@ import com.example.fectdo.utils.AndroidUtil;
 import com.example.fectdo.utils.FirebaseUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -64,6 +67,34 @@ public class Enroll extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        // Handle item selection
+                        switch (item.getItemId()) {
+                            case R.id.navigation_home:
+                                // Intent for Home
+                                Intent homeIntent = new Intent(Enroll.this, Enroll.class);
+                                startActivity(homeIntent);
+                                return true;
+                            case R.id.navigation_setting:
+                                // Intent for Setting
+                                Intent settingIntent = new Intent(Enroll.this, SettingActivity.class);
+                                startActivity(settingIntent);
+                                return true;
+                            case R.id.navigation_profile:
+                                // Intent for Profile
+                                Intent profileIntent = new Intent(Enroll.this, ProfileActivity.class);
+                                startActivity(profileIntent);
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                }
+        );
     }
 
     void nextpagephy(){
@@ -81,6 +112,7 @@ public class Enroll extends AppCompatActivity {
     void letupload(){
         Intent upload=new Intent(this, UploadActivity.class);
         startActivity(upload);
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

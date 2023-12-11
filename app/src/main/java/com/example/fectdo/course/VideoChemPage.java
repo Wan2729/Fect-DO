@@ -1,5 +1,6 @@
 package com.example.fectdo.course;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -13,8 +14,11 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
 
+import com.example.fectdo.ProfileActivity;
 import com.example.fectdo.R;
+import com.example.fectdo.SettingActivity;
 import com.example.fectdo.utils.FirebaseUtil;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class VideoChemPage extends AppCompatActivity {
 String video;
@@ -29,10 +33,42 @@ String video;
                 LetsgoExam();
             }
         });
+        loadInitialImage();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        loadInitialImage();
+
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
+
+        // Set up a listener for BottomNavigationView item clicks
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        // Handle item selection
+                        switch (item.getItemId()) {
+                            case R.id.navigation_home:
+                                // Intent for Home
+                                Intent homeIntent = new Intent(VideoChemPage.this, Enroll.class);
+                                startActivity(homeIntent);
+                                return true;
+                            case R.id.navigation_setting:
+                                // Intent for Setting
+                                Intent settingIntent = new Intent(VideoChemPage.this, SettingActivity.class);
+                                startActivity(settingIntent);
+                                return true;
+                            case R.id.navigation_profile:
+                                // Intent for Profile
+                                Intent profileIntent = new Intent(VideoChemPage.this, ProfileActivity.class);
+                                startActivity(profileIntent);
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                }
+        );
 
     }
 

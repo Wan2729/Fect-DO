@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ScrollView
-            android:id="@+id/scrollView2"
+            android:id="@+id/scrollView3"
             android:layout_width="366dp"
             android:layout_height="193dp"
             android:layout_marginStart="10dp"
@@ -46,21 +46,21 @@
                     android:id="@+id/chapter1Math"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="chapter1Math"
+                    android:onClick="chapter1MathClick"
                     android:text="Nombor Bulat" />
 
                 <Button
                     android:id="@+id/chapter2Math"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="chapter2Math"
+                    android:onClick="chapter2MathClick"
                     android:text="Nombor asas" />
 
                 <Button
                     android:id="@+id/chapter3Math"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="chapter3Math"
+                    android:onClick="chapter3MathClick"
                     android:text="Kamiran tak tentu" />
 
 
@@ -71,7 +71,7 @@
             android:id="@+id/videoViewMath"
             android:layout_width="397dp"
             android:layout_height="214dp"
-            app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+            app:layout_constraintBottom_toTopOf="@+id/scrollView3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -97,6 +97,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.929"
             app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="@drawable/whitebox"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_menu" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
