@@ -1,14 +1,21 @@
 package com.example.fectdo.general;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -17,11 +24,22 @@ import com.example.fectdo.course.Enroll;
 import com.example.fectdo.models.UserModel;
 import com.example.fectdo.utils.FirebaseUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.auth.User;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.util.HashMap;
 
 public class
 SignUpUsernameEmailPassword extends AppCompatActivity {
@@ -36,6 +54,12 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
     CollectionReference userDatabase;
     ProgressBar progressBar;
 
+    private FirebaseUser firebaseUser;
+    private ImageView ivProfile;
+    private DatabaseReference databaseReference;
+    private StorageReference fileStorage;
+    private Uri localFileUri, serverFileUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +71,11 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
         signUpBtn = findViewById(R.id.signUpBtn);
         usernameInput = findViewById(R.id.usernameInput);
         progressBar = findViewById(R.id.progressBar);
-
         mAuth = FirebaseAuth.getInstance();
         userDatabase = FirebaseUtil.getCollection("users");
+        ivProfile = findViewById(R.id.ivProfile);
+        fileStorage = FirebaseStorage.getInstance().getReference();
+
 
         signUpBtn.setOnClickListener((v) -> {
             String username = usernameInput.getText().toString();
@@ -100,10 +126,11 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
     void signUp(String username, String email, String password, FirebaseAuth mAuth) {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((task) -> {
             if (task.isSuccessful()) {
+                mAuth.getCurrentUser();
+                if(localFileUri != null){
+                    updateNameAndPhoto();
+                }
                 Toast.makeText(this, "Sign Up Successful", Toast.LENGTH_LONG).show();
-
-
-
                 if(userModel!=null){
                     userModel.setUsername(username);
                 } else {
@@ -150,4 +177,100 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
                     callback.onUsernameChecked(isTaken);
                 });
     }
+
+    public void pickImage(View view){
+        //check either user has permission to access file or not
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, 101);
+        } else {
+            // Request permission
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 102);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode==102){
+            if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent,101);
+            }
+            else{
+                Toast.makeText(this, "Access permission is required", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==101){
+            if(resultCode==RESULT_OK){
+
+                localFileUri =data.getData();
+                ivProfile.setImageURI(localFileUri);
+            }
+        }
+    }
+
+    private void updateNameAndPhoto() {
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String strFileName = firebaseUser.getUid() + ".jpg";
+        final StorageReference fileRef = fileStorage.child("images/" + strFileName);
+
+        fileRef.putFile(localFileUri)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        fileRef.getDownloadUrl()
+                                .addOnSuccessListener(uri -> {
+                                    serverFileUri = uri;
+
+                                    UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                                            .setDisplayName(usernameInput.getText().toString().trim())
+                                            .setPhotoUri(serverFileUri)
+                                            .build();
+
+                                    firebaseUser.updateProfile(request)
+                                            .addOnCompleteListener(profileTask -> {
+                                                if (profileTask.isSuccessful()) {
+                                                    String userID = firebaseUser.getUid();
+                                                    // Use the correct reference structure here
+                                                    databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+
+                                                    HashMap<String, String> hashMap = new HashMap<>();
+                                                    hashMap.put("PHOTO", strFileName);
+
+                                                    databaseReference.setValue(hashMap)
+                                                            .addOnCompleteListener(dbTask -> {
+                                                                if (dbTask.isSuccessful()) {
+                                                                    Toast.makeText(SignUpUsernameEmailPassword.this, "User created successfully", Toast.LENGTH_SHORT).show();
+                                                                    Intent intent = new Intent(SignUpUsernameEmailPassword.this, Enroll.class);
+                                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                                    startActivity(intent);
+                                                                } else {
+                                                                    handleError(dbTask.getException(), "Failed to update profile in database");
+                                                                }
+                                                            });
+                                                } else {
+                                                    handleError(profileTask.getException(), "Failed to update user profile");
+                                                }
+                                            });
+                                });
+                    } else {
+                        // Handle the case where file upload fails
+                        handleError(task.getException(), "Failed to upload profile picture");
+                    }
+                });
+    }
+
+
+    private void handleError(Exception exception, String message) {
+        Toast.makeText(SignUpUsernameEmailPassword.this, message + exception.getMessage(), Toast.LENGTH_SHORT).show();
+        signUpBtn.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
 }
