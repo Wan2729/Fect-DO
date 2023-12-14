@@ -24,7 +24,6 @@ import com.example.fectdo.course.Enroll;
 import com.example.fectdo.models.UserModel;
 import com.example.fectdo.utils.FirebaseUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,10 +33,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 
@@ -111,13 +108,21 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
             signUpBtn.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.VISIBLE);
 
-            usernameIsTaken(username,isTaken -> {
-                if (isTaken){
+            emailIsRegistered(email, isTakenEmail -> {
+                if(isTakenEmail){
                     signUpBtn.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.INVISIBLE);
-                    usernameInput.setError("This username is not available");
+                    emailInput.setError("This email is already registered.");
                 } else {
-                    signUp(username, email, password, mAuth);
+                    usernameIsTaken(username, isTakenUserame -> {
+                        if (isTakenUserame){
+                            signUpBtn.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.INVISIBLE);
+                            usernameInput.setError("This username is not available");
+                        } else {
+                            signUp(username, email, password, mAuth);
+                        }
+                    });
                 }
             });
         });
@@ -157,6 +162,30 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
 
     interface UsernameCheckCallback {
         void onUsernameChecked(boolean isTaken);
+    }
+
+    interface EmailCheckCallBack{
+        void onEmailChecked(boolean isTaken);
+    }
+
+    private void emailIsRegistered(String email,EmailCheckCallBack callBack) {
+        userDatabase.whereEqualTo("emailAddress",email)
+                .get()
+                .addOnCompleteListener(task -> {
+                    boolean isTaken = false;
+                    if(task.isSuccessful()){
+                        for (QueryDocumentSnapshot document : task.getResult()){
+                            if(document.exists()){
+                                isTaken = true;
+                                break;
+                            }
+                        }
+                    } else {
+                        Log.d("SignUP","Error getting documents",task.getException());
+                    }
+                    callBack.onEmailChecked(isTaken);
+                });
+
     }
 
     void usernameIsTaken(String username, UsernameCheckCallback callback) {
