@@ -111,13 +111,21 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
             signUpBtn.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.VISIBLE);
 
-            usernameIsTaken(username,isTaken -> {
-                if (isTaken){
+            emailIsRegistered(email, isTakenEmail -> {
+                if(isTakenEmail){
                     signUpBtn.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.INVISIBLE);
-                    usernameInput.setError("This username is not available");
+                    emailInput.setError("This email is already registered.");
                 } else {
-                    signUp(username, email, password, mAuth);
+                    usernameIsTaken(username, isTakenUserame -> {
+                        if (isTakenUserame){
+                            signUpBtn.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.INVISIBLE);
+                            usernameInput.setError("This username is not available");
+                        } else {
+                            signUp(username, email, password, mAuth);
+                        }
+                    });
                 }
             });
         });
@@ -157,6 +165,30 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
 
     interface UsernameCheckCallback {
         void onUsernameChecked(boolean isTaken);
+    }
+
+    interface EmailCheckCallBack{
+        void onEmailChecked(boolean isTaken);
+    }
+
+    private void emailIsRegistered(String email,EmailCheckCallBack callBack) {
+        userDatabase.whereEqualTo("emailAddress",email)
+                .get()
+                .addOnCompleteListener(task -> {
+                    boolean isTaken = false;
+                    if(task.isSuccessful()){
+                        for (QueryDocumentSnapshot document : task.getResult()){
+                            if(document.exists()){
+                                isTaken = true;
+                                break;
+                            }
+                        }
+                    } else {
+                        Log.d("SignUP","Error getting documents",task.getException());
+                    }
+                    callBack.onEmailChecked(isTaken);
+                });
+
     }
 
     void usernameIsTaken(String username, UsernameCheckCallback callback) {
