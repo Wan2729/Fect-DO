@@ -3,35 +3,22 @@ package com.example.fectdo.models;
 import com.google.firebase.Timestamp;
 
 public class UserModel {
-    private String phone;
     private String username;
     private Timestamp createdTimestamp;
     private String emailAddress;
-
-    public UserModel() {
-    }
-
-    public UserModel(String phone, String username, Timestamp createdTimestamp) {
-        this.phone = phone;
-        this.username = username;
-        this.createdTimestamp = createdTimestamp;
-    }
+    private String description;
+    private String fileUrl;
 
 
 
-    public UserModel(String phone, String username, Timestamp createdTimestamp, String emailAddress) {
-        this.phone = phone;
+
+
+    public UserModel(String username, Timestamp createdTimestamp, String emailAddress,String description,String fileUrl) {
         this.username = username;
         this.createdTimestamp = createdTimestamp;
         this.emailAddress = emailAddress;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+        this.description =description;
+        this.fileUrl = fileUrl;
     }
 
     public String getUsername() {
@@ -56,5 +43,21 @@ public class UserModel {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
     }
 }

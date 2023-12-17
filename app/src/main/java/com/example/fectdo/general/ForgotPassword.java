@@ -28,7 +28,7 @@ public class ForgotPassword extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_password);
 
         forgotPasswordBtn = findViewById(R.id.forgotPasswordBtn);
-        emailInput = findViewById(R.id.emailInput);
+        emailInput = findViewById(R.id.etEmail);
 
         mAuth = FirebaseAuth.getInstance();
 

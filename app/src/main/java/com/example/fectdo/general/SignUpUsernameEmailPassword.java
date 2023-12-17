@@ -24,7 +24,6 @@ import com.example.fectdo.course.Enroll;
 import com.example.fectdo.models.UserModel;
 import com.example.fectdo.utils.FirebaseUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,10 +33,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 
@@ -59,17 +56,20 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private StorageReference fileStorage;
     private Uri localFileUri, serverFileUri;
+    private String description ="";
+
+    private String strFileName="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_username_email_password);
 
-        emailInput = findViewById(R.id.emailInput);
-        passwordInput = findViewById(R.id.passwordInput);
+        emailInput = findViewById(R.id.etEmail);
+        passwordInput = findViewById(R.id.etPassword);
         reEnterPasswordInput = findViewById(R.id.reEnterPasswordInput);
-        signUpBtn = findViewById(R.id.signUpBtn);
-        usernameInput = findViewById(R.id.usernameInput);
+        signUpBtn = findViewById(R.id.btnSave);
+        usernameInput = findViewById(R.id.etName);
         progressBar = findViewById(R.id.progressBar);
         mAuth = FirebaseAuth.getInstance();
         userDatabase = FirebaseUtil.getCollection("users");
@@ -83,7 +83,7 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
             String password = passwordInput.getText().toString();
             String reEnterPassword = reEnterPasswordInput.getText().toString();
 
-            if (username.length() < 8) {
+            if (username.length() < 5) {
                 usernameInput.setError("Username must be at least 8 characters long.");
                 return;
             }
@@ -134,7 +134,7 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
                 if(userModel!=null){
                     userModel.setUsername(username);
                 } else {
-                    userModel = new UserModel(null,username, Timestamp.now(),email);
+                    userModel = new UserModel(username, Timestamp.now(),email, this.description, strFileName);
                 }
 
                 FirebaseUtil.currentUserDetails().set(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -218,7 +218,7 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
 
     private void updateNameAndPhoto() {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        String strFileName = firebaseUser.getUid() + ".jpg";
+        strFileName = firebaseUser.getUid() + ".jpg";
         final StorageReference fileRef = fileStorage.child("images/" + strFileName);
 
         fileRef.putFile(localFileUri)
@@ -228,8 +228,9 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
                                 .addOnSuccessListener(uri -> {
                                     serverFileUri = uri;
 
+
                                     UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
-                                            .setDisplayName(usernameInput.getText().toString().trim())
+                                             .setDisplayName(usernameInput.getText().toString().trim())
                                             .setPhotoUri(serverFileUri)
                                             .build();
 

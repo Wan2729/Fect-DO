@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,23 +15,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.fectdo.ProfileActivity;
+import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.R;
-import com.example.fectdo.SettingActivity;
+import com.example.fectdo.edit.SettingActivity;
 import com.example.fectdo.Soalan.PengurusSoalan;
-import com.example.fectdo.Soalan.Soalan;
-import com.example.fectdo.general.LoginEmailPassword;
 import com.example.fectdo.models.QuestionModel;
 import com.example.fectdo.utils.AndroidUtil;
-import com.example.fectdo.utils.FirebaseUtil;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.List;
 
 public class Exam extends AppCompatActivity implements View.OnClickListener {
     FirebaseFirestore database;

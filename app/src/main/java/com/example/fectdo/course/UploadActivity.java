@@ -7,26 +7,22 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.R;
-import com.example.fectdo.general.LoginEmailPassword;
-import com.example.fectdo.utils.FirebaseUtil;
+import com.example.fectdo.edit.SettingActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -65,6 +61,35 @@ public class UploadActivity extends AppCompatActivity {
 
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference("Uploads");
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        // Handle item selection
+                        switch (item.getItemId()) {
+                            case R.id.navigation_home:
+                                // Intent for Home
+                                Intent homeIntent = new Intent(UploadActivity.this, Enroll.class);
+                                startActivity(homeIntent);
+                                return true;
+                            case R.id.navigation_setting:
+                                // Intent for Setting
+                                Intent settingIntent = new Intent(UploadActivity.this, SettingActivity.class);
+                                startActivity(settingIntent);
+                                return true;
+                            case R.id.navigation_profile:
+                                // Intent for Profile
+                                Intent profileIntent = new Intent(UploadActivity.this, ProfileActivity.class);
+                                startActivity(profileIntent);
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                }
+        );
     }
 
     public void uploadFile(View view){

@@ -1,4 +1,4 @@
-package com.example.fectdo.course;
+package com.example.fectdo.career;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,54 +9,31 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 
-
-import com.example.fectdo.career.CareerMain;
-import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.R;
+import com.example.fectdo.course.Enroll;
+import com.example.fectdo.course.VideoChemPage;
+import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.edit.SettingActivity;
 import com.example.fectdo.general.LoginEmailPassword;
 import com.example.fectdo.utils.FirebaseUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class Enroll extends AppCompatActivity {
-
-
+public class CareerMain extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_enroll);
-        final ImageView NextpagePhysics = findViewById(R.id.btnPhysics);
-        final ImageView NextpageChemistry = findViewById(R.id.btnChem);
-        final ImageView NextpageMathematic = findViewById(R.id.btnMath);
-        final ImageView LetsUpload = findViewById(R.id.btnUpload);
-        NextpagePhysics.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                nextpagephy();
-            }
-        });
-        NextpageChemistry.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                nextpagechem();
-            }
-        });
-        NextpageMathematic.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                nextpagemath();
-            }
-        });
-        LetsUpload.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                letupload();
-            }
-        });
+        setContentView(R.layout.activity_career_main);
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
+
+        // Set up a listener for BottomNavigationView item clicks
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -65,17 +42,17 @@ public class Enroll extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
                                 // Intent for Home
-                                Intent homeIntent = new Intent(Enroll.this, Enroll.class);
+                                Intent homeIntent = new Intent(CareerMain.this, Enroll.class);
                                 startActivity(homeIntent);
                                 return true;
                             case R.id.navigation_setting:
                                 // Intent for Setting
-                                Intent settingIntent = new Intent(Enroll.this, SettingActivity.class);
+                                Intent settingIntent = new Intent(CareerMain.this, SettingActivity.class);
                                 startActivity(settingIntent);
                                 return true;
                             case R.id.navigation_profile:
                                 // Intent for Profile
-                                Intent profileIntent = new Intent(Enroll.this, ProfileActivity.class);
+                                Intent profileIntent = new Intent(CareerMain.this, ProfileActivity.class);
                                 startActivity(profileIntent);
                                 return true;
                             default:
@@ -84,24 +61,6 @@ public class Enroll extends AppCompatActivity {
                     }
                 }
         );
-    }
-
-    void nextpagephy(){
-        Intent Physic=new Intent(this, VideoPhysicsPage.class);
-        startActivity(Physic);
-    }
-    void nextpagechem(){
-        Intent Chemistry=new Intent(this, VideoChemPage.class);
-        startActivity(Chemistry);
-    }
-    void nextpagemath(){
-        Intent Mathematic=new Intent(this, VideoMathPage.class);
-        startActivity(Mathematic);
-    }
-    void letupload(){
-        Intent upload=new Intent(this, UploadActivity.class);
-        startActivity(upload);
-
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -122,17 +81,8 @@ public class Enroll extends AppCompatActivity {
     }
 
     private void handleLogout() {
-        FirebaseUtil.logOut();
-        Intent intent = new Intent(Enroll.this, LoginEmailPassword.class);
+        Intent intent = new Intent(CareerMain.this, Enroll.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
-
-    public void goToCareer(View view){
-        Intent intent = new Intent(this, CareerMain.class);
-        startActivity(intent);
-    }
-
-
-
 }

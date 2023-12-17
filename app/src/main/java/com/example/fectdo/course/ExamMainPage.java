@@ -12,9 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.fectdo.ProfileActivity;
+import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.R;
-import com.example.fectdo.SettingActivity;
+import com.example.fectdo.edit.SettingActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ExamMainPage extends AppCompatActivity implements View.OnClickListener {
