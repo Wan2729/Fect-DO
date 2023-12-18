@@ -113,10 +113,6 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
         jawapanB.setEnabled(true);
         jawapanC.setEnabled(true);
         jawapanD.setEnabled(true);
-//        jawapanA.setBackgroundColor(getResources().getColor(R.color.yale_blue));
-//        jawapanB.setBackgroundColor(getResources().getColor(R.color.yale_blue));
-//        jawapanC.setBackgroundColor(getResources().getColor(R.color.yale_blue));
-//        jawapanD.setBackgroundColor(getResources().getColor(R.color.yale_blue));
 
         Button btn = (Button) v;
 
@@ -133,7 +129,6 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
         }
         else{
             choice = btn.getText().toString();
-//            btn.setBackgroundColor(getResources().getColor(R.color.blue_soft));
             btn.setEnabled(false);
         }
 

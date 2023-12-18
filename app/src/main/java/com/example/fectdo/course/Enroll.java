@@ -1,6 +1,7 @@
 package com.example.fectdo.course;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -10,45 +11,63 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
+import com.example.fectdo.CourseDataBase.CourseModel;
 import com.example.fectdo.career.CareerMain;
 import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.R;
 import com.example.fectdo.edit.SettingActivity;
 import com.example.fectdo.general.LoginEmailPassword;
+import com.example.fectdo.utils.AndroidUtil;
 import com.example.fectdo.utils.FirebaseUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class Enroll extends AppCompatActivity {
-
-
+    ImageView uploadButton;
+    CollectionReference courseCollectionRef;
+    CourseModel course;
+    LinearLayout courseLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enroll);
-        final ImageView NextpagePhysics = findViewById(R.id.btnPhysics);
-        final ImageView NextpageChemistry = findViewById(R.id.btnChem);
-        final ImageView NextpageMathematic = findViewById(R.id.btnMath);
-        final ImageView LetsUpload = findViewById(R.id.btnUpload);
-        NextpagePhysics.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                nextpagephy();
-            }
-        });
-        NextpageChemistry.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                nextpagechem();
-            }
-        });
-        NextpageMathematic.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                nextpagemath();
-            }
-        });
-        LetsUpload.setOnClickListener(new View.OnClickListener(){
+//        final ImageView NextpagePhysics = findViewById(R.id.btnPhysics);
+//        final ImageView NextpageChemistry = findViewById(R.id.btnChem);
+//        final ImageView NextpageMathematic = findViewById(R.id.btnMath);
+//        NextpagePhysics.setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View view){
+//                nextpagephy();
+//            }
+//        });
+//        NextpageChemistry.setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View view){
+//                nextpagechem();
+//            }
+//        });
+//        NextpageMathematic.setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View view){
+//                nextpagemath();
+//            }
+//        });
+
+        courseLayout = findViewById(R.id.courseLayout);
+        courseCollectionRef = FirebaseFirestore.getInstance().collection("course");
+
+        uploadButton = findViewById(R.id.btnUpload);
+        uploadButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 letupload();
             }
@@ -86,6 +105,33 @@ public class Enroll extends AppCompatActivity {
         );
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        courseLayout.removeAllViews();
+        courseCollectionRef.addSnapshotListener(Enroll.this, new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                if(error != null){
+                    AndroidUtil.showToast(Enroll.this, error.toString());
+                    return;
+                }
+
+                if(queryDocumentSnapshots != null){
+                    for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
+                        course = documentSnapshot.toObject(CourseModel.class);
+
+                        addCard(course);
+                    }
+                }
+                else{
+                    AndroidUtil.showToast(Enroll.this, "onEvent: queryDocumentSnapshots is null");
+                }
+            }
+        });
+    }
+
     void nextpagephy(){
         Intent Physic=new Intent(this, VideoPhysicsPage.class);
         startActivity(Physic);
@@ -101,7 +147,6 @@ public class Enroll extends AppCompatActivity {
     void letupload(){
         Intent upload=new Intent(this, UploadActivity.class);
         startActivity(upload);
-
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -133,6 +178,25 @@ public class Enroll extends AppCompatActivity {
         startActivity(intent);
     }
 
+    void gotoCourse(){
 
+    }
 
+    void addCard(CourseModel course){
+        View courseCardView = getLayoutInflater().inflate(R.layout.course_card, null);
+
+        TextView courseName = courseCardView.findViewById(R.id.tvCourseName);
+        courseName.setText(course.getCourseName());
+
+        ImageButton courseButton = courseCardView.findViewById(R.id.btnCourseIcon);
+        courseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Enroll.this, VideoChemPage.class);
+                startActivity(intent);
+            }
+        });
+
+        courseLayout.addView(courseCardView);
+    }
 }
