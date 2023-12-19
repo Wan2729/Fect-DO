@@ -2,7 +2,6 @@ package com.example.fectdo.general;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;

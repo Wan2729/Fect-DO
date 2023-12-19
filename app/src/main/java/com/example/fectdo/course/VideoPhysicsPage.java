@@ -12,12 +12,8 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.fectdo.R;
-import com.example.fectdo.general.LoginEmailPassword;
-import com.example.fectdo.utils.FirebaseUtil;
 
 public class VideoPhysicsPage extends AppCompatActivity {
 

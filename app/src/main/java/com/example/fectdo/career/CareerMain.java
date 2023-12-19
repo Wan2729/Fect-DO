@@ -12,11 +12,8 @@ import android.view.MenuItem;
 
 import com.example.fectdo.R;
 import com.example.fectdo.course.Enroll;
-import com.example.fectdo.course.VideoChemPage;
 import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.edit.SettingActivity;
-import com.example.fectdo.general.LoginEmailPassword;
-import com.example.fectdo.utils.FirebaseUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class CareerMain extends AppCompatActivity {

@@ -35,41 +35,34 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class Enroll extends AppCompatActivity {
+    final String COURSE_KEY = "course";
     ImageView uploadButton;
     CollectionReference courseCollectionRef;
     CourseModel course;
     LinearLayout courseLayout;
+    Button searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enroll);
-//        final ImageView NextpagePhysics = findViewById(R.id.btnPhysics);
-//        final ImageView NextpageChemistry = findViewById(R.id.btnChem);
-//        final ImageView NextpageMathematic = findViewById(R.id.btnMath);
-//        NextpagePhysics.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View view){
-//                nextpagephy();
-//            }
-//        });
-//        NextpageChemistry.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View view){
-//                nextpagechem();
-//            }
-//        });
-//        NextpageMathematic.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View view){
-//                nextpagemath();
-//            }
-//        });
 
         courseLayout = findViewById(R.id.courseLayout);
-        courseCollectionRef = FirebaseFirestore.getInstance().collection("course");
+        courseCollectionRef = FirebaseFirestore.getInstance().collection(COURSE_KEY);
 
         uploadButton = findViewById(R.id.btnUpload);
         uploadButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 letupload();
+            }
+        });
+
+        searchButton = findViewById(R.id.btnSearch);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Enroll.this, CourseList.class);
+                startActivity(intent);
             }
         });
 
@@ -132,18 +125,6 @@ public class Enroll extends AppCompatActivity {
         });
     }
 
-    void nextpagephy(){
-        Intent Physic=new Intent(this, VideoPhysicsPage.class);
-        startActivity(Physic);
-    }
-    void nextpagechem(){
-        Intent Chemistry=new Intent(this, VideoChemPage.class);
-        startActivity(Chemistry);
-    }
-    void nextpagemath(){
-        Intent Mathematic=new Intent(this, VideoMathPage.class);
-        startActivity(Mathematic);
-    }
     void letupload(){
         Intent upload=new Intent(this, UploadActivity.class);
         startActivity(upload);
@@ -188,7 +169,7 @@ public class Enroll extends AppCompatActivity {
         TextView courseName = courseCardView.findViewById(R.id.tvCourseName);
         courseName.setText(course.getCourseName());
 
-        ImageButton courseButton = courseCardView.findViewById(R.id.btnCourseIcon);
+        ImageButton courseButton = courseCardView.findViewById(R.id.ivCourseIcon);
         courseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
