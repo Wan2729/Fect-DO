@@ -57,7 +57,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etSearchBar" />
 
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView2"
         android:scrollbars="horizontal"
         android:orientation="horizontal"
@@ -79,7 +79,7 @@
             android:orientation="horizontal">
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <ImageButton
         android:id="@+id/btnCareer"
