@@ -28,6 +28,7 @@ import com.example.fectdo.utils.AndroidUtil;
 import com.example.fectdo.utils.FirebaseUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -38,9 +39,10 @@ public class Enroll extends AppCompatActivity {
     final String COURSE_KEY = "course";
     ImageView uploadButton;
     CollectionReference courseCollectionRef;
+    DocumentReference userDocumentRef;
     CourseModel course;
     LinearLayout courseLayout;
-    Button searchButton;
+    Button searchButton, manageCourse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class Enroll extends AppCompatActivity {
 
         courseLayout = findViewById(R.id.courseLayout);
         courseCollectionRef = FirebaseFirestore.getInstance().collection(COURSE_KEY);
+        userDocumentRef = FirebaseUtil.currentUserDetails();
 
         uploadButton = findViewById(R.id.btnUpload);
         uploadButton.setOnClickListener(new View.OnClickListener(){
@@ -62,6 +65,19 @@ public class Enroll extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Enroll.this, CourseList.class);
+                intent.putExtra("COURSE_COLLECTION_REFERENCE", courseCollectionRef.getPath());
+                intent.putExtra("USER_DOCUMENT_REFERENCE", userDocumentRef.getPath());
+                startActivity(intent);
+            }
+        });
+
+        manageCourse = findViewById(R.id.btnManageCourse);
+        manageCourse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Enroll.this, CreatedCourseList.class);
+                intent.putExtra("COURSE_COLLECTION_REFERENCE", courseCollectionRef.getPath());
+                intent.putExtra("USER_DOCUMENT_REFERENCE", userDocumentRef.getPath());
                 startActivity(intent);
             }
         });

@@ -3,7 +3,6 @@ package com.example.fectdo.course;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-public class CourseList extends AppCompatActivity {
+public class CreatedCourseList extends AppCompatActivity {
     CollectionReference courseCollectionRef;
     DocumentReference userReference;
     CourseModel course;
@@ -33,10 +32,7 @@ public class CourseList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_list);
-        Intent intent = getIntent();
 
-//        courseCollectionRef = FirebaseFirestore.getInstance().collection("course");
-        courseCollectionRef = FirebaseFirestore.getInstance().collection(intent.getStringExtra("COURSE_COLLECTION_REFERENCE"));
         courseLayout = findViewById(R.id.courseListLayout);
         userReference = FirebaseUtil.currentUserDetails();
 
@@ -47,11 +43,11 @@ public class CourseList extends AppCompatActivity {
         super.onStart();
 
         courseLayout.removeAllViews();
-        courseCollectionRef.addSnapshotListener(CourseList.this, new EventListener<QuerySnapshot>() {
+        courseCollectionRef.addSnapshotListener(CreatedCourseList.this, new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
                 if(error != null){
-                    AndroidUtil.showToast(CourseList.this, error.toString());
+                    AndroidUtil.showToast(CreatedCourseList.this, error.toString());
                     return;
                 }
 
@@ -63,14 +59,14 @@ public class CourseList extends AppCompatActivity {
                     }
                 }
                 else{
-                    AndroidUtil.showToast(CourseList.this, "onEvent: queryDocumentSnapshots is null");
+                    AndroidUtil.showToast(CreatedCourseList.this, "onEvent: queryDocumentSnapshots is null");
                 }
             }
         });
     }
 
     void addCard(){
-        View courseCardView = getLayoutInflater().inflate(R.layout.course_list_card, null);
+        View courseCardView = getLayoutInflater().inflate(R.layout.course_list_edit_card, null);
 
         TextView courseName = courseCardView.findViewById(R.id.tvCourseName);
         courseName.setText(course.getCourseName());

@@ -40,7 +40,7 @@
                 android:id="@+id/btnEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="enroll course"
+                android:text="edit course"
                 android:textAllCaps="true"
                 android:textSize="14sp"
                 android:textColor="@color/white"

@@ -12,23 +12,22 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-
-    <EditText
-        android:id="@+id/etSearchBar"
+    <SearchView
+        android:id="@+id/svSearchBar"
         android:layout_width="359dp"
         android:layout_height="51dp"
+        android:queryHint="Search"
+        android:iconifiedByDefault="false"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
         android:background="@drawable/whitebox"
-        android:ems="10"
-        android:hint="Search"
         android:inputType="text"
         android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-    
+
     <Button
         android:id="@+id/btnSearch"
         android:layout_width="359dp"
@@ -39,7 +38,7 @@
         android:background="@color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <TextView
         android:id="@+id/textView10"
@@ -54,19 +53,19 @@
         android:text="My Course"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etSearchBar" />
+        app:layout_constraintTop_toBottomOf="@+id/svSearchBar" />
 
 
-    <androidx.core.widget.NestedScrollView
+    <HorizontalScrollView
         android:id="@+id/scrollView2"
-        android:scrollbars="horizontal"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnCareer"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        android:scrollbars="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10">
@@ -79,51 +78,62 @@
             android:orientation="horizontal">
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </HorizontalScrollView>
 
     <ImageButton
         android:id="@+id/btnCareer"
-        android:layout_width="140dp"
-        android:layout_height="60dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="34dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@drawable/btncareer"
         android:onClick="goToCareer"
-        android:padding="30dp"
         android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias=".1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="2.333:1"
+        app:layout_constraintEnd_toEndOf="@id/guideline92V"
+        app:layout_constraintStart_toStartOf="@id/guideline57V"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
     <ImageButton
         android:id="@+id/btnUpload"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="30dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@drawable/sharingbutton"
         android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias=".05"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="2.5:1"
+        app:layout_constraintEnd_toEndOf="@id/guideline92V"
+        app:layout_constraintStart_toStartOf="@id/guideline57V"
         app:layout_constraintTop_toBottomOf="@+id/btnCareer" />
 
     <ImageButton
         android:id="@+id/btnSosial"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="30dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@drawable/socialbutton"
         android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias=".05"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="2.5:1"
+        app:layout_constraintEnd_toEndOf="@id/guideline92V"
+        app:layout_constraintStart_toStartOf="@id/guideline57V"
         app:layout_constraintTop_toBottomOf="@+id/btnUpload" />
+
+    <Button
+        android:id="@+id/btnManageCourse"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        android:text="manage course"
+        android:textColor="@color/white"
+        android:background="@color/yale_blue"
+        app:layout_constraintVertical_bias=".05"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="2.5:1"
+        app:layout_constraintEnd_toEndOf="@id/guideline92V"
+        app:layout_constraintStart_toStartOf="@id/guideline57V"
+        app:layout_constraintTop_toBottomOf="@+id/btnSosial" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
@@ -136,6 +146,20 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/bottom_menu" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline57V"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".57" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline92V"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".92" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
