@@ -19,7 +19,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/ivCourseIcon"
+                android:id="@+id/ibCourseIcon"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:padding="10dp"
@@ -29,7 +29,7 @@
                 android:id="@+id/tvCourseName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/ivCourseIcon"
+                android:layout_toRightOf="@id/ibCourseIcon"
                 android:text="Course"
                 android:textAlignment="textStart"
                 android:textSize="25sp"
@@ -45,7 +45,7 @@
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:background="@color/yale_blue"
-                android:layout_toRightOf="@id/ivCourseIcon"
+                android:layout_toRightOf="@id/ibCourseIcon"
                 android:layout_below="@id/tvCourseName"
                 android:layout_marginStart="20dp"/>
 

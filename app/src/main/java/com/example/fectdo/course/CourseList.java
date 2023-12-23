@@ -75,7 +75,7 @@ public class CourseList extends AppCompatActivity {
         TextView courseName = courseCardView.findViewById(R.id.tvCourseName);
         courseName.setText(course.getCourseName());
 
-        ImageView icon = courseCardView.findViewById(R.id.ivCourseIcon);
+        ImageView icon = courseCardView.findViewById(R.id.ibCourseIcon);
 
         Button courseButton = courseCardView.findViewById(R.id.btnEdit);
         courseButton.setOnClickListener(new View.OnClickListener() {

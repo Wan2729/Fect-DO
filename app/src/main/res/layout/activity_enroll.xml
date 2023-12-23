@@ -45,7 +45,7 @@
         style="@style/myText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/scrollView2"
+        android:layout_above="@+id/rvMyCourse"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="27dp"
@@ -56,8 +56,8 @@
         app:layout_constraintTop_toBottomOf="@+id/svSearchBar" />
 
 
-    <HorizontalScrollView
-        android:id="@+id/scrollView2"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMyCourse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnCareer"
@@ -69,16 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10">
-
-        <LinearLayout
-            android:id="@+id/courseLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="start"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-    </HorizontalScrollView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <ImageButton
         android:id="@+id/btnCareer"
@@ -92,7 +83,7 @@
         app:layout_constraintDimensionRatio="2.333:1"
         app:layout_constraintEnd_toEndOf="@id/guideline92V"
         app:layout_constraintStart_toStartOf="@id/guideline57V"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+        app:layout_constraintTop_toBottomOf="@+id/rvMyCourse" />
 
     <ImageButton
         android:id="@+id/btnUpload"

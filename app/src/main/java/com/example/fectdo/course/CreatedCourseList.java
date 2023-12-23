@@ -17,7 +17,6 @@ import com.example.fectdo.utils.FirebaseUtil;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -71,7 +70,7 @@ public class CreatedCourseList extends AppCompatActivity {
         TextView courseName = courseCardView.findViewById(R.id.tvCourseName);
         courseName.setText(course.getCourseName());
 
-        ImageView icon = courseCardView.findViewById(R.id.ivCourseIcon);
+        ImageView icon = courseCardView.findViewById(R.id.ibCourseIcon);
 
         Button courseButton = courseCardView.findViewById(R.id.btnEdit);
         courseButton.setOnClickListener(new View.OnClickListener() {

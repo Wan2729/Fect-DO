@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,6 +37,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Enroll extends AppCompatActivity {
     final String COURSE_KEY = "course";
     ImageView uploadButton;
@@ -44,12 +49,17 @@ public class Enroll extends AppCompatActivity {
     LinearLayout courseLayout;
     Button searchButton, manageCourse;
 
+    //For recycler view
+    RecyclerView recyclerView;
+    MyCourseAdapter myCourseAdapter;
+    LinearLayoutManager layoutManager;
+    List<CourseModel> myCourseList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enroll);
 
-        courseLayout = findViewById(R.id.courseLayout);
         courseCollectionRef = FirebaseFirestore.getInstance().collection(COURSE_KEY);
         userDocumentRef = FirebaseUtil.currentUserDetails();
 
@@ -59,6 +69,14 @@ public class Enroll extends AppCompatActivity {
                 letupload();
             }
         });
+
+
+        //setup recyclerView
+        recyclerView = findViewById(R.id.rvMyCourse);
+        layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
+        myCourseAdapter = new MyCourseAdapter(getApplicationContext());
 
         searchButton = findViewById(R.id.btnSearch);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +136,6 @@ public class Enroll extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        courseLayout.removeAllViews();
         courseCollectionRef.addSnapshotListener(Enroll.this, new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
@@ -128,11 +145,14 @@ public class Enroll extends AppCompatActivity {
                 }
 
                 if(queryDocumentSnapshots != null){
+                    myCourseList = new ArrayList<>();
                     for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
                         course = documentSnapshot.toObject(CourseModel.class);
 
-                        addCard(course);
+                        myCourseList.add(course);
                     }
+                    myCourseAdapter.setCourseList(myCourseList);
+                    recyclerView.setAdapter(myCourseAdapter);
                 }
                 else{
                     AndroidUtil.showToast(Enroll.this, "onEvent: queryDocumentSnapshots is null");
@@ -177,23 +197,5 @@ public class Enroll extends AppCompatActivity {
 
     void gotoCourse(){
 
-    }
-
-    void addCard(CourseModel course){
-        View courseCardView = getLayoutInflater().inflate(R.layout.course_card, null);
-
-        TextView courseName = courseCardView.findViewById(R.id.tvCourseName);
-        courseName.setText(course.getCourseName());
-
-        ImageButton courseButton = courseCardView.findViewById(R.id.ivCourseIcon);
-        courseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Enroll.this, VideoChemPage.class);
-                startActivity(intent);
-            }
-        });
-
-        courseLayout.addView(courseCardView);
     }
 }
