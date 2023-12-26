@@ -5,9 +5,8 @@ import com.google.firebase.firestore.DocumentReference;
 import java.util.List;
 
 public class CourseModel {
-    String courseName;
+    String courseName, creatorID;
     List<String> ExamQuestion, ExamChoice, ExamAnswer;
-    String creatorID;
     List<DocumentReference> topics;
 
     public CourseModel() {

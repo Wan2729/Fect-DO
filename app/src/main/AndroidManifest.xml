@@ -19,7 +19,7 @@
         android:theme="@style/Theme.FectDo"
         tools:targetApi="31">
         <activity
-            android:name=".course.CreatedCourseList"
+            android:name=".course.ManageCourse"
             android:exported="false" />
         <activity
             android:name=".course.CourseList"

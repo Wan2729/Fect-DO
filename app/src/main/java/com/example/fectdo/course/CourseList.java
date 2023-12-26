@@ -32,7 +32,7 @@ public class CourseList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_course_list);
+        setContentView(R.layout.activity_manage_course);
         Intent intent = getIntent();
 
 //        courseCollectionRef = FirebaseFirestore.getInstance().collection("course");
@@ -77,7 +77,7 @@ public class CourseList extends AppCompatActivity {
 
         ImageView icon = courseCardView.findViewById(R.id.ibCourseIcon);
 
-        Button courseButton = courseCardView.findViewById(R.id.btnEdit);
+        Button courseButton = courseCardView.findViewById(R.id.btnManage);
         courseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

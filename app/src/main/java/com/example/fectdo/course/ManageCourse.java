@@ -2,8 +2,11 @@ package com.example.fectdo.course;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,71 +20,69 @@ import com.example.fectdo.utils.FirebaseUtil;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-public class CreatedCourseList extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ManageCourse extends AppCompatActivity {
     CollectionReference courseCollectionRef;
     DocumentReference userReference;
     CourseModel course;
-    LinearLayout courseLayout;
+    String userID;
+
+    CourseListManagerAdapter courseAdapter;
+    RecyclerView recyclerView;
+    List<CourseModel> courseList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_course_list);
+        setContentView(R.layout.activity_manage_course);
+        userID = getIntent().getStringExtra("USER_ID").toString();
+        courseCollectionRef = FirebaseFirestore.getInstance().collection(getIntent().getStringExtra("COURSE_COLLECTION_REFERENCE"));
 
-        courseLayout = findViewById(R.id.courseListLayout);
+        recyclerView = findViewById(R.id.rvCourseListManage);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        courseAdapter = new CourseListManagerAdapter(getApplicationContext());
+
         userReference = FirebaseUtil.currentUserDetails();
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        courseLayout.removeAllViews();
-        courseCollectionRef.addSnapshotListener(CreatedCourseList.this, new EventListener<QuerySnapshot>() {
+        courseCollectionRef.whereEqualTo("creatorID", userID)
+                .addSnapshotListener(ManageCourse.this, new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
                 if(error != null){
-                    AndroidUtil.showToast(CreatedCourseList.this, error.toString());
+                    AndroidUtil.showToast(ManageCourse.this, error.toString());
                     return;
                 }
 
                 if(queryDocumentSnapshots != null){
+                    courseList = new ArrayList<>();
                     for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
                         course = documentSnapshot.toObject(CourseModel.class);
 
-                        addCard();
+                        courseList.add(course);
                     }
+                    courseAdapter.setCourseList(courseList);
+                    recyclerView.setAdapter(courseAdapter);
                 }
                 else{
-                    AndroidUtil.showToast(CreatedCourseList.this, "onEvent: queryDocumentSnapshots is null");
+                    AndroidUtil.showToast(ManageCourse.this, "onEvent: queryDocumentSnapshots is null");
                 }
             }
         });
     }
 
-    void addCard(){
-        View courseCardView = getLayoutInflater().inflate(R.layout.course_list_edit_card, null);
+    void addCourse(){
 
-        TextView courseName = courseCardView.findViewById(R.id.tvCourseName);
-        courseName.setText(course.getCourseName());
-
-        ImageView icon = courseCardView.findViewById(R.id.ibCourseIcon);
-
-        Button courseButton = courseCardView.findViewById(R.id.btnEdit);
-        courseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                courseButton.setText("Enrolled");
-                courseButton.setEnabled(false);
-
-            }
-        });
-
-        courseLayout.addView(courseCardView);
     }
 }

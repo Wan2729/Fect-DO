@@ -14,10 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 
 import com.example.fectdo.CourseDataBase.CourseModel;
@@ -43,11 +41,12 @@ import java.util.List;
 public class Enroll extends AppCompatActivity {
     final String COURSE_KEY = "course";
     ImageView uploadButton;
+    Button searchButton, manageCourse;
+
+    //Database
     CollectionReference courseCollectionRef;
     DocumentReference userDocumentRef;
     CourseModel course;
-    LinearLayout courseLayout;
-    Button searchButton, manageCourse;
 
     //For recycler view
     RecyclerView recyclerView;
@@ -93,9 +92,9 @@ public class Enroll extends AppCompatActivity {
         manageCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Enroll.this, CreatedCourseList.class);
+                Intent intent = new Intent(Enroll.this, ManageCourse.class);
                 intent.putExtra("COURSE_COLLECTION_REFERENCE", courseCollectionRef.getPath());
-                intent.putExtra("USER_DOCUMENT_REFERENCE", userDocumentRef.getPath());
+                intent.putExtra("USER_ID", FirebaseUtil.currentUserId());
                 startActivity(intent);
             }
         });
