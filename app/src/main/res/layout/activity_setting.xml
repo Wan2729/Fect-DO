@@ -165,7 +165,6 @@
         android:backgroundTint="#37CAEC"
         android:text="Notification"
         android:textStyle="bold"
-        android:gravity="center_left"
         android:drawableRight="@drawable/noti_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
