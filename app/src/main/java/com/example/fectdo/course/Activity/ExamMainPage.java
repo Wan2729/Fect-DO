@@ -1,4 +1,4 @@
-package com.example.fectdo.course;
+package com.example.fectdo.course.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,7 +45,7 @@ public class ExamMainPage extends AppCompatActivity implements View.OnClickListe
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
                                 // Intent for Home
-                                Intent homeIntent = new Intent(ExamMainPage.this, Enroll.class);
+                                Intent homeIntent = new Intent(ExamMainPage.this, HomePage.class);
                                 startActivity(homeIntent);
                                 return true;
                             case R.id.navigation_setting:
@@ -92,7 +92,7 @@ public class ExamMainPage extends AppCompatActivity implements View.OnClickListe
     }
 
     private void handleLogout() {
-        Intent intent = new Intent(ExamMainPage.this, Enroll.class);
+        Intent intent = new Intent(ExamMainPage.this, HomePage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

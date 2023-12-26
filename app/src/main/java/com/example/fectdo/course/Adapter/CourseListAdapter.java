@@ -1,4 +1,4 @@
-package com.example.fectdo.course;
+package com.example.fectdo.course.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,16 +11,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.fectdo.CourseDataBase.CourseModel;
+import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.R;
 
 import java.util.List;
 
-public class CourseListManagerAdapter extends RecyclerView.Adapter<CourseListManagerAdapter.ViewHolder> {
+public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.ViewHolder> {
     Context context;
     List<CourseModel> courseList;
 
-    public CourseListManagerAdapter(Context context) {
+    public CourseListAdapter(Context context) {
         this.context = context;
     }
 
@@ -58,7 +58,13 @@ public class CourseListManagerAdapter extends RecyclerView.Adapter<CourseListMan
             courseTitle = itemView.findViewById(com.example.fectdo.R.id.tvCourseName);
             manageButton = itemView.findViewById(R.id.btnManage);
 
-            manageButton.setText("Edit");
+            manageButton.setText("Enroll");
+            manageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    manageButton.setText("Enrolled");
+                }
+            });
         }
     }
 }

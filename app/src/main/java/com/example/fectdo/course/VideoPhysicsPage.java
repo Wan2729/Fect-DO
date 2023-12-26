@@ -14,6 +14,8 @@ import android.webkit.WebView;
 import android.widget.Button;
 
 import com.example.fectdo.R;
+import com.example.fectdo.course.Activity.ExamMainPage;
+import com.example.fectdo.course.Activity.HomePage;
 
 public class VideoPhysicsPage extends AppCompatActivity {
 
@@ -68,7 +70,7 @@ public class VideoPhysicsPage extends AppCompatActivity {
     }
 
     private void handleLogout() {
-        Intent intent = new Intent(VideoPhysicsPage.this, Enroll.class);
+        Intent intent = new Intent(VideoPhysicsPage.this, HomePage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

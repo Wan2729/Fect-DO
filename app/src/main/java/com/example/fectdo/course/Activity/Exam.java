@@ -1,4 +1,4 @@
-package com.example.fectdo.course;
+package com.example.fectdo.course.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -84,7 +84,7 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
                                 // Intent for Home
-                                Intent homeIntent = new Intent(Exam.this, Enroll.class);
+                                Intent homeIntent = new Intent(Exam.this, HomePage.class);
                                 startActivity(homeIntent);
                                 return true;
                             case R.id.navigation_setting:

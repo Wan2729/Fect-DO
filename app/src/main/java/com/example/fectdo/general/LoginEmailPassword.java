@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fectdo.R;
-import com.example.fectdo.course.Enroll;
+import com.example.fectdo.course.Activity.HomePage;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -79,7 +79,7 @@ public class LoginEmailPassword extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        startActivity(new Intent(LoginEmailPassword.this, Enroll.class));
+                        startActivity(new Intent(LoginEmailPassword.this, HomePage.class));
                         finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {

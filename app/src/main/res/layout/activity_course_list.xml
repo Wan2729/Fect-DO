@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".course.CourseList">
+    tools:context=".course.Activity.CourseListPage">
 
     <include
         android:id="@+id/toolbar"
@@ -26,19 +26,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="add course"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        android:background="@drawable/login_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rvCourseListManage"/>
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCourseListManage"
+        android:id="@+id/rvCourseList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"

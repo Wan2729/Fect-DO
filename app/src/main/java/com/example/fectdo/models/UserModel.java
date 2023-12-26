@@ -2,13 +2,14 @@ package com.example.fectdo.models;
 
 import com.google.firebase.Timestamp;
 
+import java.util.List;
+
 public class UserModel {
     private String username;
     private Timestamp createdTimestamp;
     private String emailAddress;
     private String description;
     private String fileUrl;
-
 
 
 

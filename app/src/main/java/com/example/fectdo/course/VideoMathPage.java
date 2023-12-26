@@ -14,6 +14,8 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
 
+import com.example.fectdo.course.Activity.ExamMainPage;
+import com.example.fectdo.course.Activity.HomePage;
 import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.R;
 import com.example.fectdo.edit.SettingActivity;
@@ -46,7 +48,7 @@ String video;
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
                                 // Intent for Home
-                                Intent homeIntent = new Intent(VideoMathPage.this, Enroll.class);
+                                Intent homeIntent = new Intent(VideoMathPage.this, HomePage.class);
                                 startActivity(homeIntent);
                                 return true;
                             case R.id.navigation_setting:
@@ -103,7 +105,7 @@ String video;
     }
 
     private void handleLogout() {
-        Intent intent = new Intent(VideoMathPage.this, Enroll.class);
+        Intent intent = new Intent(VideoMathPage.this, HomePage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

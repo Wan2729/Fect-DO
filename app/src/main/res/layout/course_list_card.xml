@@ -44,7 +44,7 @@
                 android:textAllCaps="true"
                 android:textSize="14sp"
                 android:textColor="@color/white"
-                android:background="@color/yale_blue"
+                android:background="@drawable/btn_round_exam"
                 android:layout_toRightOf="@id/ibCourseIcon"
                 android:layout_below="@id/tvCourseName"
                 android:layout_marginStart="20dp"/>

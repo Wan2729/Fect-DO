@@ -20,7 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.fectdo.R;
-import com.example.fectdo.course.Enroll;
+import com.example.fectdo.course.Activity.HomePage;
 import com.example.fectdo.models.UserModel;
 import com.example.fectdo.utils.FirebaseUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -149,7 +149,7 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            Intent intent = new Intent(SignUpUsernameEmailPassword.this, Enroll.class);
+                            Intent intent = new Intent(SignUpUsernameEmailPassword.this, HomePage.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         }
@@ -280,7 +280,7 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
                                                             .addOnCompleteListener(dbTask -> {
                                                                 if (dbTask.isSuccessful()) {
                                                                     Toast.makeText(SignUpUsernameEmailPassword.this, "User created successfully", Toast.LENGTH_SHORT).show();
-                                                                    Intent intent = new Intent(SignUpUsernameEmailPassword.this, Enroll.class);
+                                                                    Intent intent = new Intent(SignUpUsernameEmailPassword.this, HomePage.class);
                                                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                                     startActivity(intent);
                                                                 } else {

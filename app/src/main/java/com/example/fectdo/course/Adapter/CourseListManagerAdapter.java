@@ -1,25 +1,26 @@
-package com.example.fectdo.course;
+package com.example.fectdo.course.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.fectdo.CourseDataBase.CourseModel;
+import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.R;
 
 import java.util.List;
 
-public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHolder> {
+public class CourseListManagerAdapter extends RecyclerView.Adapter<CourseListManagerAdapter.ViewHolder> {
     Context context;
     List<CourseModel> courseList;
 
-    public MyCourseAdapter(Context context) {
+    public CourseListManagerAdapter(Context context) {
         this.context = context;
     }
 
@@ -30,16 +31,14 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.mycourse_card, parent, false);
-
-        return new ViewHolder(view);
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.course_list_card, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        CourseModel course = courseList.get(position);
+        CourseModel couse = courseList.get(position);
 
-        holder.courseTitle.setText(course.getCourseName());
+        holder.courseTitle.setText(couse.getCourseName());
     }
 
     @Override
@@ -48,14 +47,18 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageButton icon;
+        ImageView icon;
         TextView courseTitle;
+        Button manageButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            icon = itemView.findViewById(R.id.ibCourseIcon);
-            courseTitle = itemView.findViewById(R.id.tvCourseName);
+            icon = itemView.findViewById(com.example.fectdo.R.id.ibCourseIcon);
+            courseTitle = itemView.findViewById(com.example.fectdo.R.id.tvCourseName);
+            manageButton = itemView.findViewById(R.id.btnManage);
+
+            manageButton.setText("Edit");
         }
     }
 }

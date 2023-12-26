@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.fectdo.R;
-import com.example.fectdo.course.Enroll;
+import com.example.fectdo.course.Activity.HomePage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class SettingActivity extends AppCompatActivity {
@@ -29,7 +29,7 @@ public class SettingActivity extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
                                 // Intent for Home
-                                Intent homeIntent = new Intent(SettingActivity.this, Enroll.class);
+                                Intent homeIntent = new Intent(SettingActivity.this, HomePage.class);
                                 startActivity(homeIntent);
                                 overridePendingTransition(0,0);
                                 return true;

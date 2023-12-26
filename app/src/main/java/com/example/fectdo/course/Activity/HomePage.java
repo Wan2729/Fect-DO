@@ -1,4 +1,4 @@
-package com.example.fectdo.course;
+package com.example.fectdo.course.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,10 +15,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 
-import com.example.fectdo.CourseDataBase.CourseModel;
+import com.example.fectdo.course.Adapter.MyCourseAdapter;
+import com.example.fectdo.course.UploadActivity;
+import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.career.CareerMain;
 import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.R;
@@ -38,7 +39,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Enroll extends AppCompatActivity {
+public class HomePage extends AppCompatActivity {
     final String COURSE_KEY = "course";
     ImageView uploadButton;
     Button searchButton, manageCourse;
@@ -57,7 +58,7 @@ public class Enroll extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_enroll);
+        setContentView(R.layout.activity_home_page);
 
         courseCollectionRef = FirebaseFirestore.getInstance().collection(COURSE_KEY);
         userDocumentRef = FirebaseUtil.currentUserDetails();
@@ -81,9 +82,9 @@ public class Enroll extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Enroll.this, CourseList.class);
+                Intent intent = new Intent(HomePage.this, CourseListPage.class);
                 intent.putExtra("COURSE_COLLECTION_REFERENCE", courseCollectionRef.getPath());
-                intent.putExtra("USER_DOCUMENT_REFERENCE", userDocumentRef.getPath());
+                intent.putExtra("USER_ID", FirebaseUtil.currentUserId());
                 startActivity(intent);
             }
         });
@@ -92,7 +93,7 @@ public class Enroll extends AppCompatActivity {
         manageCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Enroll.this, ManageCourse.class);
+                Intent intent = new Intent(HomePage.this, ManageCoursePage.class);
                 intent.putExtra("COURSE_COLLECTION_REFERENCE", courseCollectionRef.getPath());
                 intent.putExtra("USER_ID", FirebaseUtil.currentUserId());
                 startActivity(intent);
@@ -110,19 +111,19 @@ public class Enroll extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
                                 // Intent for Home
-                                Intent homeIntent = new Intent(Enroll.this, Enroll.class);
+                                Intent homeIntent = new Intent(HomePage.this, HomePage.class);
                                 startActivity(homeIntent);
                                 overridePendingTransition(0,0);
                                 return true;
                             case R.id.navigation_setting:
                                 // Intent for Setting
-                                Intent settingIntent = new Intent(Enroll.this, SettingActivity.class);
+                                Intent settingIntent = new Intent(HomePage.this, SettingActivity.class);
                                 startActivity(settingIntent);
                                 overridePendingTransition(0,0);
                                 return true;
                             case R.id.navigation_profile:
                                 // Intent for Profile
-                                Intent profileIntent = new Intent(Enroll.this, ProfileActivity.class);
+                                Intent profileIntent = new Intent(HomePage.this, ProfileActivity.class);
                                 startActivity(profileIntent);
                                 overridePendingTransition(0,0);
                                 return true;
@@ -138,11 +139,11 @@ public class Enroll extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        courseCollectionRef.addSnapshotListener(Enroll.this, new EventListener<QuerySnapshot>() {
+        courseCollectionRef.addSnapshotListener(HomePage.this, new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
                 if(error != null){
-                    AndroidUtil.showToast(Enroll.this, error.toString());
+                    AndroidUtil.showToast(HomePage.this, error.toString());
                     return;
                 }
 
@@ -157,7 +158,7 @@ public class Enroll extends AppCompatActivity {
                     recyclerView.setAdapter(myCourseAdapter);
                 }
                 else{
-                    AndroidUtil.showToast(Enroll.this, "onEvent: queryDocumentSnapshots is null");
+                    AndroidUtil.showToast(HomePage.this, "onEvent: queryDocumentSnapshots is null");
                 }
             }
         });
@@ -187,7 +188,7 @@ public class Enroll extends AppCompatActivity {
 
     private void handleLogout() {
         FirebaseUtil.logOut();
-        Intent intent = new Intent(Enroll.this, LoginEmailPassword.class);
+        Intent intent = new Intent(HomePage.this, LoginEmailPassword.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.fectdo.course.Activity.HomePage;
 import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.R;
 import com.example.fectdo.edit.SettingActivity;
@@ -71,7 +72,7 @@ public class UploadActivity extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
                                 // Intent for Home
-                                Intent homeIntent = new Intent(UploadActivity.this, Enroll.class);
+                                Intent homeIntent = new Intent(UploadActivity.this, HomePage.class);
                                 startActivity(homeIntent);
                                 return true;
                             case R.id.navigation_setting:
@@ -163,7 +164,7 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     private void handleLogout() {
-        Intent intent = new Intent(UploadActivity.this, Enroll.class);
+        Intent intent = new Intent(UploadActivity.this, HomePage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

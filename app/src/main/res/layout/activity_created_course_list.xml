@@ -4,13 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".course.CourseList">
+    tools:context=".course.Activity.ManageCoursePage">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
-
-    <EditText
+    <SearchView
         android:id="@+id/svSearchBar"
         android:layout_width="359dp"
         android:layout_height="51dp"
@@ -18,15 +14,16 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
         android:background="@drawable/whitebox"
-        android:ems="10"
-        android:hint="Search"
+        android:queryHint="Search"
+        android:iconifiedByDefault="false"
         android:inputType="text"
         android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCourseList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,16 +31,18 @@
         app:layout_constraintTop_toBottomOf="@id/svSearchBar"
         app:layout_constraintBottom_toTopOf="@id/guideline90H"
         app:layout_constraintVertical_bias=".05">
+    </androidx.recyclerview.widget.RecyclerView>
 
-        <LinearLayout
-            android:id="@+id/courseListLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
-        </LinearLayout>
-    </ScrollView>
+    <Button
+        android:id="@+id/btnAddCourse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add course"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_round_exam"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvCourseList"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline90H"
@@ -51,6 +50,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent=".9" />
+
+    <FrameLayout
+        android:id="@+id/fragmentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/svSearchBar"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

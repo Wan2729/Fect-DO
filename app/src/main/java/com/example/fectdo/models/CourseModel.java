@@ -1,4 +1,4 @@
-package com.example.fectdo.CourseDataBase;
+package com.example.fectdo.models;
 
 import com.google.firebase.firestore.DocumentReference;
 

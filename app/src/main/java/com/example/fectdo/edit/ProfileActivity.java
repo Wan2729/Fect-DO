@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.fectdo.R;
-import com.example.fectdo.course.Enroll;
+import com.example.fectdo.course.Activity.HomePage;
 import com.example.fectdo.general.LoginEmailPassword;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -54,7 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
-                                Intent homeIntent = new Intent(ProfileActivity.this, Enroll.class);
+                                Intent homeIntent = new Intent(ProfileActivity.this, HomePage.class);
                                 startActivity(homeIntent);
                                 overridePendingTransition(0,0);
                                 return true;

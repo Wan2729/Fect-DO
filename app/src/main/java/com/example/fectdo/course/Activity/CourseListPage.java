@@ -1,24 +1,19 @@
-package com.example.fectdo.course;
+package com.example.fectdo.course.Activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.example.fectdo.CourseDataBase.CourseModel;
+import com.example.fectdo.course.Adapter.CourseListAdapter;
+import com.example.fectdo.course.Adapter.CourseListManagerAdapter;
+import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.R;
 import com.example.fectdo.utils.AndroidUtil;
-import com.example.fectdo.utils.FirebaseUtil;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -28,40 +23,39 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManageCourse extends AppCompatActivity {
+public class CourseListPage extends AppCompatActivity {
     CollectionReference courseCollectionRef;
-    DocumentReference userReference;
     CourseModel course;
     String userID;
 
-    CourseListManagerAdapter courseAdapter;
+    CourseListAdapter courseAdapter;
     RecyclerView recyclerView;
     List<CourseModel> courseList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_course);
+        setContentView(R.layout.activity_course_list);
+
+        Intent intent = getIntent();
+        courseCollectionRef = FirebaseFirestore.getInstance().collection(intent.getStringExtra("COURSE_COLLECTION_REFERENCE"));
         userID = getIntent().getStringExtra("USER_ID").toString();
-        courseCollectionRef = FirebaseFirestore.getInstance().collection(getIntent().getStringExtra("COURSE_COLLECTION_REFERENCE"));
 
-        recyclerView = findViewById(R.id.rvCourseListManage);
+        recyclerView = findViewById(R.id.rvCourseList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        courseAdapter = new CourseListManagerAdapter(getApplicationContext());
-
-        userReference = FirebaseUtil.currentUserDetails();
+        courseAdapter = new CourseListAdapter(getApplicationContext());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        courseCollectionRef.whereEqualTo("creatorID", userID)
-                .addSnapshotListener(ManageCourse.this, new EventListener<QuerySnapshot>() {
+        courseCollectionRef.whereNotEqualTo("creatorID", userID)
+                .addSnapshotListener(CourseListPage.this, new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
                 if(error != null){
-                    AndroidUtil.showToast(ManageCourse.this, error.toString());
+                    AndroidUtil.showToast(CourseListPage.this, error.toString());
                     return;
                 }
 
@@ -69,20 +63,16 @@ public class ManageCourse extends AppCompatActivity {
                     courseList = new ArrayList<>();
                     for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
                         course = documentSnapshot.toObject(CourseModel.class);
-
                         courseList.add(course);
                     }
+
                     courseAdapter.setCourseList(courseList);
                     recyclerView.setAdapter(courseAdapter);
                 }
                 else{
-                    AndroidUtil.showToast(ManageCourse.this, "onEvent: queryDocumentSnapshots is null");
+                    AndroidUtil.showToast(CourseListPage.this, "onEvent: queryDocumentSnapshots is null");
                 }
             }
         });
-    }
-
-    void addCourse(){
-
     }
 }

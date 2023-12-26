@@ -19,10 +19,13 @@
         android:theme="@style/Theme.FectDo"
         tools:targetApi="31">
         <activity
-            android:name=".course.ManageCourse"
+            android:name=".course.Activity.AddCourse"
             android:exported="false" />
         <activity
-            android:name=".course.CourseList"
+            android:name=".course.Activity.ManageCoursePage"
+            android:exported="false" />
+        <activity
+            android:name=".course.Activity.CourseListPage"
             android:exported="false" />
         <activity
             android:name=".career.Scolarhship"
@@ -49,10 +52,10 @@
             android:name=".course.VideoPhysicsPage"
             android:exported="false" />
         <activity
-            android:name=".course.Exam"
+            android:name=".course.Activity.Exam"
             android:exported="false" />
         <activity
-            android:name=".course.ExamMainPage"
+            android:name=".course.Activity.ExamMainPage"
             android:exported="false" />
         <activity
             android:name=".general.SignUpUserrname"
@@ -64,7 +67,7 @@
             android:name=".general.SignUpPhoneNumber"
             android:exported="false" />
         <activity
-            android:name=".course.Enroll"
+            android:name=".course.Activity.HomePage"
             android:exported="false"
             android:windowSoftInputMode="adjustNothing" />
         <activity
