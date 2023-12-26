@@ -113,16 +113,19 @@ public class Enroll extends AppCompatActivity {
                                 // Intent for Home
                                 Intent homeIntent = new Intent(Enroll.this, Enroll.class);
                                 startActivity(homeIntent);
+                                overridePendingTransition(0,0);
                                 return true;
                             case R.id.navigation_setting:
                                 // Intent for Setting
                                 Intent settingIntent = new Intent(Enroll.this, SettingActivity.class);
                                 startActivity(settingIntent);
+                                overridePendingTransition(0,0);
                                 return true;
                             case R.id.navigation_profile:
                                 // Intent for Profile
                                 Intent profileIntent = new Intent(Enroll.this, ProfileActivity.class);
                                 startActivity(profileIntent);
+                                overridePendingTransition(0,0);
                                 return true;
                             default:
                                 return false;

@@ -56,14 +56,17 @@ public class ProfileActivity extends AppCompatActivity {
                             case R.id.navigation_home:
                                 Intent homeIntent = new Intent(ProfileActivity.this, Enroll.class);
                                 startActivity(homeIntent);
+                                overridePendingTransition(0,0);
                                 return true;
                             case R.id.navigation_setting:
                                 Intent settingIntent = new Intent(ProfileActivity.this, SettingActivity.class);
                                 startActivity(settingIntent);
+                                overridePendingTransition(0,0);
                                 return true;
                             case R.id.navigation_profile:
                                 Intent profileIntent = new Intent(ProfileActivity.this, ProfileActivity.class);
                                 startActivity(profileIntent);
+                                overridePendingTransition(0,0);
                                 return true;
                             default:
                                 return false;

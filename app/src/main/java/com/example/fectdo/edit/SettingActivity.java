@@ -31,16 +31,19 @@ public class SettingActivity extends AppCompatActivity {
                                 // Intent for Home
                                 Intent homeIntent = new Intent(SettingActivity.this, Enroll.class);
                                 startActivity(homeIntent);
+                                overridePendingTransition(0,0);
                                 return true;
                             case R.id.navigation_setting:
                                 // Intent for Setting
                                 Intent settingIntent = new Intent(SettingActivity.this, SettingActivity.class);
                                 startActivity(settingIntent);
+                                overridePendingTransition(0,0);
                                 return true;
                             case R.id.navigation_profile:
                                 // Intent for Profile
                                 Intent profileIntent = new Intent(SettingActivity.this, ProfileActivity.class);
                                 startActivity(profileIntent);
+                                overridePendingTransition(0,0);
                                 return true;
                             default:
                                 return false;
