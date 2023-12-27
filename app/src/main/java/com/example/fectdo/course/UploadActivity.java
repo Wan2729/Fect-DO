@@ -21,6 +21,7 @@ import com.example.fectdo.course.Activity.HomePage;
 import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.R;
 import com.example.fectdo.edit.SettingActivity;
+import com.example.fectdo.utils.Navigation;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -40,6 +41,8 @@ public class UploadActivity extends AppCompatActivity {
 
     EditText inputSubject,inputTopic,inputDescription;
 
+    private Navigation navigation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,42 +58,15 @@ public class UploadActivity extends AppCompatActivity {
         String subject = inputSubject.getText().toString();
         String topic = inputTopic.getText().toString();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
 
 
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference("Uploads");
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        // Handle item selection
-                        switch (item.getItemId()) {
-                            case R.id.navigation_home:
-                                // Intent for Home
-                                Intent homeIntent = new Intent(UploadActivity.this, HomePage.class);
-                                startActivity(homeIntent);
-                                return true;
-                            case R.id.navigation_setting:
-                                // Intent for Setting
-                                Intent settingIntent = new Intent(UploadActivity.this, SettingActivity.class);
-                                startActivity(settingIntent);
-                                return true;
-                            case R.id.navigation_profile:
-                                // Intent for Profile
-                                Intent profileIntent = new Intent(UploadActivity.this, ProfileActivity.class);
-                                startActivity(profileIntent);
-                                return true;
-                            default:
-                                return false;
-                        }
-                    }
-                }
-        );
+        navigation = new Navigation(this);
+
+        navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
     }
 
     public void uploadFile(View view){

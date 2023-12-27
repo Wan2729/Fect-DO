@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.example.fectdo.R;
 import com.example.fectdo.course.Activity.HomePage;
 import com.example.fectdo.general.LoginEmailPassword;
+import com.example.fectdo.utils.Navigation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,40 +43,16 @@ public class ProfileActivity extends AppCompatActivity {
     private Uri serverFileUri;
 
     private Button signUpBtn;
+    private Navigation navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
+        navigation = new Navigation(this);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.navigation_home:
-                                Intent homeIntent = new Intent(ProfileActivity.this, HomePage.class);
-                                startActivity(homeIntent);
-                                overridePendingTransition(0,0);
-                                return true;
-                            case R.id.navigation_setting:
-                                Intent settingIntent = new Intent(ProfileActivity.this, SettingActivity.class);
-                                startActivity(settingIntent);
-                                overridePendingTransition(0,0);
-                                return true;
-                            case R.id.navigation_profile:
-                                Intent profileIntent = new Intent(ProfileActivity.this, ProfileActivity.class);
-                                startActivity(profileIntent);
-                                overridePendingTransition(0,0);
-                                return true;
-                            default:
-                                return false;
-                        }
-                    }
-                }
-        );
+        navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
 
         etEmail = findViewById(R.id.etEmail);
         etName = findViewById(R.id.etName);
@@ -187,5 +166,21 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logoutBtn:
+                navigation.handleLogout();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_menu, menu);
+        return true;
     }
 }

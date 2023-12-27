@@ -5,51 +5,50 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.fectdo.R;
 import com.example.fectdo.course.Activity.HomePage;
+import com.example.fectdo.course.VideoChemPage;
+import com.example.fectdo.utils.Navigation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class NotificationActivity extends AppCompatActivity {
 
+    private Navigation navigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
+        navigation = new Navigation(this);
 
-        // Set up a listener for BottomNavigationView item clicks
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        // Handle item selection
-                        switch (item.getItemId()) {
-                            case R.id.navigation_home:
-                                // Intent for Home
-                                Intent homeIntent = new Intent(NotificationActivity.this, HomePage.class);
-                                startActivity(homeIntent);
-                                overridePendingTransition(0,0);
-                                return true;
-                            case R.id.navigation_setting:
-                                // Intent for Setting
-                                Intent settingIntent = new Intent(NotificationActivity.this, SettingActivity.class);
-                                startActivity(settingIntent);
-                                overridePendingTransition(0,0);
-                                return true;
-                            case R.id.navigation_profile:
-                                // Intent for Profile
-                                Intent profileIntent = new Intent(NotificationActivity.this, ProfileActivity.class);
-                                startActivity(profileIntent);
-                                overridePendingTransition(0,0);
-                                return true;
-                            default:
-                                return false;
-                        }
-                    }
-                }
-        );
+        navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
     }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logoutBtn:
+                handleLogout();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void handleLogout() {
+        Intent intent = new Intent(NotificationActivity.this, HomePage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
 }
