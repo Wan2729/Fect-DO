@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nonoti"
+    android:title="No notification"/>
+
+    <item android:id="@+id/everyday"
+        android:title="Everyday"/>
+
+    <item android:id="@+id/every3"
+        android:title="Every 3 day"/>
+
+    <item android:id="@+id/everyweek"
+        android:title="Every week"/>
+</menu>

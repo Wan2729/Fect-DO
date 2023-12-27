@@ -5,15 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".edit.NotificationActivity"
-    android:background="@drawable/wallpaper8">
+    android:background="@drawable/wallpaper6">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
-        android:layout_width="411dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
         android:background="@drawable/whitebox"
-        app:menu="@menu/bottom_menu"
-        tools:layout_editor_absoluteY="675dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_menu" />
 
     <TextView
         android:id="@+id/textView3"
@@ -29,6 +33,105 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/allnotiswitch"
+        android:layout_width="298dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="40dp"
+        android:text="All Notification"
+        android:textOff="OFF"
+        android:textOn="ON"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:thumb="@drawable/switch_thumb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:showText="true"
+        app:track="@drawable/switch_track" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/feedswitch"
+        android:layout_width="298dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="24dp"
+        android:text="Feed"
+        android:textOff="OFF"
+        android:textOn="ON"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:thumb="@drawable/switch_thumb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messageswitch"
+        app:showText="true"
+        app:track="@drawable/switch_track" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/messageswitch"
+        android:layout_width="298dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="24dp"
+        android:text="Message"
+        android:textOff="OFF"
+        android:textOn="ON"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:thumb="@drawable/switch_thumb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/allnotiswitch"
+        app:showText="true"
+        app:track="@drawable/switch_track" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/newcourseswitch"
+        android:layout_width="298dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="24dp"
+        android:text="New Course"
+        android:textOff="OFF"
+        android:textOn="ON"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:thumb="@drawable/switch_thumb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/feedswitch"
+        app:showText="true"
+        app:track="@drawable/switch_track" />
+
+    <Button
+        android:id="@+id/profilsettingbutton"
+        android:layout_width="169dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="216dp"
+        android:backgroundTint="#37CAEC"
+        android:drawableRight="@drawable/profile_icon"
+        android:text="Profile"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newcourseswitch" />
+
+    <Button
+        android:id="@+id/schedulenoti"
+        android:layout_width="242dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="48dp"
+        android:text="Scheduled Notification"
+        android:drawableRight="@drawable/down_arrow"
+        android:background="#FFFFFF"
+        android:onClick="popup_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.269"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newcourseswitch" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
