@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.fectdo.R;
 import com.example.fectdo.course.Activity.HomePage;
@@ -17,6 +19,13 @@ public class NotificationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+
+        final Button Nextpage = findViewById(R.id.profilsettingbutton);
+        Nextpage.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                profilepage();
+            }
+        });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
 
@@ -51,5 +60,10 @@ public class NotificationActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    void profilepage(){
+        Intent SettingActivity=new Intent(this,SettingActivity.class);
+        startActivity(SettingActivity);
     }
 }
