@@ -27,7 +27,9 @@ import com.example.fectdo.edit.SettingActivity;
 import com.example.fectdo.general.LoginEmailPassword;
 import com.example.fectdo.utils.AndroidUtil;
 import com.example.fectdo.utils.FirebaseUtil;
+import com.example.fectdo.utils.Navigation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
@@ -55,6 +57,10 @@ public class HomePage extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     List<CourseModel> myCourseList;
 
+    private Navigation navigation;
+
+    private TabLayout tabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +70,11 @@ public class HomePage extends AppCompatActivity {
         userDocumentRef = FirebaseUtil.currentUserDetails();
 
         uploadButton = findViewById(R.id.btnUpload);
+
+
+        navigation = new Navigation(this);
+
+        navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
         uploadButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 letupload();
@@ -100,40 +111,12 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        // Handle item selection
-                        switch (item.getItemId()) {
-                            case R.id.navigation_home:
-                                // Intent for Home
-                                Intent homeIntent = new Intent(HomePage.this, HomePage.class);
-                                startActivity(homeIntent);
-                                overridePendingTransition(0,0);
-                                return true;
-                            case R.id.navigation_setting:
-                                // Intent for Setting
-                                Intent settingIntent = new Intent(HomePage.this, SettingActivity.class);
-                                startActivity(settingIntent);
-                                overridePendingTransition(0,0);
-                                return true;
-                            case R.id.navigation_profile:
-                                // Intent for Profile
-                                Intent profileIntent = new Intent(HomePage.this, ProfileActivity.class);
-                                startActivity(profileIntent);
-                                overridePendingTransition(0,0);
-                                return true;
-                            default:
-                                return false;
-                        }
-                    }
-                }
-        );
+
+
+
     }
+
+
 
     @Override
     protected void onStart() {
@@ -162,11 +145,22 @@ public class HomePage extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     void letupload(){
         Intent upload=new Intent(this, UploadActivity.class);
         startActivity(upload);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logoutBtn:
+                navigation.handleLogout();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -175,30 +169,12 @@ public class HomePage extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.logoutBtn:
-                handleLogout();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+    void gotoCourse(){
 
-    private void handleLogout() {
-        FirebaseUtil.logOut();
-        Intent intent = new Intent(HomePage.this, LoginEmailPassword.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
     }
 
     public void goToCareer(View view){
         Intent intent = new Intent(this, CareerMain.class);
         startActivity(intent);
-    }
-
-    void gotoCourse(){
-
     }
 }

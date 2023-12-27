@@ -8,18 +8,14 @@
     android:background="@drawable/wallpaper8"
     tools:context=".edit.SettingActivity">
 
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
-        android:layout_width="0dp"
+        android:layout_width="411dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
         android:background="@drawable/whitebox"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/bottom_menu" />
+        app:menu="@menu/bottom_menu"
+        tools:layout_editor_absoluteY="675dp" />
+
 
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/settingProfile"
@@ -163,13 +159,13 @@
 
     <Button
         android:id="@+id/notificationbutton"
-        android:layout_width="191dp"
-        android:layout_height="51dp"
+        android:layout_width="169dp"
+        android:layout_height="53dp"
         android:layout_marginTop="20dp"
         android:backgroundTint="#37CAEC"
-        android:drawableRight="@drawable/noti_icon"
         android:text="Notification"
         android:textStyle="bold"
+        android:drawableRight="@drawable/noti_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

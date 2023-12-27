@@ -15,11 +15,13 @@ import android.widget.Button;
 import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.R;
 import com.example.fectdo.edit.SettingActivity;
+import com.example.fectdo.utils.Navigation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ExamMainPage extends AppCompatActivity implements View.OnClickListener {
 
     Button math;
+    private Navigation navigation;
     boolean dahJawab = false;
 
     @Override
@@ -30,40 +32,9 @@ public class ExamMainPage extends AppCompatActivity implements View.OnClickListe
         math = findViewById(R.id.btnMath);
         math.setOnClickListener(this);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        navigation = new Navigation(this);
 
-
-        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
-
-        // Set up a listener for BottomNavigationView item clicks
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        // Handle item selection
-                        switch (item.getItemId()) {
-                            case R.id.navigation_home:
-                                // Intent for Home
-                                Intent homeIntent = new Intent(ExamMainPage.this, HomePage.class);
-                                startActivity(homeIntent);
-                                return true;
-                            case R.id.navigation_setting:
-                                // Intent for Setting
-                                Intent settingIntent = new Intent(ExamMainPage.this, SettingActivity.class);
-                                startActivity(settingIntent);
-                                return true;
-                            case R.id.navigation_profile:
-                                // Intent for Profile
-                                Intent profileIntent = new Intent(ExamMainPage.this, ProfileActivity.class);
-                                startActivity(profileIntent);
-                                return true;
-                            default:
-                                return false;
-                        }
-                    }
-                }
-        );
+        navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
     }
 
     @Override

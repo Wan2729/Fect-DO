@@ -16,17 +16,20 @@ import android.widget.Button;
 import com.example.fectdo.R;
 import com.example.fectdo.course.Activity.ExamMainPage;
 import com.example.fectdo.course.Activity.HomePage;
+import com.example.fectdo.utils.Navigation;
 
 public class VideoPhysicsPage extends AppCompatActivity {
 
     String video;
+    private Navigation navigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.video_physics_page);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        navigation = new Navigation(this);
+
+        navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
 
         // Load an image initially
         loadInitialImage();

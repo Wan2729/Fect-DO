@@ -21,6 +21,7 @@ import com.example.fectdo.edit.SettingActivity;
 import com.example.fectdo.Soalan.PengurusSoalan;
 import com.example.fectdo.models.QuestionModel;
 import com.example.fectdo.utils.AndroidUtil;
+import com.example.fectdo.utils.Navigation;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
@@ -38,6 +39,7 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
     Button jawapanA, jawapanB, jawapanC, jawapanD, nextBtn;
     int currentQuestion, marks;
     String choice;
+    private Navigation navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,41 +70,9 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
 
 //        loadQuestionFromFirebase();
         loadNewQuestion();
+        navigation = new Navigation(this);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-
-        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
-
-        // Set up a listener for BottomNavigationView item clicks
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        // Handle item selection
-                        switch (item.getItemId()) {
-                            case R.id.navigation_home:
-                                // Intent for Home
-                                Intent homeIntent = new Intent(Exam.this, HomePage.class);
-                                startActivity(homeIntent);
-                                return true;
-                            case R.id.navigation_setting:
-                                // Intent for Setting
-                                Intent settingIntent = new Intent(Exam.this, SettingActivity.class);
-                                startActivity(settingIntent);
-                                return true;
-                            case R.id.navigation_profile:
-                                // Intent for Profile
-                                Intent profileIntent = new Intent(Exam.this, ProfileActivity.class);
-                                startActivity(profileIntent);
-                                return true;
-                            default:
-                                return false;
-                        }
-                    }
-                }
-        );
+        navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
     }
 
 
