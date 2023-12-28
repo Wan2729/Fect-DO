@@ -45,19 +45,43 @@
         app:layout_constraintTop_toBottomOf="@id/etCourseTitle"/>
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv2">
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
 
     </ScrollView>
+
+    <Button
+        android:id="@+id/btnAddTopic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_round_exam"
+        android:text="add topic"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnDeleteTopic"
+        app:layout_constraintTop_toBottomOf="@id/scrollView"/>
+
+    <Button
+        android:id="@+id/btnDeleteTopic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_round_exam"
+        android:text="delete topic"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@id/btnAddTopic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollView"/>
 
     <Button
         android:id="@+id/btnDone"

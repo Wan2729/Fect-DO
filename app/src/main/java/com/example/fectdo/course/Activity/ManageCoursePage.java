@@ -8,12 +8,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.fectdo.course.Adapter.CourseListManagerAdapter;
-import com.example.fectdo.course.Fragment.AddCourse;
 import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.R;
 import com.example.fectdo.utils.AndroidUtil;
@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ManageCoursePage extends AppCompatActivity {
+    final static String COURSE_PATH = "COURSE_PATH_REF", USER_ID = "USER_ID", NEW_COURSE = "NEW_COURSE";
     CollectionReference courseCollectionRef;
     CourseModel course;
     String userID;
@@ -42,7 +43,7 @@ public class ManageCoursePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_created_course_list);
-        userID = getIntent().getStringExtra("USER_ID").toString();
+        userID = getIntent().getStringExtra(USER_ID).toString();
         courseCollectionRef = FirebaseFirestore.getInstance().collection(getIntent().getStringExtra("COURSE_COLLECTION_REFERENCE"));
 
         recyclerView = findViewById(R.id.rvCourseList);
@@ -53,9 +54,11 @@ public class ManageCoursePage extends AppCompatActivity {
         addCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addCourse.setEnabled(false);
-                addCourse.setVisibility(View.INVISIBLE);
-                startFragment(AddCourse.newInstance(courseCollectionRef.getPath(), userID, true));
+                Intent intent = new Intent(getApplicationContext(), AddCourse.class);
+                intent.putExtra(COURSE_PATH, courseCollectionRef.getPath());
+                intent.putExtra(USER_ID, userID);
+                intent.putExtra(NEW_COURSE, true);
+                startActivity(intent);
             }
         });
     }
@@ -88,25 +91,5 @@ public class ManageCoursePage extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void startFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentLayout, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if(getSupportFragmentManager().getBackStackEntryCount() > 0){
-            addCourse.setEnabled(true);
-            addCourse.setVisibility(View.VISIBLE);
-            getSupportFragmentManager().popBackStack();
-        }
-        else {
-            super.onBackPressed();
-        }
     }
 }

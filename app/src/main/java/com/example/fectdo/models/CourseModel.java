@@ -7,7 +7,7 @@ import java.util.List;
 public class CourseModel {
     String courseName, creatorID;
     List<String> ExamQuestion, ExamChoice, ExamAnswer;
-    List<DocumentReference> topics;
+    List<String> topics;
 
     public CourseModel() {
     }
@@ -16,7 +16,7 @@ public class CourseModel {
         this.courseName = course_name;
     }
 
-    public CourseModel(String courseName, List<String> examQuestion, List<String> examChoice, List<String> examAnswer, String creatorID, List<DocumentReference> topics) {
+    public CourseModel(String courseName, List<String> examQuestion, List<String> examChoice, List<String> examAnswer, String creatorID, List<String> topics) {
         this.courseName = courseName;
         ExamQuestion = examQuestion;
         ExamChoice = examChoice;
@@ -45,7 +45,7 @@ public class CourseModel {
         return creatorID;
     }
 
-    public List<DocumentReference> getTopics() {
+    public List<String> getTopics() {
         return topics;
     }
 
@@ -69,7 +69,7 @@ public class CourseModel {
         this.creatorID = creatorID;
     }
 
-    public void setTopics(List<DocumentReference> topics) {
+    public void setTopics(List<String> topics) {
         this.topics = topics;
     }
 }
