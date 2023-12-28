@@ -19,19 +19,16 @@
         android:theme="@style/Theme.FectDo"
         tools:targetApi="31">
         <activity
-            android:name=".social.MainFeedActivity"
-            android:exported="false" />
-        <activity
             android:name=".edit.NotificationActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.AddCourse"
+            android:name=".course.Activity.AddCourse"
             android:exported="false" />
         <activity
-            android:name=".activity.ManageCoursePage"
+            android:name=".course.Activity.ManageCoursePage"
             android:exported="false" />
         <activity
-            android:name=".activity.CourseListPage"
+            android:name=".course.Activity.CourseListPage"
             android:exported="false" />
         <activity
             android:name=".career.Scolarhship"
@@ -55,10 +52,10 @@
             android:name=".general.LoginEmailPassword"
             android:exported="false" />
         <activity
-            android:name=".activity.Exam"
+            android:name=".course.Activity.Exam"
             android:exported="false" />
         <activity
-            android:name=".activity.ExamMainPage"
+            android:name=".course.Activity.ExamMainPage"
             android:exported="false" />
         <activity
             android:name=".general.SignUpUserrname"
@@ -70,11 +67,11 @@
             android:name=".general.SignUpPhoneNumber"
             android:exported="false" />
         <activity
-            android:name=".activity.HomePage"
+            android:name=".course.Activity.HomePage"
             android:exported="false"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".activity.VideoPage"
+            android:name=".course.Activity.VideoPage"
             android:exported="false" />
         <activity
             android:name=".course.UploadActivity"
