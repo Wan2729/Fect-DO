@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.fectdo.R;
-import com.example.fectdo.activity.HomePage;
+import com.example.fectdo.course.Activity.HomePage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class NotificationActivity extends AppCompatActivity {

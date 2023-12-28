@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.fectdo.activity.HomePage;
+import com.example.fectdo.course.Activity.HomePage;
 import com.example.fectdo.R;
 import com.example.fectdo.utils.Navigation;
 import com.google.android.gms.tasks.OnSuccessListener;

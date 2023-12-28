@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/wallpaper10"
-    tools:context=".activity.HomePage">
+    tools:context=".course.Activity.HomePage">
 
     <include
         android:id="@+id/toolbar"

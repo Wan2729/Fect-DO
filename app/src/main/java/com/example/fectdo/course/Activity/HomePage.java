@@ -1,9 +1,7 @@
 package com.example.fectdo.course.Activity;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,23 +12,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 
 import com.example.fectdo.TAG.TAG;
-import com.example.fectdo.course.Adapter.MyCourseAdapter;
+import com.example.fectdo.adapter.MyCourseAdapter;
 import com.example.fectdo.course.UploadActivity;
 import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.career.CareerMain;
-import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.R;
-import com.example.fectdo.edit.SettingActivity;
-import com.example.fectdo.general.LoginEmailPassword;
+import com.example.fectdo.social.MainFeedActivity;
 import com.example.fectdo.utils.AndroidUtil;
 import com.example.fectdo.utils.FirebaseUtil;
 import com.example.fectdo.utils.Navigation;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
@@ -45,7 +40,9 @@ import java.util.List;
 public class HomePage extends AppCompatActivity {
     final String COURSE_KEY = "course";
     ImageView uploadButton;
-    Button searchButton, manageCourse;
+    ImageButton manageCourse;
+    Button searchButton;
+    ImageButton socialButton;
 
     //Database
     CollectionReference courseCollectionRef;
@@ -67,6 +64,7 @@ public class HomePage extends AppCompatActivity {
 
         courseCollectionRef = FirebaseFirestore.getInstance().collection(COURSE_KEY);
         userDocumentRef = FirebaseUtil.currentUserDetails();
+        socialButton = findViewById(R.id.btnSosial);
 
         uploadButton = findViewById(R.id.btnUpload);
 
@@ -112,6 +110,11 @@ public class HomePage extends AppCompatActivity {
                 intent.putExtra("USER_ID", FirebaseUtil.currentUserId());
                 startActivity(intent);
             }
+        });
+
+        socialButton.setOnClickListener(v -> {
+            Intent intent = new Intent(HomePage.this, MainFeedActivity.class);
+            startActivity(intent);
         });
     }
 

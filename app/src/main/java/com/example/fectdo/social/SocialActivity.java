@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.fectdo.R;
-import com.example.fectdo.career.Scolarhship;
 import com.example.fectdo.course.Activity.HomePage;
 import com.example.fectdo.utils.Navigation;
 import com.google.android.material.tabs.TabLayout;

@@ -9,7 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.fectdo.R;
-import com.example.fectdo.activity.HomePage;
+import com.example.fectdo.course.Activity.HomePage;
 import com.example.fectdo.utils.Navigation;
 
 public class CareerMain extends AppCompatActivity {
