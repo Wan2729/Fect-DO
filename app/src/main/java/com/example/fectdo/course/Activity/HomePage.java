@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 
@@ -45,8 +46,8 @@ import java.util.List;
 public class HomePage extends AppCompatActivity {
     final String COURSE_KEY = "course";
     ImageView uploadButton;
-    Button searchButton, manageCourse;
-
+    Button searchButton;
+    ImageButton manageCourse;
     //Database
     CollectionReference courseCollectionRef;
     DocumentReference userDocumentRef;

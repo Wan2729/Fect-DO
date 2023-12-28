@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_home"
@@ -14,10 +15,8 @@
 
     <SearchView
         android:id="@+id/svSearchBar"
-        android:layout_width="359dp"
+        android:layout_width="0dp"
         android:layout_height="51dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
         android:background="@drawable/whitebox"
         android:iconifiedByDefault="false"
@@ -30,12 +29,11 @@
 
     <Button
         android:id="@+id/btnSearch"
-        android:layout_width="359dp"
+        android:layout_width="0dp"
         android:layout_height="51dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
         android:background="@color/transparent"
+        android:contentDescription="Search Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
@@ -55,11 +53,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/svSearchBar" />
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMyCourse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="412dp"
+        android:layout_height="147dp"
         android:layout_above="@+id/btnCareer"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
@@ -69,6 +66,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10"></androidx.recyclerview.widget.RecyclerView>
+
+    <!-- Your other views... -->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
@@ -82,92 +81,54 @@
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/bottom_menu" />
 
-    <LinearLayout
-        android:layout_width="188dp"
-        android:layout_height="270dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/ic_back"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvMyCourse">
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_medium"
-            android:paddingTop="10dp"
-            android:text="COMMUNITY"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/btn_addFriends"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_addfriends" />
-
-        <Button
-            android:id="@+id/btn_findFriends"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_findfriends" />
-
-        <Button
-            android:id="@+id/btn_chat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_chat" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="188dp"
-        android:layout_height="320dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/ic_back"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:flow_horizontalGap="10dp"
+    <ImageButton
+        android:id="@+id/btnSosial"
+        android:layout_width="130dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="70dp"
+        android:background="@drawable/socialbutton"
+        android:scaleType="fitXY"
+        android:contentDescription="Social Button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvMyCourse">
+        app:layout_constraintTop_toBottomOf="@+id/rvMyCourse" />
 
-        <ImageButton
-            android:id="@+id/btnCareer"
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btncareer"
-            android:onClick="goToCareer"
-            android:scaleType="fitXY" />
+    <ImageButton
+        android:id="@+id/btnCareer"
+        android:layout_width="120dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/btncareer"
+        android:onClick="goToCareer"
+        android:scaleType="fitXY"
+        android:contentDescription="Career Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvMyCourse" />
 
-        <ImageButton
-            android:id="@+id/btnUpload"
-            android:layout_width="130dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/sharingbutton"
-            android:scaleType="fitXY" />
+    <ImageButton
+        android:id="@+id/btnManageCourse"
+        android:layout_width="130dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/btn_manage"
+        android:scaleType="fitXY"
+        android:textColor="@color/white"
+        android:contentDescription="Manage Course Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCareer" />
 
-        <Button
-            android:id="@+id/btnManageCourse"
-            android:layout_width="130dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn_manage"
-            android:scaleType="fitXY"
-            android:textColor="@color/white" />
-
-        <ImageButton
-            android:id="@+id/btnSosial"
-            android:layout_width="130dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/socialbutton"
-            android:scaleType="fitXY" />
-    </LinearLayout>
-
+    <ImageButton
+        android:id="@+id/btnUpload"
+        android:layout_width="130dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="70dp"
+        android:background="@drawable/sharingbutton"
+        android:scaleType="fitXY"
+        android:contentDescription="Upload Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSosial" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
