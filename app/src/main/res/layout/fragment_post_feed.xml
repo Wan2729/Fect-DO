@@ -7,11 +7,18 @@
     android:layout_margin="20dp">
 
     <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:id="@+id/refreshButton"
         android:src="@drawable/ic_refresh"
         android:layout_alignParentRight="true"/>
+    <ProgressBar
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/progressBar"
+        android:src="@drawable/ic_refresh"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.fectdo.R;
@@ -36,6 +37,7 @@ public class PostFeedFragment extends Fragment {
     List<PostModel> postList;
     PostFeedAdapter postFeedAdapter;
     DatabaseReference dbRef;
+    ProgressBar progressBar;
 
     public PostFeedFragment() {
 
@@ -51,6 +53,7 @@ public class PostFeedFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recycleView);
         reloadButton = view.findViewById(R.id.refreshButton);
+        progressBar = view.findViewById(R.id.progressBar);
 
         dbRef = FirebaseDatabase.getInstance().getReference("Posts");
 
@@ -64,6 +67,8 @@ public class PostFeedFragment extends Fragment {
         }
 
         reloadButton.setOnClickListener(v->{
+            progressBar.setVisibility(View.VISIBLE);
+            reloadButton.setVisibility(View.GONE);
             updateRecyclerView();
         });
 
@@ -90,11 +95,15 @@ public class PostFeedFragment extends Fragment {
                     return 0;
                 });
                 recyclerView.getAdapter().notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
+                reloadButton.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getContext(), "Error getting database.", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+                reloadButton.setVisibility(View.VISIBLE);
             }
         });
         firstArrive = false;
