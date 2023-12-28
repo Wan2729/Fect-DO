@@ -1,4 +1,4 @@
-package com.example.fectdo.course;
+package com.example.fectdo.course.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,8 +15,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.fectdo.course.Activity.ExamMainPage;
-import com.example.fectdo.course.Activity.HomePage;
 import com.example.fectdo.R;
 import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.models.TopicModel;
@@ -26,7 +24,6 @@ import com.example.fectdo.utils.Navigation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,7 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VideoChemPage extends AppCompatActivity {
+public class VideoPage extends AppCompatActivity {
 String videoLink;
 List<TopicModel> topicList;
 DocumentReference courseDetails;
@@ -47,7 +44,7 @@ private Navigation navigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.video_chem_page);
+        setContentView(R.layout.activity_video_page);
 
         final Button Examchem = findViewById(R.id.ExamButtonChem);
 
@@ -178,7 +175,7 @@ private Navigation navigation;
     }
 
     private void handleLogout() {
-        Intent intent = new Intent(VideoChemPage.this, HomePage.class);
+        Intent intent = new Intent(VideoPage.this, HomePage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 
+import com.example.fectdo.TAG.TAG;
 import com.example.fectdo.course.Adapter.MyCourseAdapter;
 import com.example.fectdo.course.UploadActivity;
 import com.example.fectdo.models.CourseModel;
@@ -59,8 +60,6 @@ public class HomePage extends AppCompatActivity {
 
     private Navigation navigation;
 
-    private TabLayout tabLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +76,11 @@ public class HomePage extends AppCompatActivity {
         navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
         uploadButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                letupload();
+                Intent intent = new Intent(getApplicationContext(), AddCourse.class);
+                intent.putExtra(TAG.COURSE_PATH, courseCollectionRef.getPath());
+                intent.putExtra(TAG.USER_ID, FirebaseUtil.currentUserId());
+                intent.putExtra(TAG.NEW_COURSE, true);
+                startActivity(intent);
             }
         });
 

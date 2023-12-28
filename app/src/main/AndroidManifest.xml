@@ -52,9 +52,6 @@
             android:name=".general.LoginEmailPassword"
             android:exported="false" />
         <activity
-            android:name=".course.VideoPhysicsPage"
-            android:exported="false" />
-        <activity
             android:name=".course.Activity.Exam"
             android:exported="false" />
         <activity
@@ -74,10 +71,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".course.VideoChemPage"
-            android:exported="false" />
-        <activity
-            android:name=".course.VideoMathPage"
+            android:name=".course.Activity.VideoPage"
             android:exported="false" />
         <activity
             android:name=".course.UploadActivity"
