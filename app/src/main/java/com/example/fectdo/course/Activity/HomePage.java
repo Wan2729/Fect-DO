@@ -27,6 +27,7 @@ import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.R;
 import com.example.fectdo.edit.SettingActivity;
 import com.example.fectdo.general.LoginEmailPassword;
+import com.example.fectdo.social.SocialActivity;
 import com.example.fectdo.utils.AndroidUtil;
 import com.example.fectdo.utils.FirebaseUtil;
 import com.example.fectdo.utils.Navigation;
@@ -70,8 +71,6 @@ public class HomePage extends AppCompatActivity {
         userDocumentRef = FirebaseUtil.currentUserDetails();
 
         uploadButton = findViewById(R.id.btnUpload);
-
-
         navigation = new Navigation(this);
 
         navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
@@ -176,6 +175,11 @@ public class HomePage extends AppCompatActivity {
 
     public void goToCareer(View view){
         Intent intent = new Intent(this, CareerMain.class);
+        startActivity(intent);
+    }
+
+    public void goToSocial(View view){
+        Intent intent = new Intent(this, SocialActivity.class);
         startActivity(intent);
     }
 }
