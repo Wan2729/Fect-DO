@@ -1,4 +1,4 @@
-package com.example.fectdo.course.Activity;
+package com.example.fectdo.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

@@ -1,14 +1,12 @@
 package com.example.fectdo.utils;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 
 import com.example.fectdo.R;
-import com.example.fectdo.course.Activity.HomePage;
+import com.example.fectdo.activity.HomePage;
 import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.edit.SettingActivity;
 import com.example.fectdo.general.LoginEmailPassword;

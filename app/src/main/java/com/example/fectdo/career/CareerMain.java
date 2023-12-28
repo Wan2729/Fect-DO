@@ -1,8 +1,6 @@
 package com.example.fectdo.career;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +9,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.fectdo.R;
-import com.example.fectdo.course.Activity.HomePage;
-import com.example.fectdo.edit.ProfileActivity;
-import com.example.fectdo.edit.SettingActivity;
+import com.example.fectdo.activity.HomePage;
 import com.example.fectdo.utils.Navigation;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class CareerMain extends AppCompatActivity {
     private Navigation navigation;

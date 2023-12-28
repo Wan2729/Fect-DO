@@ -1,9 +1,7 @@
-package com.example.fectdo.course.Activity;
+package com.example.fectdo.activity;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,19 +16,15 @@ import android.widget.ImageView;
 
 
 import com.example.fectdo.TAG.TAG;
-import com.example.fectdo.course.Adapter.MyCourseAdapter;
+import com.example.fectdo.adapter.MyCourseAdapter;
 import com.example.fectdo.course.UploadActivity;
 import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.career.CareerMain;
-import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.R;
-import com.example.fectdo.edit.SettingActivity;
-import com.example.fectdo.general.LoginEmailPassword;
+import com.example.fectdo.social.MainFeedActivity;
 import com.example.fectdo.utils.AndroidUtil;
 import com.example.fectdo.utils.FirebaseUtil;
 import com.example.fectdo.utils.Navigation;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
@@ -57,6 +51,7 @@ public class HomePage extends AppCompatActivity {
     MyCourseAdapter myCourseAdapter;
     LinearLayoutManager layoutManager;
     List<CourseModel> myCourseList;
+    ImageView socialButton;
 
     private Navigation navigation;
 
@@ -69,7 +64,7 @@ public class HomePage extends AppCompatActivity {
         userDocumentRef = FirebaseUtil.currentUserDetails();
 
         uploadButton = findViewById(R.id.btnUpload);
-
+        socialButton = findViewById(R.id.btnSosial);
 
         navigation = new Navigation(this);
 
@@ -113,6 +108,12 @@ public class HomePage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        socialButton.setOnClickListener(v->{
+            Intent intent = new Intent(HomePage.this, MainFeedActivity.class);
+            startActivity(intent);
+        });
+
     }
 
 

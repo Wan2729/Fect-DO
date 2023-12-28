@@ -1,4 +1,4 @@
-package com.example.fectdo.course.Adapter;
+package com.example.fectdo.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.fectdo.course.Activity.VideoPage;
+import com.example.fectdo.activity.VideoPage;
 import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.R;
 

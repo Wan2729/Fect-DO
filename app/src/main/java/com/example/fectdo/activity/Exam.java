@@ -1,8 +1,6 @@
-package com.example.fectdo.course.Activity;
+package com.example.fectdo.activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -15,15 +13,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.R;
-import com.example.fectdo.edit.SettingActivity;
 import com.example.fectdo.Soalan.PengurusSoalan;
 import com.example.fectdo.models.QuestionModel;
 import com.example.fectdo.utils.AndroidUtil;
 import com.example.fectdo.utils.Navigation;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;

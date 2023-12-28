@@ -1,4 +1,4 @@
-package com.example.fectdo.course.Activity;
+package com.example.fectdo.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,8 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.fectdo.course.Adapter.CourseListAdapter;
-import com.example.fectdo.course.Adapter.CourseListManagerAdapter;
+import com.example.fectdo.adapter.CourseListAdapter;
 import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.R;
 import com.example.fectdo.utils.AndroidUtil;

@@ -11,7 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.fectdo.R;
-import com.example.fectdo.course.Activity.HomePage;
+import com.example.fectdo.activity.HomePage;
 import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.edit.SettingActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

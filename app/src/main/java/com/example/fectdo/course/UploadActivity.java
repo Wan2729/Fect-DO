@@ -3,7 +3,6 @@ package com.example.fectdo.course;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,14 +16,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.fectdo.course.Activity.HomePage;
-import com.example.fectdo.edit.ProfileActivity;
+import com.example.fectdo.activity.HomePage;
 import com.example.fectdo.R;
-import com.example.fectdo.edit.SettingActivity;
 import com.example.fectdo.utils.Navigation;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;

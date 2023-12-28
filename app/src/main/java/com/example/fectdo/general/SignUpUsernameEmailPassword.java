@@ -20,7 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.fectdo.R;
-import com.example.fectdo.course.Activity.HomePage;
+import com.example.fectdo.activity.HomePage;
 import com.example.fectdo.models.UserModel;
 import com.example.fectdo.utils.FirebaseUtil;
 import com.google.android.gms.tasks.OnCompleteListener;

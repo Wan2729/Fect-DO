@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/btn_welcome"
-    tools:context=".course.Activity.AddCourse">
+    tools:context=".activity.AddCourse">
 
     <TextView
         android:id="@+id/tv1"
