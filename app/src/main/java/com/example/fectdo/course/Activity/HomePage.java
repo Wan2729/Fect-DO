@@ -110,10 +110,6 @@ public class HomePage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
-
     }
 
 
@@ -134,6 +130,7 @@ public class HomePage extends AppCompatActivity {
                     myCourseList = new ArrayList<>();
                     for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
                         course = documentSnapshot.toObject(CourseModel.class);
+                        course.setDocumentID(documentSnapshot.getId());
 
                         myCourseList.add(course);
                     }

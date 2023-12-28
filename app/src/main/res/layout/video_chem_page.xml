@@ -12,7 +12,7 @@
         layout="@layout/toolbar" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvCourseTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
@@ -38,30 +38,10 @@
         app:layout_constraintTop_toBottomOf="@id/videoViewChem">
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <Button
-                android:id="@+id/chapter1Chem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="chapter1ChemClick"
-                android:text="Pengenalan kepada kimia" />
-
-            <Button
-                android:id="@+id/chapter2Chem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="chapter2ChemClick"
-                android:text="jirim dan struktur atom" />
-
-            <Button
-                android:id="@+id/chapter3Chem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="chapter3ChemClick"
-                android:text="Jadual berkala unsur" />
 
 
         </LinearLayout>

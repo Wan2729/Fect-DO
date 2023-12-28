@@ -1,6 +1,7 @@
 package com.example.fectdo.course.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fectdo.course.Activity.HomePage;
+import com.example.fectdo.course.VideoChemPage;
 import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.R;
 
@@ -40,6 +43,16 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
         CourseModel course = courseList.get(position);
 
         holder.courseTitle.setText(course.getCourseName());
+
+        holder.icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, VideoChemPage.class);
+                intent.putExtra("COURSE_DOCUMENT_REF", course.getDocumentID());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -54,8 +67,9 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            icon = itemView.findViewById(R.id.ibCourseIcon);
             courseTitle = itemView.findViewById(R.id.tvCourseName);
+
+            icon = itemView.findViewById(R.id.ibCourseIcon);
         }
     }
 }

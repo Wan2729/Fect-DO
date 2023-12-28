@@ -2,7 +2,6 @@ package com.example.fectdo.course;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,17 +12,37 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.fectdo.course.Activity.ExamMainPage;
 import com.example.fectdo.course.Activity.HomePage;
-import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.R;
-import com.example.fectdo.edit.SettingActivity;
+import com.example.fectdo.models.CourseModel;
+import com.example.fectdo.models.TopicModel;
+import com.example.fectdo.utils.AndroidUtil;
+import com.example.fectdo.utils.FirebaseUtil;
 import com.example.fectdo.utils.Navigation;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class VideoChemPage extends AppCompatActivity {
-String video;
+String videoLink;
+List<TopicModel> topicList;
+DocumentReference courseDetails;
+
+TextView title;
+WebView webView;
+LinearLayout topicLayout;
+
 private Navigation navigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +50,93 @@ private Navigation navigation;
         setContentView(R.layout.video_chem_page);
 
         final Button Examchem = findViewById(R.id.ExamButtonChem);
+
+        topicList = new ArrayList<>();
+        title = findViewById(R.id.tvCourseTitle);
+        topicLayout = findViewById(R.id.linearLayout);
+        webView = findViewById(R.id.videoViewChem);
+        String documentID = getIntent().getStringExtra("COURSE_DOCUMENT_REF");
+        courseDetails = FirebaseUtil.getCollection("course").document(documentID);
+
         Examchem.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                LetsgoExam();
+//                LetsgoExam();
             }
         });
-        loadInitialImage();
+//        loadInitialImage();
 
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        courseDetails.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                CourseModel course = documentSnapshot.toObject(CourseModel.class);
+                title.setText(course.getCourseName());
+
+                if(course.getTopics() != null){
+                    for(String topicID : course.getTopics()){
+                        getTopic(topicID);
+                    }
+
+                    for(TopicModel topicDetails : topicList){
+                        loadTopics(topicDetails);
+                    }
+                }
+                else{
+                    showToast("There is no topic in this course");
+                }
+            }
+        });
+    }
+
+    void getTopic(String topicID){
+        DocumentReference topicRef = FirebaseFirestore.getInstance().collection("topics").document(topicID);
+        topicLayout.removeAllViews();
+
+        topicRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if(documentSnapshot.exists()){
+                        topicList.add(documentSnapshot.toObject(TopicModel.class));
+                    }
+                    else{
+                        showToast("There is no topic in this course");
+                    }
+                }
+                else{
+                    showToast("Failed with exception: " +task.getException());
+                }
+            }
+        });
+    }
+
+    void loadTopics(TopicModel topicDetails){
+        View view = getLayoutInflater().inflate(R.layout.topic_list_card, null);
+
+        Button button = view.findViewById(R.id.btnTopicName);
+        button.setText(topicDetails.getTopicName());
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadVideo(topicDetails.getVideoLink());
+            }
+        });
+
+        topicLayout.addView(view);
+    }
+
+    void loadVideo(String embedLink){
+        videoLink = "<iframe width=\"100%\" height=\"100%\" src=\"" +embedLink +"\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
+        webView.loadData(videoLink,"text/html","utf-8");
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebChromeClient(new WebChromeClient());
     }
 
     void LetsgoExam(){
@@ -87,27 +185,13 @@ private Navigation navigation;
 
     public void chapter1ChemClick(View view){
         WebView webView = findViewById(R.id.videoViewChem);
-        video = "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/qRa74ODgUlA?si=SVG7rW67cA7X4RKj\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
-        webView.loadData(video,"text/html","utf-8");
+        videoLink = "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/qRa74ODgUlA?si=SVG7rW67cA7X4RKj\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
+        webView.loadData(videoLink,"text/html","utf-8");
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new WebChromeClient());
     }
 
-    public void chapter2ChemClick(View view){
-        WebView webView = findViewById(R.id.videoViewChem);
-        video="<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/2kMVWoxcp38?si=E1rrT80JP0qJ4lpq\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
-        webView.loadData(video,"text/html","utf-8");
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebChromeClient(new WebChromeClient());
+    private void showToast(String message){
+        AndroidUtil.showToast(getApplicationContext(), message);
     }
-
-    public void chapter3ChemClick(View view){
-        WebView webView = findViewById(R.id.videoViewChem);
-        video="<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/o6gJ0f10oVE?si=2p3GUShGVnLMuokH\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
-        webView.loadData(video,"text/html","utf-8");
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebChromeClient(new WebChromeClient());
-    }
-
-
 }

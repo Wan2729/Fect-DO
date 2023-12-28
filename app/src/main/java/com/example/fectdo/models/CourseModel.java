@@ -1,11 +1,12 @@
 package com.example.fectdo.models;
 
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.Exclude;
 
 import java.util.List;
 
 public class CourseModel {
-    String courseName, creatorID;
+    String courseName, creatorID, documentID;
     List<String> ExamQuestion, ExamChoice, ExamAnswer;
     List<String> topics;
 
@@ -23,6 +24,15 @@ public class CourseModel {
         ExamAnswer = examAnswer;
         this.creatorID = creatorID;
         this.topics = topics;
+    }
+
+    @Exclude
+    public String getDocumentID() {
+        return documentID;
+    }
+
+    public void setDocumentID(String documentID) {
+        this.documentID = documentID;
     }
 
     public String getCourseName() {

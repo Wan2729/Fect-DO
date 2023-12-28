@@ -15,6 +15,7 @@ import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.models.TopicModel;
 import com.example.fectdo.utils.AndroidUtil;
 import com.example.fectdo.utils.FirebaseUtil;
+import com.example.fectdo.utils.YouTubeLinkConverter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -36,6 +37,7 @@ public class AddCourse extends AppCompatActivity {
     List<String> topicList;
 
     List<View> viewList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,7 +129,7 @@ public class AddCourse extends AppCompatActivity {
         for(Map.Entry<String, String> entry : topicDetailsList.entrySet()){
             TopicModel topic = new TopicModel();
             topic.setTopicName(entry.getKey());
-            topic.setVideoLink(entry.getValue());
+            topic.setVideoLink(YouTubeLinkConverter.convertToEmbedLink(entry.getValue()));
 
             topicCollectionReference.add(topic).addOnCompleteListener(task -> {
                 if(task.isSuccessful()){
