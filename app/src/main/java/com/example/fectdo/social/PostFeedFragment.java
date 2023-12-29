@@ -38,6 +38,7 @@ public class PostFeedFragment extends Fragment {
     PostFeedAdapter postFeedAdapter;
     DatabaseReference dbRef;
     ProgressBar progressBar;
+    View view;
 
     public PostFeedFragment() {
 
@@ -47,7 +48,7 @@ public class PostFeedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_post_feed, container, false);
+        view = inflater.inflate(R.layout.fragment_post_feed, container, false);
 
         firstArrive = true;
 
@@ -101,7 +102,7 @@ public class PostFeedFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Error getting database.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Error getting database.", Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
                 reloadButton.setVisibility(View.VISIBLE);
             }
