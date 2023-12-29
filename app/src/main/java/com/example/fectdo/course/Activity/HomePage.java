@@ -1,5 +1,6 @@
 package com.example.fectdo.course.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,8 +29,11 @@ import com.example.fectdo.social.SocialActivity;
 import com.example.fectdo.utils.AndroidUtil;
 import com.example.fectdo.utils.FirebaseUtil;
 import com.example.fectdo.utils.Navigation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -37,6 +42,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class HomePage extends AppCompatActivity {
     final String COURSE_KEY = "course";
@@ -125,37 +131,72 @@ public class HomePage extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        CollectionReference enrollment = FirebaseUtil.getCollection("enrollment");
 
-        courseCollectionRef.addSnapshotListener(HomePage.this, new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                if(error != null){
-                    AndroidUtil.showToast(HomePage.this, error.toString());
-                    return;
-                }
+        enrollment.whereEqualTo("userID", FirebaseUtil.currentUserId())
+                        .addSnapshotListener(HomePage.this, new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                                if(error != null){
+                                    AndroidUtil.showToast(HomePage.this, error.toString());
+                                    return;
+                                }
 
-                if(queryDocumentSnapshots != null){
-                    myCourseList = new ArrayList<>();
-                    for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
-                        course = documentSnapshot.toObject(CourseModel.class);
-                        course.setDocumentID(documentSnapshot.getId());
+                                if(queryDocumentSnapshots != null){
+                                    myCourseList = new ArrayList<>();
+                                    int totalTasks = queryDocumentSnapshots.size();
+                                    AtomicInteger completedTasks = new AtomicInteger(0);
 
-                        myCourseList.add(course);
-                    }
-                    myCourseAdapter.setCourseList(myCourseList);
-                    recyclerView.setAdapter(myCourseAdapter);
-                }
-                else{
-                    AndroidUtil.showToast(HomePage.this, "onEvent: queryDocumentSnapshots is null");
-                }
-            }
-        });
+                                    for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
+                                        String courseID = documentSnapshot.getString("courseID");
+                                        FirebaseUtil.getDocumentById("course", courseID, CourseModel.class)
+                                                .addOnCompleteListener(task -> {
+                                                    course = task.getResult();
 
-    }
+                                                    if(course != null){
+                                                        myCourseList.add(course);
+                                                    }
 
-    void letupload(){
-        Intent upload=new Intent(this, UploadActivity.class);
-        startActivity(upload);
+                                                    // Check if all tasks are completed
+                                                    if (completedTasks.incrementAndGet() == totalTasks) {
+                                                        myCourseAdapter.setCourseList(myCourseList);
+                                                        recyclerView.setAdapter(myCourseAdapter);
+                                                    }
+                                                });
+                                    }
+                                    myCourseAdapter.setCourseList(myCourseList);
+                                    recyclerView.setAdapter(myCourseAdapter);
+                                }
+                                else{
+                                    AndroidUtil.showToast(HomePage.this, "onEvent: queryDocumentSnapshots is null");
+                                }
+                            }
+                        });
+
+//        courseCollectionRef.addSnapshotListener(HomePage.this, new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+//                if(error != null){
+//                    AndroidUtil.showToast(HomePage.this, error.toString());
+//                    return;
+//                }
+//
+//                if(queryDocumentSnapshots != null){
+//                    myCourseList = new ArrayList<>();
+//                    for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
+//                        course = documentSnapshot.toObject(CourseModel.class);
+//                        course.setDocumentID(documentSnapshot.getId());
+//
+//                        myCourseList.add(course);
+//                    }
+//                    myCourseAdapter.setCourseList(myCourseList);
+//                    recyclerView.setAdapter(myCourseAdapter);
+//                }
+//                else{
+//                    AndroidUtil.showToast(HomePage.this, "onEvent: queryDocumentSnapshots is null");
+//                }
+//            }
+//        });
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -172,10 +213,6 @@ public class HomePage extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.top_menu, menu);
         return true;
-    }
-
-    void gotoCourse(){
-
     }
 
     public void goToCareer(View view){
