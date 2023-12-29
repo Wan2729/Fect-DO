@@ -6,13 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.fectdo.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,8 +32,8 @@ public class FindFriendsFragment extends Fragment {
     private FindFriendAdapter findFriendAdapter;
     private List<FindFriendModel> findFriendModelList;
     private TextView tvEmptyFriendsList;
-    private DatabaseReference databaseReference;
     private FirebaseUser currentUser;
+    private DatabaseReference databaseReferenceFriendRequests;
     private View progressBar;
 
     public FindFriendsFragment() {
@@ -65,6 +63,7 @@ public class FindFriendsFragment extends Fragment {
         rvFindFriends.setAdapter(findFriendAdapter);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        databaseReferenceFriendRequests = FirebaseDatabase.getInstance().getReference().child("FRIEND_REQUEST").child(currentUser.getUid());
 
         tvEmptyFriendsList.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.VISIBLE);
@@ -72,9 +71,8 @@ public class FindFriendsFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Query query = db.collection("users").orderBy("username");
 
-// ...
-
         query.addSnapshotListener((queryDocumentSnapshots, error) -> {
+
             if (error != null) {
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(getContext(), "Failed to fetch friends: " + error.getMessage(), Toast.LENGTH_SHORT).show();
@@ -93,19 +91,34 @@ public class FindFriendsFragment extends Fragment {
                         String fullName = document.getString("username");
                         String photoName = document.getString("fileUrl");
 
-                        findFriendModelList.add(new FindFriendModel(fullName, photoName, userId, false));
+                        databaseReferenceFriendRequests.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if(snapshot.exists()){
+                                    String requestType = snapshot.child("REQUEST_TYPE").getValue().toString();
+                                    if(requestType.equals(Constants.REQUEST_STATUS_SENT)){
+                                        findFriendModelList.add(new FindFriendModel(fullName, photoName, userId, true));
+                                        findFriendAdapter.notifyDataSetChanged();
+                                    }
+                                }
+                                else{
+                                    findFriendModelList.add(new FindFriendModel(fullName, photoName, userId, false));
+                                    findFriendAdapter.notifyDataSetChanged();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        });
                     }
                 }
 
-                findFriendAdapter.notifyDataSetChanged();
-
-                if (findFriendModelList.isEmpty()) {
-                    tvEmptyFriendsList.setVisibility(View.VISIBLE);
-                } else {
-                    tvEmptyFriendsList.setVisibility(View.GONE);
-                }
-
+                tvEmptyFriendsList.setVisibility(View.GONE);
                 progressBar.setVisibility(View.GONE);
+
+
             }
         });
 
