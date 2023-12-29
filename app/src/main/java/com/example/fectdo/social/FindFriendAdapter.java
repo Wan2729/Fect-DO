@@ -67,6 +67,7 @@ public class FindFriendAdapter extends RecyclerView.Adapter<FindFriendAdapter.Fi
         // Always set the initial visibility state
         holder.btnSendRequest.setVisibility(View.VISIBLE);
         holder.btnCancelRequest.setVisibility(View.GONE);
+        holder.pbRequest.setVisibility(View.GONE);
 
         if (friendModel.isRequestSent()) {
             holder.btnSendRequest.setVisibility(View.GONE);
@@ -75,6 +76,7 @@ public class FindFriendAdapter extends RecyclerView.Adapter<FindFriendAdapter.Fi
             holder.btnSendRequest.setVisibility(View.VISIBLE);
             holder.btnCancelRequest.setVisibility(View.GONE);
         }
+
 
         holder.btnSendRequest.setOnClickListener(v -> {
             holder.btnSendRequest.setVisibility(View.GONE);
@@ -91,6 +93,7 @@ public class FindFriendAdapter extends RecyclerView.Adapter<FindFriendAdapter.Fi
                                             Toast.makeText(context, "Request Successfully", Toast.LENGTH_SHORT).show();
                                             holder.btnCancelRequest.setVisibility(View.VISIBLE);
                                             holder.pbRequest.setVisibility(View.GONE);
+                                            holder.btnSendRequest.setVisibility(View.GONE);
                                         } else {
                                             Toast.makeText(context, "Failed to send request: " + task.getException(), Toast.LENGTH_SHORT).show();
                                             holder.btnCancelRequest.setVisibility(View.GONE);
@@ -102,6 +105,39 @@ public class FindFriendAdapter extends RecyclerView.Adapter<FindFriendAdapter.Fi
                             Toast.makeText(context, "Failed to send request: " + task.getException(), Toast.LENGTH_SHORT).show();
                             holder.btnCancelRequest.setVisibility(View.GONE);
                             holder.btnSendRequest.setVisibility(View.VISIBLE);
+                            holder.pbRequest.setVisibility(View.GONE);
+                        }
+                    });
+        });
+
+
+        holder.btnCancelRequest.setOnClickListener(v -> {
+            holder.btnCancelRequest.setVisibility(View.GONE);
+            holder.pbRequest.setVisibility(View.VISIBLE);
+
+            userId = friendModel.getUserID();
+
+            friendRequestDatabase.child(currentUser.getUid()).child(userId).child("REQUEST_TYPE")
+                    .setValue(null).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            friendRequestDatabase.child(userId).child(currentUser.getUid()).child("REQUEST_TYPE")
+                                    .setValue(null).addOnCompleteListener(innerTask -> {
+                                        if (innerTask.isSuccessful()) {
+                                            Toast.makeText(context, "Cancel Successfully", Toast.LENGTH_SHORT).show();
+                                            holder.btnCancelRequest.setVisibility(View.GONE);
+                                            holder.btnSendRequest.setVisibility(View.VISIBLE);
+                                            holder.pbRequest.setVisibility(View.GONE);
+                                        } else {
+                                            Toast.makeText(context, "Failed to cancel request: " +task.getException(), Toast.LENGTH_SHORT).show();
+                                            holder.btnCancelRequest.setVisibility(View.VISIBLE);
+                                            holder.btnSendRequest.setVisibility(View.GONE);
+                                            holder.pbRequest.setVisibility(View.GONE);
+                                        }
+                                    });
+                        } else {
+                            Toast.makeText(context, "Failed to cancel request: " + task.getException(), Toast.LENGTH_SHORT).show();
+                            holder.btnCancelRequest.setVisibility(View.VISIBLE);
+                            holder.btnSendRequest.setVisibility(View.GONE);
                             holder.pbRequest.setVisibility(View.GONE);
                         }
                     });
