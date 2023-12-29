@@ -39,6 +39,7 @@ public class MyPostFragment extends Fragment {
     String username,description;
     RecyclerView recyclerView;
     FirebaseAuth mAuth;
+    View view;
     public MyPostFragment() {
 
     }
@@ -47,7 +48,7 @@ public class MyPostFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_my_post, container, false);
+        view = inflater.inflate(R.layout.fragment_my_post, container, false);
 
         recyclerView = view.findViewById(R.id.recycleView);
         usernameTextView = view.findViewById(R.id.usernameTextView);
@@ -78,7 +79,7 @@ public class MyPostFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Error getting database.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Error getting database.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -100,10 +101,10 @@ public class MyPostFragment extends Fragment {
                         usernameTextView.setText(username);
                         descriptionTextView.setText(description);
                     } else {
-                        Toast.makeText(getContext(), "Document Snapshot not exist.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), "Document Snapshot not exist.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getContext(), "Failed getting database.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "Failed getting database.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

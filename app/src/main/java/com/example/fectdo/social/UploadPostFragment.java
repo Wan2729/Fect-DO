@@ -42,13 +42,14 @@ public class UploadPostFragment extends Fragment {
     Button uploadButton;
     EditText postDescriptionInput;
     ProgressBar progressBar;
+    View view;
 
     public UploadPostFragment() {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_upload_post, container, false);
+        view = inflater.inflate(R.layout.fragment_upload_post, container, false);
 
         uploadButton = view.findViewById(R.id.uploadButton);
         postDescriptionInput = view.findViewById(R.id.postInput);
@@ -101,7 +102,7 @@ public class UploadPostFragment extends Fragment {
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-                                                Toast.makeText(getContext(), "Data added to database.", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(view.getContext(), "Data added to database.", Toast.LENGTH_SHORT).show();
                                                 postDescriptionInput.setText("");
                                                 progressBar.setVisibility(View.GONE);
                                                 uploadButton.setVisibility(View.VISIBLE);
@@ -109,7 +110,7 @@ public class UploadPostFragment extends Fragment {
                                         }).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(getContext(), "Failed add data to database.", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(view.getContext(), "Failed add data to database.", Toast.LENGTH_SHORT).show();
                                                 progressBar.setVisibility(View.GONE);
                                                 uploadButton.setVisibility(View.VISIBLE);
                                             }
@@ -117,10 +118,10 @@ public class UploadPostFragment extends Fragment {
 
 
                             } else {
-                                Toast.makeText(getContext(), "Document not exist.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(view.getContext(), "Document not exist.", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(getContext(), "Error getting database.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(view.getContext(), "Error getting database.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
