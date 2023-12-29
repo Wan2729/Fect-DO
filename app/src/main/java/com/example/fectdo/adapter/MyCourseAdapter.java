@@ -1,4 +1,4 @@
-package com.example.fectdo.course.Adapter;
+package com.example.fectdo.adapter;
 
 import android.content.Context;
 import android.content.Intent;

@@ -19,9 +19,6 @@
         android:theme="@style/Theme.FectDo"
         tools:targetApi="31">
         <activity
-            android:name=".social.SocialActivity"
-            android:exported="false" />
-        <activity
             android:name=".edit.NotificationActivity"
             android:exported="false" />
         <activity
@@ -92,6 +89,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".social.MainFeedActivity"
+            android:exported="false"/>
         <activity
             android:name=".general.SignUpPage"
             android:label="@string/app_name" />
