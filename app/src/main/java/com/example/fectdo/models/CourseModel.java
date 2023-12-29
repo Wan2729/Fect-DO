@@ -26,7 +26,6 @@ public class CourseModel {
         this.topics = topics;
     }
 
-    @Exclude
     public String getDocumentID() {
         return documentID;
     }

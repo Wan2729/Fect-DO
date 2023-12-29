@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -75,13 +76,10 @@ private Navigation navigation;
                 CourseModel course = documentSnapshot.toObject(CourseModel.class);
                 title.setText(course.getCourseName());
 
+                topicLayout.removeAllViews();
                 if(course.getTopics() != null){
                     for(String topicID : course.getTopics()){
-                        getTopic(topicID);
-                    }
-
-                    for(TopicModel topicDetails : topicList){
-                        loadTopics(topicDetails);
+                        loadTopic(topicID);
                     }
                 }
                 else{
@@ -91,9 +89,8 @@ private Navigation navigation;
         });
     }
 
-    void getTopic(String topicID){
+    void loadTopic(String topicID){
         DocumentReference topicRef = FirebaseFirestore.getInstance().collection("topics").document(topicID);
-        topicLayout.removeAllViews();
 
         topicRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -101,7 +98,8 @@ private Navigation navigation;
                 if(task.isSuccessful()){
                     DocumentSnapshot documentSnapshot = task.getResult();
                     if(documentSnapshot.exists()){
-                        topicList.add(documentSnapshot.toObject(TopicModel.class));
+//                        topicList.add(documentSnapshot.toObject(TopicModel.class));
+                        addCard(documentSnapshot.toObject(TopicModel.class));
                     }
                     else{
                         showToast("There is no topic in this course");
@@ -114,11 +112,12 @@ private Navigation navigation;
         });
     }
 
-    void loadTopics(TopicModel topicDetails){
+    void addCard(TopicModel topicDetails){
         View view = getLayoutInflater().inflate(R.layout.topic_list_card, null);
 
         Button button = view.findViewById(R.id.btnTopicName);
         button.setText(topicDetails.getTopicName());
+        Log.d("Test sini, delete nanti", topicDetails.getTopicName());
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +125,7 @@ private Navigation navigation;
             }
         });
 
+//        topicLayout.removeAllViews();
         topicLayout.addView(view);
     }
 

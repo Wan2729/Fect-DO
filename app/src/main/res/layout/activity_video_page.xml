@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/wallpaper10"
-    tools:context=".course.VideoMathPage">
+    tools:context=".course.Activity.VideoPage">
 
     <include
         android:id="@+id/toolbar"
@@ -30,12 +30,12 @@
         android:id="@+id/rvMyCourse"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="172dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:.7"
         app:layout_constraintEnd_toEndOf="@+id/videoViewChem"
         app:layout_constraintStart_toStartOf="@+id/videoViewChem"
-        app:layout_constraintTop_toBottomOf="@id/videoViewChem">
+        app:layout_constraintTop_toBottomOf="@id/videoViewChem"
+        app:layout_constraintVertical_bias="0.2">
 
         <LinearLayout
             android:id="@+id/linearLayout"

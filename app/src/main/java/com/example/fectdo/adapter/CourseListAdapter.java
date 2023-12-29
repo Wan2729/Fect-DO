@@ -1,6 +1,7 @@
 package com.example.fectdo.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.R;
+import com.example.fectdo.models.EnrollmentModel;
+import com.example.fectdo.utils.FirebaseUtil;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -36,9 +48,39 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        CourseModel couse = courseList.get(position);
+        CourseModel course = courseList.get(position);
+        String userID = FirebaseUtil.currentUserId();
+        String courseID = course.getDocumentID();
 
-        holder.courseTitle.setText(couse.getCourseName());
+        holder.courseTitle.setText(course.getCourseName());
+
+        FirebaseUtil.getCollection("enrollment")
+                .whereEqualTo("userID", userID)
+                .whereEqualTo("courseID", courseID)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                        if(queryDocumentSnapshots.isEmpty()){
+                            holder.enrollButton.setText("Enroll ");
+                            holder.enrollButton.setEnabled(true);
+                        }
+                        else {
+                            holder.enrollButton.setText("Enrolled");
+                        }
+                        holder.enrollButton.setVisibility(View.VISIBLE);
+                    }
+                });
+
+        holder.enrollButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EnrollmentModel enroll = new EnrollmentModel(FirebaseUtil.currentUserId(), course.getDocumentID());
+
+                FirebaseUtil.getCollection("enrollment").add(enroll);
+                holder.enrollButton.setText("Enrolled");
+                holder.enrollButton.setEnabled(false);
+            }
+        });
     }
 
     @Override
@@ -49,22 +91,17 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView icon;
         TextView courseTitle;
-        Button manageButton;
+        Button enrollButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             icon = itemView.findViewById(com.example.fectdo.R.id.ibCourseIcon);
             courseTitle = itemView.findViewById(com.example.fectdo.R.id.tvCourseName);
-            manageButton = itemView.findViewById(R.id.btnManage);
+            enrollButton = itemView.findViewById(R.id.btnManage);
 
-            manageButton.setText("Enroll");
-            manageButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    manageButton.setText("Enrolled");
-                }
-            });
+            enrollButton.setEnabled(false);
+            enrollButton.setVisibility(View.INVISIBLE);
         }
     }
 }

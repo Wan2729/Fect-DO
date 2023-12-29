@@ -1,6 +1,7 @@
 package com.example.fectdo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fectdo.course.Activity.VideoPage;
 import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.R;
 
@@ -36,9 +38,19 @@ public class CourseListManagerAdapter extends RecyclerView.Adapter<CourseListMan
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        CourseModel couse = courseList.get(position);
+        CourseModel course = courseList.get(position);
 
-        holder.courseTitle.setText(couse.getCourseName());
+        holder.courseTitle.setText(course.getCourseName());
+
+        holder.viewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, VideoPage.class);
+                intent.putExtra("COURSE_DOCUMENT_REF", course.getDocumentID());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -49,16 +61,16 @@ public class CourseListManagerAdapter extends RecyclerView.Adapter<CourseListMan
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView icon;
         TextView courseTitle;
-        Button manageButton;
+        Button viewButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             icon = itemView.findViewById(com.example.fectdo.R.id.ibCourseIcon);
             courseTitle = itemView.findViewById(com.example.fectdo.R.id.tvCourseName);
-            manageButton = itemView.findViewById(R.id.btnManage);
+            viewButton = itemView.findViewById(R.id.btnManage);
 
-            manageButton.setText("Edit");
+            viewButton.setText("View Course");
         }
     }
 }

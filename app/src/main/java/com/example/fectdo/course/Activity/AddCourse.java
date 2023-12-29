@@ -1,5 +1,6 @@
 package com.example.fectdo.course.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import com.example.fectdo.models.TopicModel;
 import com.example.fectdo.utils.AndroidUtil;
 import com.example.fectdo.utils.FirebaseUtil;
 import com.example.fectdo.utils.YouTubeLinkConverter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 
@@ -139,7 +142,13 @@ public class AddCourse extends AppCompatActivity {
                         CourseModel course = new CourseModel(courseTitle);
                         course.setCreatorID(getIntent().getStringExtra(USER_ID));
                         course.setTopics(topicList);
-                        courseCollectionReference.add(course);
+                        courseCollectionReference.add(course).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                                DocumentReference document = task.getResult();
+                                document.update("documentID", document.getId());
+                            }
+                        });
                         showToast(courseTitle + " course is successfully added");
                     }
                 }
