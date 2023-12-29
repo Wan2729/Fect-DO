@@ -23,6 +23,7 @@ import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.career.CareerMain;
 import com.example.fectdo.R;
 import com.example.fectdo.social.MainFeedActivity;
+import com.example.fectdo.social.SocialActivity;
 import com.example.fectdo.utils.AndroidUtil;
 import com.example.fectdo.utils.FirebaseUtil;
 import com.example.fectdo.utils.Navigation;
@@ -42,7 +43,7 @@ public class HomePage extends AppCompatActivity {
     ImageView uploadButton;
     ImageButton manageCourse;
     Button searchButton;
-    ImageButton socialButton;
+    ImageButton socialButton,btnCommunity;
 
     //Database
     CollectionReference courseCollectionRef;
@@ -89,6 +90,7 @@ public class HomePage extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
         myCourseAdapter = new MyCourseAdapter(getApplicationContext());
+        btnCommunity = findViewById(R.id.btnCommunity);
 
         searchButton = findViewById(R.id.btnSearch);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -178,6 +180,11 @@ public class HomePage extends AppCompatActivity {
 
     public void goToCareer(View view){
         Intent intent = new Intent(this, CareerMain.class);
+        startActivity(intent);
+    }
+
+    public void goToCommunity(View view){
+        Intent intent = new Intent(this , SocialActivity.class);
         startActivity(intent);
     }
 }

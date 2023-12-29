@@ -38,19 +38,18 @@ public class FindFriendAdapter extends RecyclerView.Adapter<FindFriendAdapter.Fi
     public void onBindViewHolder(@NonNull FindFriendAdapter.FindFriendViewHolder holder, int position) {
         FindFriendModel friendModel = findFriendModelList.get(position);
 
-
         holder.tvFullName.setText(friendModel.getUserName());
         StorageReference fileRef = FirebaseStorage.getInstance().getReference().child(Constants.IMAGE_FOLDER+"/"+friendModel.getPhotoName());
-        fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(context)
-                        .load(uri)
-                        .placeholder(R.drawable.default_profile)
-                        .error(R.drawable.default_profile)
-                        .into(holder.ivProfile);
 
-            }
+        fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+            Glide.with(context)
+                    .load(uri)
+                    .placeholder(R.drawable.default_profile)
+                    .error(R.drawable.default_profile)
+                    .into(holder.ivProfile);
+        }).addOnFailureListener(exception -> {
+            // Handle the failure to load the image
+            holder.ivProfile.setImageResource(R.drawable.default_profile);
         });
     }
 

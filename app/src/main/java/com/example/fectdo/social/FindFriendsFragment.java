@@ -89,7 +89,7 @@ public class FindFriendsFragment extends Fragment {
                     if (userId.equals(currentUser.getUid()))
                         continue;
 
-                    if (document.getString("username") != null) {
+                    if (document.getString("username") != null && document.getString("fileUrl") != null) {
                         String fullName = document.getString("username");
                         String photoName = document.getString("fileUrl");
 
