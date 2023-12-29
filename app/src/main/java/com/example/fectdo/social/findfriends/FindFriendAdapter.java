@@ -1,4 +1,4 @@
-package com.example.fectdo.social;
+package com.example.fectdo.social.findfriends;
 
 import android.content.Context;
 import android.net.Uri;
@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.fectdo.R;
+import com.example.fectdo.social.Constants;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

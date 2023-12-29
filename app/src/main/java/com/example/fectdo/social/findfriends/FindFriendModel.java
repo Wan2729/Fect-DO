@@ -1,4 +1,4 @@
-    package com.example.fectdo.social;
+    package com.example.fectdo.social.findfriends;
 
     public class FindFriendModel {
 

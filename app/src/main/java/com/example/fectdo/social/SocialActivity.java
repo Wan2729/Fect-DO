@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.example.fectdo.R;
 import com.example.fectdo.course.Activity.HomePage;
+import com.example.fectdo.social.findfriends.FindFriendsFragment;
+import com.example.fectdo.social.request.RequestsFragment;
 import com.example.fectdo.utils.Navigation;
 import com.google.android.material.tabs.TabLayout;
 

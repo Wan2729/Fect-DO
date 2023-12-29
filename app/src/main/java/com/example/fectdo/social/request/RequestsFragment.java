@@ -1,4 +1,4 @@
-package com.example.fectdo.social;
+package com.example.fectdo.social.request;
 
 import android.os.Bundle;
 
