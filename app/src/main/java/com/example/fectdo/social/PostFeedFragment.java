@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.fectdo.R;
 import com.example.fectdo.adapter.PostFeedAdapter;
 import com.example.fectdo.models.PostModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,7 +50,6 @@ public class PostFeedFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_post_feed, container, false);
-
         firstArrive = true;
 
         recyclerView = view.findViewById(R.id.recycleView);
