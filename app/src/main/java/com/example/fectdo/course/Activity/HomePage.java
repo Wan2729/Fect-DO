@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import com.example.fectdo.TAG.TAG;
 import com.example.fectdo.adapter.MyCourseAdapter;
 import com.example.fectdo.course.UploadActivity;
+import com.example.fectdo.edit.ProfileActivity;
+import com.example.fectdo.edit.SettingActivity;
 import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.career.CareerMain;
 import com.example.fectdo.R;
@@ -31,6 +33,8 @@ import com.example.fectdo.utils.FirebaseUtil;
 import com.example.fectdo.utils.Navigation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -50,6 +54,7 @@ public class HomePage extends AppCompatActivity {
     ImageButton manageCourse;
     Button searchButton;
     ImageButton socialButton,btnCommunity;
+    BottomNavigationView bottomNavigationView;
 
     //Database
     CollectionReference courseCollectionRef;
@@ -76,9 +81,30 @@ public class HomePage extends AppCompatActivity {
         uploadButton = findViewById(R.id.btnUpload);
 
 
-        navigation = new Navigation(this);
+//          navigation = new Navigation(this);
+//
+//        navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
 
-        navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
+        //Setup Bottom Navigation
+        bottomNavigationView = findViewById(R.id.nav_view);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if(item.getItemId()==R.id.navigation_setting){
+                    Intent intent = new Intent(HomePage.this, SettingActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                if (item.getItemId()==R.id.navigation_profile){
+                    Intent intent = new Intent(HomePage.this, ProfileActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                return true;
+            }
+        });
+        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+
         uploadButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 Intent intent = new Intent(getApplicationContext(), AddCourse.class);
@@ -221,7 +247,8 @@ public class HomePage extends AppCompatActivity {
     }
 
     public void goToCommunity(View view){
-        Intent intent = new Intent(this , SocialActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(HomePage.this, SocialActivity.class));
     }
+
+
 }

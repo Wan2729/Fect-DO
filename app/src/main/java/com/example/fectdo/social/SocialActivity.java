@@ -18,24 +18,53 @@ import android.widget.Toast;
 
 import com.example.fectdo.R;
 import com.example.fectdo.course.Activity.HomePage;
+import com.example.fectdo.edit.ProfileActivity;
+import com.example.fectdo.edit.SettingActivity;
 import com.example.fectdo.social.findfriends.FindFriendsFragment;
 import com.example.fectdo.social.request.RequestsFragment;
 import com.example.fectdo.utils.Navigation;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
 
 public class SocialActivity extends AppCompatActivity {
     private Navigation navigation;
-    private TabLayout tabLayout;
+    TabLayout tabLayout;
     private ViewPager2 viewPager;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_social);
 
-        navigation = new Navigation(this);
+//        navigation = new Navigation(this);
+//
+//        navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
 
-        navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
+        bottomNavigationView = findViewById(R.id.nav_view);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if(item.getItemId()==R.id.navigation_home){
+                    Intent intent = new Intent(SocialActivity.this,HomePage.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+                if(item.getItemId()==R.id.navigation_setting){
+                    Intent intent = new Intent(SocialActivity.this,SettingActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+                if(item.getItemId()==R.id.navigation_profile){
+                    Intent intent = new Intent(SocialActivity.this,ProfileActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+                return true;
+            }
+        });
+
         tabLayout = findViewById(R.id.tabMain);
         viewPager = findViewById(R.id.vpMain);
 

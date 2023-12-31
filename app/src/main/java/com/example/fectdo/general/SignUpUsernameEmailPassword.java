@@ -32,6 +32,8 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -139,12 +141,9 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
                     updateNameAndPhoto();
                 }
                 Toast.makeText(this, "Sign Up Successful", Toast.LENGTH_LONG).show();
-                if(userModel!=null){
-                    userModel.setUsername(username);
-                } else {
-                    userModel = new UserModel(username, Timestamp.now(),email, this.description, strFileName);
-                }
-
+                userModel = new UserModel(username, Timestamp.now(),email, this.description, strFileName);
+                userModel.setUsername(username);
+                Log.d("USERNAME CHECK",username);
                 FirebaseUtil.currentUserDetails().set(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
