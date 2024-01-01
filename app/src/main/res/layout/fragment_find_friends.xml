@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".findfriends.FindFriendsFragment">
+    tools:context="social.findfriends.FindFriendsFragment">
 
     <include
         layout="@layout/custom_progressbar"

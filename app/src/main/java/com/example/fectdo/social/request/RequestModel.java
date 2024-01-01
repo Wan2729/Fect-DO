@@ -1,10 +1,16 @@
 package com.example.fectdo.social.request;
 
+
 public class RequestModel {
 
     private String userId;
     private String userName;
     private String photoName;
+
+    public RequestModel() {
+        // Default constructor required for Firebase
+    }
+
 
     public RequestModel(String userId, String userName, String photoName) {
         this.userId = userId;
@@ -36,3 +42,4 @@ public class RequestModel {
         this.photoName = photoName;
     }
 }
+
