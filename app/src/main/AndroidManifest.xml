@@ -19,9 +19,6 @@
         android:theme="@style/Theme.FectDo"
         tools:targetApi="31">
         <activity
-            android:name=".edit.NotificationActivity"
-            android:exported="false" />
-        <activity
             android:name=".course.Activity.AddCourse"
             android:exported="false" />
         <activity
