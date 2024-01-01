@@ -19,7 +19,6 @@ public class CareerMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_career_main);
 
-
         navigation = new Navigation(this);
 
         navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);

@@ -137,17 +137,18 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((task) -> {
             if (task.isSuccessful()) {
                 mAuth.getCurrentUser();
-                if(localFileUri != null){
+                if (localFileUri != null) {
                     updateNameAndPhoto();
                 }
                 Toast.makeText(this, "Sign Up Successful", Toast.LENGTH_LONG).show();
-                userModel = new UserModel(username, Timestamp.now(),email, this.description, strFileName);
+
+                userModel = new UserModel(username, Timestamp.now(), email, this.description, serverFileUri.getPath());
                 userModel.setUsername(username);
-                Log.d("USERNAME CHECK",username);
+
                 FirebaseUtil.currentUserDetails().set(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Intent intent = new Intent(SignUpUsernameEmailPassword.this, HomePage.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
@@ -161,6 +162,7 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
             }
         });
     }
+
 
     interface UsernameCheckCallback {
         void onUsernameChecked(boolean isTaken);
@@ -273,7 +275,7 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
                                                     databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
 
                                                     HashMap<String, String> hashMap = new HashMap<>();
-                                                    hashMap.put("PHOTO", strFileName);
+                                                    hashMap.put("PHOTO", serverFileUri.getPath());
 
                                                     databaseReference.setValue(hashMap)
                                                             .addOnCompleteListener(dbTask -> {
