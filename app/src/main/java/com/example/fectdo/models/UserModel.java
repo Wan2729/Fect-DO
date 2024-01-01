@@ -5,7 +5,7 @@ import com.google.firebase.Timestamp;
 import java.util.List;
 
 public class UserModel {
-    private static String username;
+    private String username;
     private Timestamp createdTimestamp;
     private String emailAddress;
     private String description;
@@ -19,12 +19,12 @@ public class UserModel {
         this.fileUrl = fileUrl;
     }
 
-    public static String getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    public static void setUsername(String username) {
-        UserModel.username = username;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Timestamp getCreatedTimestamp() {

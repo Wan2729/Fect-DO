@@ -47,6 +47,8 @@ public class MyPostFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_my_post, container, false);
 
@@ -62,6 +64,10 @@ public class MyPostFragment extends Fragment {
         PostFeedAdapter postFeedAdapter = new PostFeedAdapter(postModels,getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(postFeedAdapter);
+
+        if(mAuth==null){
+            return null;
+        }
 
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Posts").child(mAuth.getUid());
         dbRef.addValueEventListener(new ValueEventListener() {
@@ -87,6 +93,9 @@ public class MyPostFragment extends Fragment {
     }
 
     public void setUpUsernameAndDescription(){
+        if(mAuth==null){
+            return;
+        }
         DocumentReference dataRef = FirebaseFirestore.getInstance()
                 .collection("users")
                 .document(mAuth.getUid());

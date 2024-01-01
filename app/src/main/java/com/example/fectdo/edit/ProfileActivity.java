@@ -17,12 +17,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.fectdo.R;
+import com.example.fectdo.course.Activity.HomePage;
 import com.example.fectdo.general.LoginEmailPassword;
 import com.example.fectdo.utils.Navigation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,6 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageView ivProfile;
     private FirebaseUser firebaseUser;
     private Uri serverFileUri;
+    BottomNavigationView bottomNavigationView;
 
     private Button signUpBtn;
     private Navigation navigation;
@@ -48,9 +52,29 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        navigation = new Navigation(this);
+//        navigation = new Navigation(this);
+//
+//        navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
 
-        navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
+        //Setup Bototm Naviagtion View
+        bottomNavigationView = findViewById(R.id.nav_view);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if(item.getItemId()==R.id.navigation_setting){
+                    Intent intent = new Intent(ProfileActivity.this, SettingActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                if (item.getItemId()==R.id.navigation_home){
+                    Intent intent = new Intent(ProfileActivity.this, HomePage.class);
+                    startActivity(intent);
+                    finish();
+                }
+                return true;
+            }
+        });
+        bottomNavigationView.setSelectedItemId(R.id.navigation_profile);
 
         etEmail = findViewById(R.id.etEmail);
         etName = findViewById(R.id.etName);

@@ -127,8 +127,8 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/btn_social"
         android:contentDescription="Manage Course Button"
-        android:onClick="goToCommunity"
         android:scaleType="fitXY"
+        android:onClick="goToCommunity"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSosial" />
