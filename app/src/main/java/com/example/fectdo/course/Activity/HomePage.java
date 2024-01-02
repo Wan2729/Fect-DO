@@ -81,9 +81,9 @@ public class HomePage extends AppCompatActivity {
         uploadButton = findViewById(R.id.btnUpload);
 
 
-       navigation = new Navigation(this);
-
-    navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
+//          navigation = new Navigation(this);
+//
+//        navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
 
         //Setup Bottom Navigation
         bottomNavigationView = findViewById(R.id.nav_view);

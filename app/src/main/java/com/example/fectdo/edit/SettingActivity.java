@@ -23,13 +23,6 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        final Button Nextpage = findViewById(R.id.notificationbutton);
-        Nextpage.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                notificationpage();
-            }
-        });
-
         //Setup Bototm Naviagtion View
         bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -81,10 +74,5 @@ public class SettingActivity extends AppCompatActivity {
 //                    }
 //                }
 //        );
-    }
-
-    void notificationpage(){
-        Intent NotificationActivity=new Intent(this,NotificationActivity.class);
-        startActivity(NotificationActivity);
     }
 }
