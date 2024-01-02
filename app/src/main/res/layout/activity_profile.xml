@@ -72,7 +72,7 @@
         android:layout_height="22dp"
         android:layout_marginBottom="52dp"
         android:background="@android:color/transparent"
-        android:onClick="handleLogout"
+        android:onClick="btnLogoutClick"
         android:text="Logout"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/nav_view"

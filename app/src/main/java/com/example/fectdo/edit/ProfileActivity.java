@@ -1,10 +1,13 @@
 package com.example.fectdo.edit;
 
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,7 +18,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.fectdo.R;
@@ -140,8 +145,6 @@ public class ProfileActivity extends AppCompatActivity {
                         fileRef.getDownloadUrl()
                                 .addOnSuccessListener(uri -> {
                                     serverFileUri = uri;
-                                    userDocRef.set(serverFileUri.getPath());
-
 
                                     UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
                                             .setDisplayName(etName.getText().toString().trim())
@@ -155,15 +158,27 @@ public class ProfileActivity extends AppCompatActivity {
                                                     // Use the correct reference structure here
                                                     databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
 
-                                                    HashMap<String, String> hashMap = new HashMap<>();
-                                                    hashMap.put("PHOTO", serverFileUri.getPath());
-
+                                                    // Update Firestore document with photoUri field
+                                                    userDocRef.update("fileUrl", serverFileUri.getPath())
+                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void aVoid) {
+                                                                    Log.d("ProfileActivity", "Photo URI updated in Firestore.");
+                                                                }
+                                                            })
+                                                            .addOnFailureListener(new OnFailureListener() {
+                                                                @Override
+                                                                public void onFailure(@NonNull Exception e) {
+                                                                    Log.e("ProfileActivity", "Error updating Photo URI in Firestore", e);
+                                                                }
+                                                            });
                                                 }
                                             });
                                 });
                     }
                 });
     }
+
 
     public void updateOnlyNameEmail(){
         String username = etName.getText().toString();
@@ -210,6 +225,44 @@ public class ProfileActivity extends AppCompatActivity {
                             Log.e("ProfileActivity", "Error updating user document in Firestore", e);
                         }
                     });
+        }
+    }
+
+    public void pickImage(View view){
+        //check either user has permission to access file or not
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, 101);
+        } else {
+            // Request permission
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 102);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode==102){
+            if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent,101);
+            }
+            else{
+                Toast.makeText(this, "Access permission is required", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==101){
+            if(resultCode==RESULT_OK){
+
+                localFileUri =data.getData();
+                ivProfile.setImageURI(localFileUri);
+            }
         }
     }
 
