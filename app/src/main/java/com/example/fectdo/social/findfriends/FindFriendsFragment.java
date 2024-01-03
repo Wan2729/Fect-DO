@@ -74,55 +74,42 @@ public class FindFriendsFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Query query = db.collection("users").orderBy("username");
 
-        query.addSnapshotListener((queryDocumentSnapshots, error) -> {
+        // ...
+
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
             findFriendModelList.clear();
 
-            for(DocumentChange ds :queryDocumentSnapshots.getDocumentChanges()) {
-                String userId = ds.getDocument().getId();
+            for (QueryDocumentSnapshot ds : queryDocumentSnapshots) {
+                String userId = ds.getId();
 
                 if (userId.equals(currentUser.getUid())) {
                     continue;
                 }
 
-                if (ds.getDocument().getString("username") != null) {
-                    String fullName = ds.getDocument().getString("username");
-                    String photoName = ds.getDocument().getString("fileUrl");
+                if (ds.getString("username") != null) {
+                    String fullName = ds.getString("username");
+                    String photoName = ds.getString("fileUrl");
 
+                    // Check friend request status directly in Firestore without querying the Realtime Database
+                    String requestType = ds.getString("REQUEST_TYPE");
 
-                    databaseReferenceFriendRequests.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                String requestType = snapshot.child("REQUEST_TYPE").getValue().toString();
-                                if (requestType.equals(Constants.REQUEST_STATUS_SENT)) {
-                                    findFriendModelList.add(new FindFriendModel(fullName, photoName, userId, true));
-                                    findFriendAdapter.notifyDataSetChanged();
-                                }
-                            } else {
-                                findFriendModelList.add(new FindFriendModel(fullName, photoName, userId, false));
-                                findFriendAdapter.notifyDataSetChanged();
-                            }
-                        }
+                    boolean requestSent = requestType != null && requestType.equals(Constants.REQUEST_STATUS_SENT);
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    });
-
+                    findFriendModelList.add(new FindFriendModel(fullName, photoName, userId, requestSent));
                 }
             }
+
+            // Notify adapter and update UI
+            findFriendAdapter.notifyDataSetChanged();
+            tvEmptyFriendsList.setVisibility(findFriendModelList.isEmpty() ? View.VISIBLE : View.GONE);
+            progressBar.setVisibility(View.GONE);
+        }).addOnFailureListener(e -> {
+            // Handle failure to retrieve data
             tvEmptyFriendsList.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
-
-            if(error != null){
-                tvEmptyFriendsList.setVisibility(View.GONE);
-                progressBar.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed to retrieve", Toast.LENGTH_SHORT).show();
-            }
-
-
+            Toast.makeText(getContext(), "Failed to retrieve data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
+
 
     }
 }

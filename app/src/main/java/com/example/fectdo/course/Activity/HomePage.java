@@ -35,6 +35,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -103,6 +105,10 @@ public class HomePage extends AppCompatActivity {
                 return true;
             }
         });
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        Log.d("Authentication", "User ID: " + ((FirebaseUser) currentUser).getUid());
+        Log.d("Authentication", "Display Name: " + currentUser.getDisplayName());
+        Log.d("Authentication", "Email: " + currentUser.getEmail());
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
 
         uploadButton.setOnClickListener(new View.OnClickListener(){

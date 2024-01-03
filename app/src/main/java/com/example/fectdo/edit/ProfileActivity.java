@@ -159,7 +159,7 @@ public class ProfileActivity extends AppCompatActivity {
                                                     databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
 
                                                     // Update Firestore document with photoUri field
-                                                    userDocRef.update("fileUrl", serverFileUri.getPath())
+                                                    userDocRef.update("fileUrl", serverFileUri.toString()) // Use toString() to get the full path
                                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
                                                                 public void onSuccess(Void aVoid) {
@@ -178,6 +178,7 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
 
     public void updateOnlyNameEmail(){
@@ -209,10 +210,13 @@ public class ProfileActivity extends AppCompatActivity {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             DocumentReference userRef = db.collection("users").document(firebaseUser.getUid());
 
+            // Check if serverFileUri is not null before using toString()
+            String photoUriString = (serverFileUri != null) ? serverFileUri.toString() : "";
+
             userRef.update("username", username,
                             "emailAddress", email,
                             "description", description,
-                            "photoUri", serverFileUri.toString())  // Save the photo URI as a string
+                            "photoUri", photoUriString)  // Save the photo URI as a string
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -227,6 +231,7 @@ public class ProfileActivity extends AppCompatActivity {
                     });
         }
     }
+
 
     public void pickImage(View view){
         //check either user has permission to access file or not

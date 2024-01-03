@@ -2,6 +2,8 @@ package com.example.fectdo.social.findfriends;
 
 import android.content.Context;
 import android.net.Uri;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.fectdo.R;
 import com.example.fectdo.social.Constants;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -48,19 +51,39 @@ public class FindFriendAdapter extends RecyclerView.Adapter<FindFriendAdapter.Fi
     @Override
     public void onBindViewHolder(@NonNull FindFriendAdapter.FindFriendViewHolder holder, int position) {
         FindFriendModel friendModel = findFriendModelList.get(position);
+        Log.d("PhotoIdentifier", "Photo identifier: " + friendModel.getPhotoName());
+        Log.d("PhotoIdentifier", "Username identifier: " + friendModel.getUserName());
 
         holder.tvFullName.setText(friendModel.getUserName());
-        StorageReference fileRef = FirebaseStorage.getInstance().getReference().child(Constants.IMAGE_FOLDER+"/"+friendModel.getPhotoName());
-        fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(context)
-                        .load(uri)
-                        .placeholder(R.drawable.default_profile)
-                        .error(R.drawable.default_profile)
-                        .into(holder.ivProfile);
-            }
-        });
+
+        // Check if fileUrl is empty or null before trying to download the image
+        if (!TextUtils.isEmpty(friendModel.getPhotoName())) {
+            StorageReference fileRef = FirebaseStorage.getInstance().getReference().child( friendModel.getPhotoName());
+
+            fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Log.d("Glide", "Loading image for user: " + friendModel.getUserName());
+                    Glide.with(context)
+                            .load(uri)
+                            .placeholder(R.drawable.default_profile)
+                            .error(R.drawable.default_profile)
+                            .into(holder.ivProfile);
+                    Log.d("Glide", "Image loaded successfully");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    // Handle the failure to get download URL (object not found, deleted, etc.)
+                    Log.e("FindFriendAdapter", "Failed to get download URL: " + e.getMessage());
+                    // You can set a default image or take appropriate action here.
+                    holder.ivProfile.setImageResource(R.drawable.default_profile);
+                }
+            });
+        } else {
+            // Handle the case where fileUrl is empty or null (e.g., set a default image)
+            holder.ivProfile.setImageResource(R.drawable.default_profile);
+        }
 
         friendRequestDatabase = FirebaseDatabase.getInstance().getReference().child("FRIEND_REQUEST");
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
