@@ -42,4 +42,3 @@ public class RequestModel {
         this.photoName = photoName;
     }
 }
-

@@ -28,6 +28,7 @@ import com.example.fectdo.career.CareerMain;
 import com.example.fectdo.course.Activity.HomePage;
 import com.example.fectdo.general.SignUpUsernameEmailPassword;
 import com.example.fectdo.utils.Navigation;
+import com.example.fectdo.utils.NodeNames;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -115,7 +116,6 @@ public class ProfileActivity extends AppCompatActivity {
         firebaseAuth.signOut();
         Intent intent = new Intent(this, HomePage.class);
         startActivity(intent);
-        finish();
     }
 
     public void saveButton(View view){
@@ -127,110 +127,84 @@ public class ProfileActivity extends AppCompatActivity {
                 updateNameAndPhoto();
             }
             if(etName.getText() != null && etEmail != null){
-                updateOnlyNameEmail();
+                updateOnlyName();
             }
         }
     }
 
     private void updateNameAndPhoto() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference userDocRef = db.collection("users").document(firebaseUser.getUid());
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String strFileName = firebaseUser.getUid() + ".jpg";
         final StorageReference fileRef = fileStorage.child("images/" + strFileName);
 
-        fileRef.putFile(localFileUri)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        fileRef.getDownloadUrl()
-                                .addOnSuccessListener(uri -> {
-                                    serverFileUri = uri;
+        fileRef.putFile(localFileUri).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                    serverFileUri = uri;
 
-                                    UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
-                                            .setDisplayName(etName.getText().toString().trim())
-                                            .setPhotoUri(serverFileUri)
-                                            .build();
+                    updateProfileData(etName.getText().toString().trim());
+                    updateFirestore(etName.getText().toString(), etEmail.getText().toString(), etBio.getText().toString());
+                });
+            }
+        });
+    }
 
-                                    firebaseUser.updateProfile(request)
-                                            .addOnCompleteListener(profileTask -> {
-                                                if (profileTask.isSuccessful()) {
-                                                    String userID = firebaseUser.getUid();
-                                                    // Use the correct reference structure here
-                                                    databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+    private void updateOnlyName() {
+        updateProfileData(etName.getText().toString().trim());
+        updateFirestore(etName.getText().toString(), etEmail.getText().toString(), etBio.getText().toString());
+    }
 
-                                                    // Update Firestore document with photoUri field
-                                                    userDocRef.update("fileUrl", serverFileUri.toString()) // Use toString() to get the full path
-                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                @Override
-                                                                public void onSuccess(Void aVoid) {
-                                                                    Log.d("ProfileActivity", "Photo URI updated in Firestore.");
-                                                                }
-                                                            })
-                                                            .addOnFailureListener(new OnFailureListener() {
-                                                                @Override
-                                                                public void onFailure(@NonNull Exception e) {
-                                                                    Log.e("ProfileActivity", "Error updating Photo URI in Firestore", e);
-                                                                }
-                                                            });
-                                                }
-                                            });
-                                });
+    private void updateProfileData(String username) {
+        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                .setDisplayName(username)
+                .setPhotoUri(serverFileUri)
+                .build();
+
+        firebaseUser.updateProfile(request).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                String userID = firebaseUser.getUid();
+                databaseReference = FirebaseDatabase.getInstance().getReference().child(NodeNames.USERS);
+
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put(NodeNames.NAME, username);
+                hashMap.put(NodeNames.DESCRIPTION, etBio.getText().toString());
+
+                if (serverFileUri != null) {
+                    hashMap.put(NodeNames.PHOTO, serverFileUri.toString());
+                }
+
+                databaseReference.child(userID).setValue(hashMap).addOnCompleteListener(databaseTask -> {
+                    if (databaseTask.isSuccessful()) {
+                        Log.d("FirebaseDatabase", "User profile updated successfully");
+                        Toast.makeText(ProfileActivity.this, "User profile updated successfully", Toast.LENGTH_SHORT).show();
+
+                        }
+                    else {
+                        Log.e("FirebaseDatabase", "Failed to update profile in Realtime Database", databaseTask.getException());
+                        Toast.makeText(ProfileActivity.this, "Failed to update profile in Realtime Database" + databaseTask.getException(), Toast.LENGTH_SHORT).show();
                     }
                 });
+            } else {
+                Log.e("FirebaseDatabase", "Failed to update profile in Authentication", task.getException());
+                Toast.makeText(ProfileActivity.this, "Failed to update profile in Authentication" + task.getException(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateFirestore(String username, String email, String description) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference userRef = db.collection("users").document(firebaseUser.getUid());
+
+        String photoUriString = (serverFileUri != null) ? serverFileUri.toString() : "";
+
+        userRef.update("username", username,
+                        "emailAddress", email,
+                        "description", description,
+                        "photoUri", photoUriString)
+                .addOnSuccessListener(aVoid -> Log.d("ProfileActivity", "User document updated in Firestore."))
+                .addOnFailureListener(e -> Log.e("ProfileActivity", "Error updating user document in Firestore", e));
     }
 
 
-
-    public void updateOnlyNameEmail(){
-        String username = etName.getText().toString();
-        String email = etEmail.getText().toString();
-        String description = etBio.getText().toString();
-
-        if (firebaseUser != null) {
-            // Update Firebase Authentication user profile
-            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                    .setDisplayName(username)
-                    .setPhotoUri(serverFileUri)  // Set the photo URI
-                    .build();
-
-            firebaseUser.updateProfile(profileUpdates)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Log.d("ProfileActivity", "User profile updated.");
-                                Toast.makeText(ProfileActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Log.e("ProfileActivity", "Failed to update user profile.");
-                                Toast.makeText(ProfileActivity.this, "Failed to update profile", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            DocumentReference userRef = db.collection("users").document(firebaseUser.getUid());
-
-            // Check if serverFileUri is not null before using toString()
-            String photoUriString = (serverFileUri != null) ? serverFileUri.toString() : "";
-
-            userRef.update("username", username,
-                            "emailAddress", email,
-                            "description", description,
-                            "photoUri", photoUriString)  // Save the photo URI as a string
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d("ProfileActivity", "User document updated in Firestore.");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.e("ProfileActivity", "Error updating user document in Firestore", e);
-                        }
-                    });
-        }
-    }
 
 
     public void pickImage(View view){

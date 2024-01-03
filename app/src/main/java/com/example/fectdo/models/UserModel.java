@@ -6,17 +6,18 @@ import java.util.List;
 
 public class UserModel {
     private String username;
-    private Timestamp createdTimestamp;
     private String emailAddress;
     private String description;
-    private String fileUrl;
 
-    public UserModel(String username, Timestamp createdTimestamp, String emailAddress,String description,String fileUrl) {
+
+    private String photo;
+    private String online;
+
+    public UserModel(String emailAddress, String username, String online, String photo, String description) {
         this.username = username;
-        this.createdTimestamp = createdTimestamp;
         this.emailAddress = emailAddress;
-        this.description =description;
-        this.fileUrl = fileUrl;
+        this.description = description;
+
     }
 
     public String getUsername() {
@@ -25,14 +26,6 @@ public class UserModel {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public Timestamp getCreatedTimestamp() {
-        return createdTimestamp;
-    }
-
-    public void setCreatedTimestamp(Timestamp createdTimestamp) {
-        this.createdTimestamp = createdTimestamp;
     }
 
     public String getEmailAddress() {
@@ -51,11 +44,20 @@ public class UserModel {
         this.description = description;
     }
 
-    public String getFileUrl() {
-        return fileUrl;
+
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setFileUrl(String fileUrl) {
-        this.fileUrl = fileUrl;
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getOnline() {
+        return online;
+    }
+
+    public void setOnline(String online) {
+        this.online = online;
     }
 }

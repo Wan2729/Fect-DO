@@ -1,10 +1,10 @@
-package com.example.fectdo.social;
+package com.example.fectdo.utils;
 
 
 public class Constants {
 
     public static final String IMAGE_FOLDER="images";
-    public static final Object REQUEST_STATUS_SENT = "Sent";
-
+    public static final Object REQUEST_STATUS_SENT = "sent";
     public static final Object REQUEST_STATUS_RECEIVED = "received";
+
 }

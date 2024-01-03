@@ -26,6 +26,7 @@ public class LoginEmailPassword extends AppCompatActivity {
     FirebaseAuth mAuth;
     TextView gotoSignUpBtn;
     TextView gotoForgotPassword;
+    View progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class LoginEmailPassword extends AppCompatActivity {
         logInButton = findViewById(R.id.logInBtn);
         gotoSignUpBtn = findViewById(R.id.goToSignUpTV);
         gotoForgotPassword = findViewById(R.id.goToForgotPassword);
+        progressBar = findViewById(R.id.progressBar);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -75,16 +77,19 @@ public class LoginEmailPassword extends AppCompatActivity {
     }
 
     void logIn(String email,String password,FirebaseAuth mAuth) {
+        progressBar.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
+                        progressBar.setVisibility(View.GONE);
                         startActivity(new Intent(LoginEmailPassword.this, HomePage.class));
                         finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(LoginEmailPassword.this, "Login Failed.", Toast.LENGTH_LONG).show();
                     }
                 });

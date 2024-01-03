@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import com.example.fectdo.utils.NodeNames;
 
 import android.Manifest;
 import android.content.Intent;
@@ -24,6 +25,7 @@ import com.example.fectdo.course.Activity.HomePage;
 import com.example.fectdo.models.UserModel;
 import com.example.fectdo.utils.FirebaseUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,13 +39,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 
 public class
 SignUpUsernameEmailPassword extends AppCompatActivity {
 
-    FirebaseAuth mAuth;
+    FirebaseAuth firebaseAuth;
     EditText emailInput;
     EditText passwordInput;
     EditText reEnterPasswordInput;
@@ -51,16 +54,17 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
     EditText usernameInput;
     UserModel userModel;
     CollectionReference userDatabase;
-    ProgressBar progressBar;
+
+
 
     private FirebaseUser firebaseUser;
     private ImageView ivProfile;
     private DatabaseReference databaseReference;
     private StorageReference fileStorage;
     private Uri localFileUri, serverFileUri;
-    private String description ="";
+    private String strFileName = "";
+    private View progressBar;
 
-    private String strFileName="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,21 +76,25 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
         reEnterPasswordInput = findViewById(R.id.reEnterPasswordInput);
         signUpBtn = findViewById(R.id.btnSave);
         usernameInput = findViewById(R.id.etName);
-        progressBar = findViewById(R.id.progressBar);
-        mAuth = FirebaseAuth.getInstance();
         userDatabase = FirebaseUtil.getCollection("users");
         ivProfile = findViewById(R.id.ivProfile);
         fileStorage = FirebaseStorage.getInstance().getReference();
+        progressBar = findViewById(R.id.progressBar);
+        firebaseAuth = FirebaseAuth.getInstance();
+        fileStorage = FirebaseStorage.getInstance().getReference().child("images");
 
 
-        signUpBtn.setOnClickListener((v) -> {
+
+    }
+
+    public void signUpButton(View view){
             String username = usernameInput.getText().toString();
             String email = emailInput.getText().toString();
             String password = passwordInput.getText().toString();
             String reEnterPassword = reEnterPasswordInput.getText().toString();
 
             if (username.length() < 5) {
-                usernameInput.setError("Username must be at least 8 characters long.");
+                usernameInput.setError("Username must be at least 5 characters long.");
                 return;
             }
 
@@ -101,7 +109,7 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
             }
 
             if (password.length() < 8) {
-                passwordInput.setError("Password must be at least 8 characters long.");
+                passwordInput.setError("Password must be at least 5 characters long.");
                 return;
             }
 
@@ -110,59 +118,23 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
                 return;
             }
 
-            signUpBtn.setVisibility(View.INVISIBLE);
-            progressBar.setVisibility(View.VISIBLE);
 
-            emailIsRegistered(email, isTakenEmail -> {
-                if(isTakenEmail){
-                    signUpBtn.setVisibility(View.VISIBLE);
-                    progressBar.setVisibility(View.INVISIBLE);
-                    emailInput.setError("This email is already registered.");
-                } else {
-                    usernameIsTaken(username, isTakenUserame -> {
-                        if (isTakenUserame){
-                            signUpBtn.setVisibility(View.VISIBLE);
-                            progressBar.setVisibility(View.INVISIBLE);
-                            usernameInput.setError("This username is not available");
-                        } else {
-                            signUp(username, email, password, mAuth);
-                        }
-                    });
-                }
-            });
-        });
-    }
 
-    void signUp(String username, String email, String password, FirebaseAuth mAuth) {
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((task) -> {
-            if (task.isSuccessful()) {
-                mAuth.getCurrentUser();
-                if (localFileUri != null) {
-                    updateNameAndPhoto();
-                }
-                Toast.makeText(this, "Sign Up Successful", Toast.LENGTH_LONG).show();
 
-                userModel = new UserModel(username, Timestamp.now(), email, this.description, serverFileUri.getPath());
-                userModel.setUsername(username);
-
-                FirebaseUtil.currentUserDetails().set(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Intent intent = new Intent(SignUpUsernameEmailPassword.this, HomePage.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                        }
+        emailIsRegistered(email, isTakenEmail -> {
+            if (isTakenEmail) {
+                emailInput.setError("This email is already registered.");
+            } else {
+                usernameIsTaken(username, isTakenUserame -> {
+                    if (isTakenUserame) {
+                        usernameInput.setError("This username is not available");
+                    } else {
+                        signUp(username, email, password,firebaseAuth);  // Removed 'firebaseAuth' parameter
                     }
                 });
-            } else {
-                signUpBtn.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(this, "Sign Up Failed", Toast.LENGTH_LONG).show();
             }
         });
     }
-
 
     interface UsernameCheckCallback {
         void onUsernameChecked(boolean isTaken);
@@ -211,6 +183,49 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
                 });
     }
 
+    public void signUp(String username, String email, String password, FirebaseAuth mAuth) {
+        progressBar.setVisibility(View.VISIBLE);
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((task) -> {
+            if (task.isSuccessful()) {
+                // Get the current user after successful creation
+                firebaseUser = mAuth.getCurrentUser();
+
+                progressBar.setVisibility(View.GONE);
+                if (localFileUri != null) {
+                    updateNameAndPhoto();
+                } else {
+                    updateOnlyName();
+                }
+
+                // Check if serverFileUri is not null before accessing its path
+                if (serverFileUri != null) {
+                    userModel = new UserModel(email, username, "true", "", serverFileUri.getPath());
+                    userModel.setUsername(username);
+                } else {
+                    userModel = new UserModel(email, username, "true", "", "");
+                    userModel.setUsername(username);
+                }
+
+                Toast.makeText(this, "Sign Up Successful", Toast.LENGTH_LONG).show();
+                FirebaseUtil.currentUserDetails().set(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            progressBar.setVisibility(View.GONE);
+                            Intent intent = new Intent(SignUpUsernameEmailPassword.this, HomePage.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        }
+                    }
+                });
+            } else {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(this, "Sign Up Failed", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
     public void pickImage(View view){
         //check either user has permission to access file or not
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
@@ -250,61 +265,102 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
     }
 
     private void updateNameAndPhoto() {
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        strFileName = firebaseUser.getUid() + ".jpg";
-        final StorageReference fileRef = fileStorage.child("images/" + strFileName);
+        progressBar.setVisibility(View.VISIBLE);
 
-        fileRef.putFile(localFileUri)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        fileRef.getDownloadUrl()
-                                .addOnSuccessListener(uri -> {
-                                    serverFileUri = uri;
+        final StorageReference fileRef = fileStorage.child(firebaseUser.getUid() + ".jpg");  // Updated file reference
 
+        fileRef.putFile(localFileUri).addOnCompleteListener(task -> {
+            progressBar.setVisibility(View.GONE);
 
-                                    UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
-                                             .setDisplayName(usernameInput.getText().toString().trim())
-                                            .setPhotoUri(serverFileUri)
-                                            .build();
+            if (task.isSuccessful()) {
+                fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                    serverFileUri = uri;
 
-                                    firebaseUser.updateProfile(request)
-                                            .addOnCompleteListener(profileTask -> {
-                                                if (profileTask.isSuccessful()) {
-                                                    String userID = firebaseUser.getUid();
-                                                    // Use the correct reference structure here
-                                                    databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+                    UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(usernameInput.getText().toString().trim())
+                            .setPhotoUri(Uri.parse(serverFileUri.toString())).build();
 
-                                                    HashMap<String, String> hashMap = new HashMap<>();
-                                                    hashMap.put("PHOTO", serverFileUri.getPath());
+                    firebaseUser.updateProfile(request).addOnCompleteListener(updateProfileTask -> {
+                        if (updateProfileTask.isSuccessful()) {
+                            String userID = firebaseUser.getUid();
+                            databaseReference = FirebaseDatabase.getInstance().getReference().child(NodeNames.USERS);
 
-                                                    databaseReference.setValue(hashMap)
-                                                            .addOnCompleteListener(dbTask -> {
-                                                                if (dbTask.isSuccessful()) {
-                                                                    Toast.makeText(SignUpUsernameEmailPassword.this, "User created successfully", Toast.LENGTH_SHORT).show();
-                                                                    Intent intent = new Intent(SignUpUsernameEmailPassword.this, HomePage.class);
-                                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                                    startActivity(intent);
-                                                                } else {
-                                                                    handleError(dbTask.getException(), "Failed to update profile in database");
-                                                                }
-                                                            });
-                                                } else {
-                                                    handleError(profileTask.getException(), "Failed to update user profile");
-                                                }
-                                            });
-                                });
-                    } else {
-                        // Handle the case where file upload fails
-                        handleError(task.getException(), "Failed to upload profile picture");
-                    }
+                            HashMap<String, String> hashMap = new HashMap<>();
+                            hashMap.put(NodeNames.NAME, usernameInput.getText().toString());
+                            hashMap.put(NodeNames.EMAIL, emailInput.getText().toString());
+                            hashMap.put(NodeNames.ONLINE, "true");
+                            hashMap.put(NodeNames.PHOTO, serverFileUri.toString());
+                            hashMap.put(NodeNames.DESCRIPTION, "");
+
+                            databaseReference.child(userID).setValue(hashMap).addOnCompleteListener(writeToDatabaseTask -> {
+                                if (writeToDatabaseTask.isSuccessful()) {
+                                    Toast.makeText(SignUpUsernameEmailPassword.this, "User created successfully", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Log.e("FirebaseDatabase", "Failed to write to database", writeToDatabaseTask.getException());
+                                    Toast.makeText(SignUpUsernameEmailPassword.this, "Failed to write to database", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            Log.e("FirebaseDatabase", "Failed to update profile", updateProfileTask.getException());
+                            Toast.makeText(SignUpUsernameEmailPassword.this, "Failed to update profile", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 });
+            } else {
+                Log.e("FirebaseStorage", "Failed to upload file", task.getException());
+                Toast.makeText(SignUpUsernameEmailPassword.this, "Failed to upload file", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateOnlyName() {
+        progressBar.setVisibility(View.VISIBLE);
+        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                .setDisplayName(usernameInput.getText().toString().trim()).build();
+
+        firebaseUser.updateProfile(request).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    progressBar.setVisibility(View.GONE);
+                    String userID = firebaseUser.getUid();
+                    databaseReference = FirebaseDatabase.getInstance().getReference().child(NodeNames.USERS);
+
+                    HashMap<String, String> hashMap = new HashMap<>();
+
+                    hashMap.put(NodeNames.NAME, usernameInput.getText().toString());
+                    hashMap.put(NodeNames.EMAIL, emailInput.getText().toString());
+                    hashMap.put(NodeNames.ONLINE, "true");
+                    hashMap.put(NodeNames.PHOTO, "");
+
+                    progressBar.setVisibility(View.VISIBLE);
+                    databaseReference.child(userID).setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("FirebaseDatabase", "User profile updated successfully");
+                                Toast.makeText(SignUpUsernameEmailPassword.this, "User created successfully", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                Log.e("FirebaseDatabase", "Failed to update profile", task.getException());
+                                Toast.makeText(SignUpUsernameEmailPassword.this, "Failed to update profile" + task.getException(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    Log.e("FirebaseDatabase", "Failed to update profile", task.getException());
+                }
+            }
+        });
     }
 
 
-    private void handleError(Exception exception, String message) {
-        Toast.makeText(SignUpUsernameEmailPassword.this, message + exception.getMessage(), Toast.LENGTH_SHORT).show();
-        signUpBtn.setVisibility(View.VISIBLE);
-        progressBar.setVisibility(View.INVISIBLE);
-    }
+
+
+
+
+
+
 
 }
