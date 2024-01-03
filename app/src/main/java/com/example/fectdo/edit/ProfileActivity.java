@@ -144,6 +144,9 @@ public class ProfileActivity extends AppCompatActivity {
                     updateProfileData(etName.getText().toString().trim());
                     updateFirestore(etName.getText().toString(), etEmail.getText().toString(), etBio.getText().toString());
                 });
+            } else {
+                Log.e("FirebaseStorage", "Failed to upload file", task.getException());
+                Toast.makeText(ProfileActivity.this, "Failed to upload file", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -169,7 +172,7 @@ public class ProfileActivity extends AppCompatActivity {
                 hashMap.put(NodeNames.DESCRIPTION, etBio.getText().toString());
 
                 if (serverFileUri != null) {
-                    hashMap.put(NodeNames.PHOTO, serverFileUri.toString());
+                    hashMap.put(NodeNames.PHOTO, serverFileUri.getPath());
                 }
 
                 databaseReference.child(userID).setValue(hashMap).addOnCompleteListener(databaseTask -> {
@@ -177,7 +180,7 @@ public class ProfileActivity extends AppCompatActivity {
                         Log.d("FirebaseDatabase", "User profile updated successfully");
                         Toast.makeText(ProfileActivity.this, "User profile updated successfully", Toast.LENGTH_SHORT).show();
 
-                        }
+                    }
                     else {
                         Log.e("FirebaseDatabase", "Failed to update profile in Realtime Database", databaseTask.getException());
                         Toast.makeText(ProfileActivity.this, "Failed to update profile in Realtime Database" + databaseTask.getException(), Toast.LENGTH_SHORT).show();
@@ -194,7 +197,7 @@ public class ProfileActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference userRef = db.collection("users").document(firebaseUser.getUid());
 
-        String photoUriString = (serverFileUri != null) ? serverFileUri.toString() : "";
+        String photoUriString = (serverFileUri != null) ? serverFileUri.getPath() : "";
 
         userRef.update("username", username,
                         "emailAddress", email,

@@ -55,11 +55,19 @@ public class FindFriendAdapter extends RecyclerView.Adapter<FindFriendAdapter.Fi
         Log.d("FindFriendAdapter", "StorageReference path: " + fileRef.getPath());
 
         fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
-            Glide.with(context)
-                    .load(uri)
-                    .placeholder(R.drawable.default_profile)
-                    .error(R.drawable.default_profile)
-                    .into(holder.ivProfile);
+            if (uri != null) {
+                Log.d("FindFriendAdapter", "Download URL: " + uri.toString());
+                Glide.with(context)
+                        .load(uri)
+                        .placeholder(R.drawable.default_profile)
+                        .error(R.drawable.default_profile)
+                        .into(holder.ivProfile);
+            } else {
+                Log.e("FindFriendAdapter", "File does not exist at: " + fileRef.getPath());
+                holder.ivProfile.setImageResource(R.drawable.default_profile);
+            }
+        }).addOnFailureListener(exception -> {
+            Log.e("FindFriendAdapter", "Failed to download image: " + exception.getMessage());
         });
 
         friendRequestDatabase = FirebaseDatabase.getInstance().getReference().child(NodeNames.FRIEND_REQUEST);

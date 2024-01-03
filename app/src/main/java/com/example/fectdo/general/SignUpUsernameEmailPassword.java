@@ -267,7 +267,7 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
     private void updateNameAndPhoto() {
         progressBar.setVisibility(View.VISIBLE);
 
-        final StorageReference fileRef = fileStorage.child(firebaseUser.getUid() + ".jpg");  // Updated file reference
+        final StorageReference fileRef = fileStorage.child("images/" + firebaseUser.getUid() + ".jpg");  // Updated file reference
 
         fileRef.putFile(localFileUri).addOnCompleteListener(task -> {
             progressBar.setVisibility(View.GONE);
@@ -289,12 +289,15 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
                             hashMap.put(NodeNames.NAME, usernameInput.getText().toString());
                             hashMap.put(NodeNames.EMAIL, emailInput.getText().toString());
                             hashMap.put(NodeNames.ONLINE, "true");
-                            hashMap.put(NodeNames.PHOTO, serverFileUri.toString());
+                            hashMap.put(NodeNames.PHOTO, serverFileUri.getPath());
                             hashMap.put(NodeNames.DESCRIPTION, "");
 
                             databaseReference.child(userID).setValue(hashMap).addOnCompleteListener(writeToDatabaseTask -> {
                                 if (writeToDatabaseTask.isSuccessful()) {
                                     Toast.makeText(SignUpUsernameEmailPassword.this, "User created successfully", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(SignUpUsernameEmailPassword.this, HomePage.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
                                 } else {
                                     Log.e("FirebaseDatabase", "Failed to write to database", writeToDatabaseTask.getException());
                                     Toast.makeText(SignUpUsernameEmailPassword.this, "Failed to write to database", Toast.LENGTH_SHORT).show();
@@ -312,6 +315,7 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
             }
         });
     }
+
 
     private void updateOnlyName() {
         progressBar.setVisibility(View.VISIBLE);
