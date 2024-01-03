@@ -8,13 +8,15 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.example.fectdo.R;
 import com.example.fectdo.course.Activity.HomePage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class SettingActivity extends AppCompatActivity {
+public class SettingActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     BottomNavigationView bottomNavigationView;
 
@@ -74,5 +76,32 @@ public class SettingActivity extends AppCompatActivity {
 //                    }
 //                }
 //        );
+    }
+
+    public void showPopup(View v){
+        PopupMenu showpopup = new PopupMenu(this, v);
+        showpopup.setOnMenuItemClickListener(this);
+        showpopup.inflate(R.menu.popup_menu);
+        showpopup.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.nonoti:
+                Toast.makeText(this, "No notification set", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.everyday:
+                Toast.makeText(this, "Everyday notification set", Toast.LENGTH_SHORT).show();;
+                return true;
+            case R.id.every3:
+                Toast.makeText(this, "3 day notification set", Toast.LENGTH_SHORT).show();;
+                return true;
+            case R.id.everyweek:
+                Toast.makeText(this, "Every week notification set", Toast.LENGTH_SHORT).show();;
+                return true;
+            default:
+                return false;
+        }
     }
 }

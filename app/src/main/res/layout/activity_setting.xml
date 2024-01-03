@@ -108,17 +108,20 @@
         app:track="@drawable/switch_track" />
 
     <Button
-        android:id="@+id/schedulenoti"
-        android:layout_width="242dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="48dp"
-        android:text="Scheduled Notification"
-        android:drawableRight="@drawable/down_arrow"
-        android:background="#FFFFFF"
-        android:onClick="popup_menu"
+        android:id="@+id/button"
+        android:layout_width="146dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="60dp"
+        android:background="@color/white"
+        android:gravity=""
+        android:onClick="showPopup"
+        android:text="Scheduled"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.269"
+        app:layout_constraintHorizontal_bias="0.211"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newcourseswitch" />
+        app:layout_constraintTop_toBottomOf="@+id/newcourseswitch"
+        tools:ignore="OnClick" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
