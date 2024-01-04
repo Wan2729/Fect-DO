@@ -83,10 +83,46 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            databaseReferenceChats.child(userId).child(currentUser.getUid()).child(NodeNames.TIME_STAMP).setValue(ServerValue.TIMESTAMP);
+                            databaseReferenceChats.child(userId).child(currentUser.getUid()).child(NodeNames.TIME_STAMP).setValue(ServerValue.TIMESTAMP)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if(task.isSuccessful()){
+                                                        databaseReferenceRequests.child(currentUser.getUid()).child(userId).child(NodeNames.REQUEST_TYPE).setValue(Constants.REQUEST_STATUS_ACCEPTED)
+                                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                                if(task.isSuccessful()){
+                                                                                    databaseReferenceRequests.child(userId).child(currentUser.getUid()).child(NodeNames.REQUEST_TYPE).setValue(Constants.REQUEST_STATUS_ACCEPTED)
+                                                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                                @Override
+                                                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                                                    if(task.isSuccessful()){
+                                                                                                        holder.pbDecision.setVisibility(View.GONE);
+                                                                                                        holder.btnDenyRequest.setVisibility(View.GONE);
+                                                                                                        holder.btnAcceptRequest.setVisibility(View.VISIBLE);
 
-                            databaseReferenceRequests.child(currentUser.getUid()).child(userId).child(NodeNames.REQUEST_TYPE).setValue(Constants.REQUEST_STATUS_ACCEPTED);
-                            databaseReferenceRequests.child(userId).child(currentUser.getUid()).child(NodeNames.REQUEST_TYPE).setValue(Constants.REQUEST_STATUS_ACCEPTED);
+                                                                                                    }
+                                                                                                    else{
+                                                                                                        handleException(holder,task.getException());
+                                                                                                    }
+                                                                                                }
+                                                                                            });
+                                                                                }
+                                                                                else{
+                                                                                    handleException(holder,task.getException());
+                                                                                }
+                                                                            }
+                                                                        });
+
+                                                    }
+                                                    else{
+                                                        handleException(holder,task.getException());
+                                                    }
+                                                }
+                                            });
+
+
                         }
                         else{
                            handleException(holder,task.getException());
@@ -146,7 +182,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
     public void handleException(RequestViewHolder holder,Exception exception){
         Toast.makeText(context, "Failed to accept request: "+exception, Toast.LENGTH_SHORT).show();
         holder.pbDecision.setVisibility(View.GONE);
-        holder.btnDenyRequest.setVisibility(View.VISIBLE;
+        holder.btnDenyRequest.setVisibility(View.VISIBLE);
         holder.btnAcceptRequest.setVisibility(View.VISIBLE);
     }
 
