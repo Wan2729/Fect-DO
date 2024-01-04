@@ -1,6 +1,7 @@
 package com.example.fectdo.social.findfriends;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.fectdo.R;
 import com.example.fectdo.utils.Constants;
 import com.example.fectdo.utils.NodeNames;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -49,26 +51,22 @@ public class FindFriendAdapter extends RecyclerView.Adapter<FindFriendAdapter.Fi
     public void onBindViewHolder(@NonNull FindFriendAdapter.FindFriendViewHolder holder, int position) {
         FindFriendModel friendModel = findFriendModelList.get(position);
 
-        holder.tvFullName.setText(friendModel.getUserName());
-        StorageReference fileRef = FirebaseStorage.getInstance().getReference().child(Constants.IMAGE_FOLDER + "/" + friendModel.getPhotoName());
-        Log.d("FindFriendAdapter", "PhotoName: " + friendModel.getPhotoName());
-        Log.d("FindFriendAdapter", "StorageReference path: " + fileRef.getPath());
 
-        fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
-            if (uri != null) {
-                Log.d("FindFriendAdapter", "Download URL: " + uri.toString());
+        holder.tvFullName.setText(friendModel.getUserName());
+        StorageReference fileRef = FirebaseStorage.getInstance().getReference().child(Constants.IMAGE_FOLDER + "/" + friendModel.getUserID()+".jpg");
+
+
+        fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
                 Glide.with(context)
                         .load(uri)
                         .placeholder(R.drawable.default_profile)
                         .error(R.drawable.default_profile)
                         .into(holder.ivProfile);
-            } else {
-                Log.e("FindFriendAdapter", "File does not exist at: " + fileRef.getPath());
-                holder.ivProfile.setImageResource(R.drawable.default_profile);
             }
-        }).addOnFailureListener(exception -> {
-            Log.e("FindFriendAdapter", "Failed to download image: " + exception.getMessage());
         });
+
 
         friendRequestDatabase = FirebaseDatabase.getInstance().getReference().child(NodeNames.FRIEND_REQUEST);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();

@@ -14,10 +14,11 @@ public class UserModel {
     private String online;
 
     public UserModel(String emailAddress, String username, String online, String photo, String description) {
-        this.username = username;
         this.emailAddress = emailAddress;
+        this.username = username;
+        this.online = online;
+        this.photo = photo;
         this.description = description;
-
     }
 
     public String getUsername() {

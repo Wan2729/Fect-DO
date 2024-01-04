@@ -267,7 +267,8 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
     private void updateNameAndPhoto() {
         progressBar.setVisibility(View.VISIBLE);
 
-        final StorageReference fileRef = fileStorage.child("images/" + firebaseUser.getUid() + ".jpg");  // Updated file reference
+        String strFileName = firebaseUser.getUid()+".jpg";
+        final StorageReference fileRef = fileStorage.child("images/");
 
         fileRef.putFile(localFileUri).addOnCompleteListener(task -> {
             progressBar.setVisibility(View.GONE);

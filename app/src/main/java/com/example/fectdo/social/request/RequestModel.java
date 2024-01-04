@@ -1,6 +1,5 @@
 package com.example.fectdo.social.request;
 
-
 public class RequestModel {
 
     private String userId;

@@ -3,13 +3,13 @@
     public class FindFriendModel {
 
         private String userName;
-        private String photoName;
+        private String photoUri;
         private String userID;
         private boolean requestSent;
 
-        public FindFriendModel(String userName, String photoName, String userID, boolean requestSent) {
+        public FindFriendModel(String userName, String photoUri, String userID, boolean requestSent) {
             this.userName = userName;
-            this.photoName = photoName;
+            this.photoUri = photoUri;
             this.userID = userID;
             this.requestSent = requestSent;
         }
@@ -22,12 +22,12 @@
             this.userName = userName;
         }
 
-        public String getPhotoName() {
-            return photoName;
+        public String getPhotoUri() {
+            return photoUri;
         }
 
-        public void setPhotoName(String photoName) {
-            this.photoName = photoName;
+        public void setPhotoUri(String photoUri) {
+            this.photoUri = photoUri;
         }
 
         public String getUserID() {

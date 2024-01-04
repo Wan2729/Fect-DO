@@ -1,6 +1,13 @@
 package com.example.fectdo.social.request;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,14 +15,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-import com.example.fectdo.utils.NodeNames;
-import com.example.fectdo.utils.Constants;
 import com.example.fectdo.R;
+import com.example.fectdo.utils.Constants;
+import com.example.fectdo.utils.NodeNames;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +35,7 @@ public class RequestsFragment extends Fragment {
     private RequestAdapter adapter;
     private List<RequestModel> requestModelList;
     private TextView tvEmptyRequestList;
-    private DatabaseReference databaseReferenceRequest,databaseReferenceUsers;
+    private DatabaseReference databaseReferenceRequest, databaseReferenceUsers;
     private FirebaseUser currentUser;
     private View progressBar;
 
@@ -46,8 +48,7 @@ public class RequestsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_requests, container, false);
     }
 
@@ -59,10 +60,9 @@ public class RequestsFragment extends Fragment {
         tvEmptyRequestList = view.findViewById(R.id.tvEmptyRequestsList);
         progressBar = view.findViewById(R.id.progressBar);
 
-
         rvRequest.setLayoutManager(new LinearLayoutManager(getActivity()));
         requestModelList = new ArrayList<>();
-        adapter = new RequestAdapter(getActivity(),requestModelList);
+        adapter = new RequestAdapter(getActivity(), requestModelList);
         rvRequest.setAdapter(adapter);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -71,59 +71,67 @@ public class RequestsFragment extends Fragment {
 
         tvEmptyRequestList.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.VISIBLE);
+
+// In RequestsFragment.java
+// ...
         databaseReferenceRequest.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 progressBar.setVisibility(View.GONE);
                 requestModelList.clear();
+                Log.d("RequestsFragment", "DataSnapshot: " + snapshot.getValue());
 
-                for(DataSnapshot ds: snapshot.getChildren()){
-                    if(ds.exists()){
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Log.d("RequestsFragment", "Child: " + ds.getKey());
+                    if (ds.exists()) {
                         String requestType = ds.child(NodeNames.REQUEST_TYPE).getValue().toString();
-                        if(requestType.equals(Constants.REQUEST_STATUS_RECEIVED)){
+                        Log.d("RequestsFragment", "RequestType: " + requestType);
 
+                        if (requestType != null && requestType.equals(Constants.REQUEST_STATUS_RECEIVED)) {
                             String userId = ds.getKey();
+                            Log.d("RequestsFragment", "Received friend request from user ID: " + userId);
+
                             databaseReferenceUsers.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    String userName = snapshot.child(NodeNames.NAME).getValue().toString();
+                                    if (snapshot.exists()) {
+                                        Log.d("RequestsFragment", "DataSnapshot: " + snapshot.getValue());
+                                        String userName = snapshot.child(NodeNames.NAME).getValue().toString();
 
-                                    String photoName = "";
+                                        String photoName = "";
+                                        if (snapshot.child(NodeNames.PHOTO).getValue() != null) {
+                                            photoName = snapshot.child(NodeNames.PHOTO).getValue().toString();
+                                        }
 
-                                    if(snapshot.child(NodeNames.PHOTO).getValue() != null){
-                                        photoName = snapshot.child(NodeNames.PHOTO).getValue().toString();
+                                        Log.d("RequestsFragment", "User name: " + userName + ", Photo name: " + photoName);
+
+                                        RequestModel requestModel = new RequestModel(userId, userName, photoName);
+                                        requestModelList.add(requestModel);
+                                        adapter.notifyDataSetChanged();
+                                        tvEmptyRequestList.setVisibility(View.GONE);
+
+                                        progressBar.setVisibility(View.GONE);
                                     }
-
-                                    RequestModel requestModel = new RequestModel(userId, userName,photoName);
-                                    requestModelList.add(requestModel);
-                                    adapter.notifyDataSetChanged();
-                                    tvEmptyRequestList.setVisibility(View.GONE);
-                                    progressBar.setVisibility(View.GONE);
-
                                 }
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
                                     progressBar.setVisibility(View.GONE);
-                                    Toast.makeText(getActivity(), "Failed to fetch friends requests: "+error.getMessage(), Toast.LENGTH_SHORT).show();
-
+                                    Toast.makeText(getActivity(), "Failed to fetch friends requests: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
                     }
                 }
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(getActivity(), "Failed to fetch friends requests: "+error.getMessage(), Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(getActivity(), "Failed to fetch friends requests: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
+// ...
 
     }
 }
-

@@ -80,11 +80,12 @@ public class FindFriendsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 findFriendModelList.clear();
+
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String userId = ds.getKey();
 
                     if (userId.equals(currentUser.getUid())) {
-                        continue; // Use continue instead of return
+                        continue; // Skip the current user
                     }
 
                     if (ds.child(NodeNames.NAME).getValue() != null) {
@@ -96,17 +97,18 @@ public class FindFriendsFragment extends Fragment {
                         }
 
                         String finalPhotoName = photoName;
+                        // Check both sent and received friend requests
                         databaseReferenceFriendRequests.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if(snapshot.exists()){
+                                if (snapshot.exists()) {
                                     String requestType = snapshot.child(NodeNames.REQUEST_TYPE).getValue().toString();
-                                    if(requestType.equals(Constants.REQUEST_STATUS_SENT)){
+                                    if (requestType.equals(Constants.REQUEST_STATUS_SENT) || requestType.equals(Constants.REQUEST_STATUS_RECEIVED)) {
                                         findFriendModelList.add(new FindFriendModel(fullName, finalPhotoName, userId, true));
                                         findFriendAdapter.notifyDataSetChanged();
                                     }
-                                }
-                                else{
+                                } else {
+                                    // No friend request means the user is not a friend
                                     findFriendModelList.add(new FindFriendModel(fullName, finalPhotoName, userId, false));
                                     findFriendAdapter.notifyDataSetChanged();
                                 }
@@ -117,8 +119,6 @@ public class FindFriendsFragment extends Fragment {
                                 progressBar.setVisibility(View.GONE);
                             }
                         });
-
-
 
                         tvEmptyFriendsList.setVisibility(View.GONE);
                         progressBar.setVisibility(View.GONE);
@@ -132,6 +132,7 @@ public class FindFriendsFragment extends Fragment {
                 Toast.makeText(getContext(), "Failed to fetch friends: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
 
 
     }
