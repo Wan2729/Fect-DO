@@ -16,24 +16,28 @@ import java.util.concurrent.ExecutionException;
 
 public class FirebaseUtil {
 
-    public static String currentUserId(){
+    public static String currentUserId() {
         return FirebaseAuth.getInstance().getUid();
     }
 
-    public static DocumentReference currentUserDetails(){
-        return FirebaseFirestore.getInstance().collection("users").document(currentUserId());
+    public static DocumentReference currentUserDetails() {
+        String userId = currentUserId();
+        if (userId != null) {
+            return FirebaseFirestore.getInstance().collection("users").document(userId);
+        } else {
+            // Handle the case where userId is null
+            // For example, you can log a message or return a default document reference.
+            // Here, I'll return a reference to the "users" collection without a specific document.
+            return FirebaseFirestore.getInstance().collection("users").document();
+        }
     }
 
-    public static CollectionReference getCollection(String collectionName){
+    public static CollectionReference getCollection(String collectionName) {
         return FirebaseFirestore.getInstance().collection(collectionName);
     }
 
-    public static boolean isLoggedIn(){
-        return currentUserId()!=null;
-    }
-
-    public static void logOut(){
-        FirebaseAuth.getInstance().signOut();
+    public static boolean isLoggedIn() {
+        return currentUserId() != null;
     }
 
     public static <T> Task<T> getDocumentById(String collectionName, String documentId, Class<T> documentClass) {
@@ -57,16 +61,17 @@ public class FirebaseUtil {
                 .collection(collectionName)
                 .document(documentId);
 
-
-        Task<DocumentSnapshot> task = documentReference.get();
         try {
+            Task<DocumentSnapshot> task = documentReference.get();
             Tasks.await(task);  // Blocking call to wait for the result
 
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     CourseModel courseModel = document.toObject(CourseModel.class);
-                    courseModel.setDocumentID(document.getId());
+                    if (courseModel != null) {
+                        courseModel.setDocumentID(document.getId());
+                    }
                     return courseModel;
                 }
             }
@@ -75,5 +80,9 @@ public class FirebaseUtil {
         }
 
         return null;
+    }
+
+    public static void logOut() {
+        FirebaseAuth.getInstance().signOut();
     }
 }

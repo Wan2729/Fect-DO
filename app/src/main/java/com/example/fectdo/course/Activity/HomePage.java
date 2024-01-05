@@ -1,11 +1,5 @@
 package com.example.fectdo.course.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +11,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fectdo.TAG.TAG;
 import com.example.fectdo.adapter.MyCourseAdapter;
@@ -55,15 +54,15 @@ public class HomePage extends AppCompatActivity {
     ImageView uploadButton;
     ImageButton manageCourse;
     Button searchButton;
-    ImageButton socialButton,btnCommunity;
+    ImageButton socialButton, btnCommunity;
     BottomNavigationView bottomNavigationView;
 
-    //Database
+    // Database
     CollectionReference courseCollectionRef;
     DocumentReference userDocumentRef;
     CourseModel course;
 
-    //For recycler view
+    // For recycler view
     RecyclerView recyclerView;
     MyCourseAdapter myCourseAdapter;
     LinearLayoutManager layoutManager;
@@ -76,43 +75,45 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         courseCollectionRef = FirebaseFirestore.getInstance().collection(COURSE_KEY);
         userDocumentRef = FirebaseUtil.currentUserDetails();
         socialButton = findViewById(R.id.btnSosial);
 
         uploadButton = findViewById(R.id.btnUpload);
 
+        navigation = new Navigation(this);
 
-//          navigation = new Navigation(this);
-//
-//        navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
+        // Set up Toolbar and Bottom Navigation
+        navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
 
-        //Setup Bottom Navigation
+        // Set up Bottom Navigation View
         bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if(item.getItemId()==R.id.navigation_setting){
-                    Intent intent = new Intent(HomePage.this, SettingActivity.class);
-                    startActivity(intent);
-                    finish();
+                switch (item.getItemId()) {
+                    case R.id.navigation_setting:
+                        startActivity(new Intent(HomePage.this, SettingActivity.class));
+                        finish();
+                        return true;
+                    case R.id.navigation_profile:
+                        startActivity(new Intent(HomePage.this, ProfileActivity.class));
+                        finish();
+                        return true;
+                    default:
+                        return false;
                 }
-                if (item.getItemId()==R.id.navigation_profile){
-                    Intent intent = new Intent(HomePage.this, ProfileActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-                return true;
             }
         });
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        Log.d("Authentication", "User ID: " + ((FirebaseUser) currentUser).getUid());
+
+        Log.d("Authentication", "User ID: " + currentUser.getUid());
         Log.d("Authentication", "Display Name: " + currentUser.getDisplayName());
         Log.d("Authentication", "Email: " + currentUser.getEmail());
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
 
-        uploadButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
+        uploadButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AddCourse.class);
                 intent.putExtra(TAG.COURSE_PATH, courseCollectionRef.getPath());
                 intent.putExtra(TAG.USER_ID, FirebaseUtil.currentUserId());
@@ -121,8 +122,7 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
-
-        //setup recyclerView
+        // Setup recyclerView
         recyclerView = findViewById(R.id.rvMyCourse);
         layoutManager = new LinearLayoutManager(getApplicationContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -158,79 +158,54 @@ public class HomePage extends AppCompatActivity {
         });
     }
 
-
-
     @Override
     protected void onStart() {
         super.onStart();
         CollectionReference enrollment = FirebaseUtil.getCollection("enrollment");
 
         enrollment.whereEqualTo("userID", FirebaseUtil.currentUserId())
-                        .addSnapshotListener(HomePage.this, new EventListener<QuerySnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                                if(error != null){
-                                    AndroidUtil.showToast(HomePage.this, error.toString());
-                                    return;
-                                }
+                .addSnapshotListener(HomePage.this, new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            AndroidUtil.showToast(HomePage.this, error.toString());
+                            return;
+                        }
 
-                                if(queryDocumentSnapshots != null){
-                                    myCourseList = new ArrayList<>();
-                                    int totalTasks = queryDocumentSnapshots.size();
-                                    AtomicInteger completedTasks = new AtomicInteger(0);
+                        if (queryDocumentSnapshots != null) {
+                            myCourseList = new ArrayList<>();
+                            int totalTasks = queryDocumentSnapshots.size();
+                            AtomicInteger completedTasks = new AtomicInteger(0);
 
-                                    for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
-                                        String courseID = documentSnapshot.getString("courseID");
-                                        FirebaseUtil.getDocumentById("course", courseID, CourseModel.class)
-                                                .addOnCompleteListener(task -> {
-                                                    course = task.getResult();
+                            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                                String courseID = documentSnapshot.getString("courseID");
+                                FirebaseUtil.getDocumentById("course", courseID, CourseModel.class)
+                                        .addOnCompleteListener(task -> {
+                                            if (task.isSuccessful()) {
+                                                course = task.getResult();
 
-                                                    if(course != null){
-                                                        myCourseList.add(course);
-                                                    }
+                                                if (course != null) {
+                                                    myCourseList.add(course);
+                                                }
 
-                                                    // Check if all tasks are completed
-                                                    if (completedTasks.incrementAndGet() == totalTasks) {
-                                                        myCourseAdapter.setCourseList(myCourseList);
-                                                        recyclerView.setAdapter(myCourseAdapter);
-                                                    }
-                                                });
-                                    }
-                                    myCourseAdapter.setCourseList(myCourseList);
-                                    recyclerView.setAdapter(myCourseAdapter);
-                                }
-                                else{
-                                    AndroidUtil.showToast(HomePage.this, "onEvent: queryDocumentSnapshots is null");
-                                }
+                                                // Check if all tasks are completed
+                                                if (completedTasks.incrementAndGet() == totalTasks) {
+                                                    myCourseAdapter.setCourseList(myCourseList);
+                                                    recyclerView.setAdapter(myCourseAdapter);
+                                                }
+                                            }
+                                        });
                             }
-                        });
-
-//        courseCollectionRef.addSnapshotListener(HomePage.this, new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-//                if(error != null){
-//                    AndroidUtil.showToast(HomePage.this, error.toString());
-//                    return;
-//                }
-//
-//                if(queryDocumentSnapshots != null){
-//                    myCourseList = new ArrayList<>();
-//                    for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
-//                        course = documentSnapshot.toObject(CourseModel.class);
-//                        course.setDocumentID(documentSnapshot.getId());
-//
-//                        myCourseList.add(course);
-//                    }
-//                    myCourseAdapter.setCourseList(myCourseList);
-//                    recyclerView.setAdapter(myCourseAdapter);
-//                }
-//                else{
-//                    AndroidUtil.showToast(HomePage.this, "onEvent: queryDocumentSnapshots is null");
-//                }
-//            }
-//        });
+                            myCourseAdapter.setCourseList(myCourseList);
+                            recyclerView.setAdapter(myCourseAdapter);
+                        } else {
+                            AndroidUtil.showToast(HomePage.this, "onEvent: queryDocumentSnapshots is null");
+                        }
+                    }
+                });
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.logoutBtn:
@@ -241,20 +216,19 @@ public class HomePage extends AppCompatActivity {
         }
     }
 
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.top_menu, menu);
         return true;
     }
 
-    public void goToCareer(View view){
+    public void goToCareer(View view) {
         Intent intent = new Intent(this, CareerMain.class);
         startActivity(intent);
     }
 
-    public void goToCommunity(View view){
+    public void goToCommunity(View view) {
         startActivity(new Intent(HomePage.this, SocialActivity.class));
     }
-
-
 }

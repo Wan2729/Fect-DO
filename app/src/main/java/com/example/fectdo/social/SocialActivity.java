@@ -20,6 +20,7 @@ import com.example.fectdo.R;
 import com.example.fectdo.course.Activity.HomePage;
 import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.edit.SettingActivity;
+import com.example.fectdo.social.chats.ChatFragment;
 import com.example.fectdo.social.findfriends.FindFriendsFragment;
 import com.example.fectdo.social.request.RequestsFragment;
 import com.example.fectdo.utils.Navigation;
