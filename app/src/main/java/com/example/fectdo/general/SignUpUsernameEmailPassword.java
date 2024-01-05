@@ -215,6 +215,8 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
                             Intent intent = new Intent(SignUpUsernameEmailPassword.this, HomePage.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
+                        } else {
+                            Toast.makeText(SignUpUsernameEmailPassword.this, "Error creating database SIGN UP", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
