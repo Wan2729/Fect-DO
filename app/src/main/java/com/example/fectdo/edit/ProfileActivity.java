@@ -26,7 +26,9 @@ import com.bumptech.glide.Glide;
 import com.example.fectdo.R;
 import com.example.fectdo.career.CareerMain;
 import com.example.fectdo.course.Activity.HomePage;
+import com.example.fectdo.general.LoginEmailPassword;
 import com.example.fectdo.general.SignUpUsernameEmailPassword;
+import com.example.fectdo.general.WelcomePage;
 import com.example.fectdo.utils.Navigation;
 import com.example.fectdo.utils.NodeNames;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -114,7 +116,7 @@ public class ProfileActivity extends AppCompatActivity {
     public void btnLogoutClick(View view){
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signOut();
-        Intent intent = new Intent(this, HomePage.class);
+        Intent intent = new Intent(this, LoginEmailPassword.class);
         startActivity(intent);
     }
 
