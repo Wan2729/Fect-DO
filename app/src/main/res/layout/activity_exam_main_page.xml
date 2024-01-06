@@ -12,7 +12,7 @@
         layout="@layout/toolbar" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/topicNumberText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
@@ -33,9 +33,9 @@
         android:padding="15dp"
         android:text="Selamat menjawab"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintEnd_toEndOf="@+id/topicNumberText"
+        app:layout_constraintStart_toStartOf="@+id/topicNumberText"
+        app:layout_constraintTop_toBottomOf="@+id/topicNumberText" />
 
     <Button
         android:id="@+id/btnMath"
@@ -50,7 +50,7 @@
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="@+id/tvCourseTitle"
         app:layout_constraintStart_toStartOf="@+id/tvCourseTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/topicNumberText" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"

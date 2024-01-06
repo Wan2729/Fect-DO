@@ -8,7 +8,7 @@
     tools:context=".course.Activity.AddCourse">
 
     <TextView
-        android:id="@+id/tv1"
+        android:id="@+id/text1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Course Title"
@@ -28,10 +28,10 @@
         android:inputType="text"
         app:layout_constraintEnd_toStartOf="@+id/guideline95H"
         app:layout_constraintStart_toStartOf="@+id/guideline5H"
-        app:layout_constraintTop_toBottomOf="@id/tv1" />
+        app:layout_constraintTop_toBottomOf="@id/text1" />
 
     <TextView
-        android:id="@+id/tv2"
+        android:id="@+id/text2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Course topics"
@@ -50,7 +50,7 @@
         app:layout_constraintDimensionRatio="1:1.4"
         app:layout_constraintEnd_toStartOf="@+id/guideline95H"
         app:layout_constraintStart_toStartOf="@+id/guideline5H"
-        app:layout_constraintTop_toBottomOf="@id/tv2">
+        app:layout_constraintTop_toBottomOf="@id/text2">
 
         <ScrollView
             android:id="@+id/scrollView"
@@ -59,7 +59,7 @@
             app:layout_constraintDimensionRatio="1:1.4"
             app:layout_constraintEnd_toStartOf="@+id/guideline95H"
             app:layout_constraintStart_toStartOf="@+id/guideline5H"
-            app:layout_constraintTop_toBottomOf="@id/tv2">
+            app:layout_constraintTop_toBottomOf="@id/text2">
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -135,6 +135,15 @@
         app:layout_constraintTop_toBottomOf="@+id/btnDeleteTopic"
         app:layout_constraintVertical_bias="0.9" />
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline95H"
         android:orientation="vertical"
@@ -148,14 +157,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintGuide_percent=".05"/>
-
-    <FrameLayout
-        android:id="@+id/fragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
