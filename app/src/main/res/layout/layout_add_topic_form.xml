@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TOPIC"/>
+
+    <EditText
+        android:id="@+id/topicNameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_below="@+id/textView"
+        android:hint="Topic name " />
+
+    <EditText
+        android:id="@+id/videoLinkInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_below="@+id/topicNameInput"
+        android:hint="Video Link" />
+
+    <Button
+        android:id="@+id/btnAddQuiz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="add quiz"
+        android:textColor="@color/black"
+        android:background="@drawable/btn_welcome"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginTop="5dp"
+        app:dividerColor="@color/yale_blue"/>
+
+</LinearLayout>

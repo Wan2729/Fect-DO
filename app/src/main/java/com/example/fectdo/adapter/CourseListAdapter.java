@@ -1,7 +1,6 @@
 package com.example.fectdo.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +16,8 @@ import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.R;
 import com.example.fectdo.models.EnrollmentModel;
 import com.example.fectdo.utils.FirebaseUtil;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
@@ -43,7 +37,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.course_list_card, parent, false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.layout_course_list, parent, false));
     }
 
     @Override

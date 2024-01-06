@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+            <!-- Outer circle -->
+            <item>
+                <shape android:shape="oval">
+                    <solid android:color="#FFFFFF"/>
+                    <stroke android:width="2dp" android:color="@color/blue_soft"/>
+                    <size android:width="20dp" android:height="20dp"/>
+                </shape>
+            </item>
+
+            <!-- Inner circle -->
+            <item android:top="5dp" android:left="5dp" android:right="5dp" android:bottom="5dp">
+                <shape android:shape="oval">
+                    <solid android:color="@color/blue_soft"/> <!-- Inner circle color -->
+                    <size android:width="20dp" android:height="20dp"/> <!-- Adjust the size as needed -->
+                </shape>
+            </item>
+
+        </layer-list>
+    </item>
+
+    <item android:state_checked="false">
+        <shape android:shape="oval">
+            <solid android:color="@color/white"/>
+            <stroke android:width="2dp" android:color="@color/common_google_signin_btn_text_light_disabled"/>
+            <size android:width="20dp" android:height="20dp"/>
+        </shape>
+    </item>
+</selector>

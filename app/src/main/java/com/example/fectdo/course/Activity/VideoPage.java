@@ -113,7 +113,7 @@ private Navigation navigation;
     }
 
     void addCard(TopicModel topicDetails){
-        View view = getLayoutInflater().inflate(R.layout.topic_list_card, null);
+        View view = getLayoutInflater().inflate(R.layout.layout_topiclist_button, null);
 
         Button button = view.findViewById(R.id.btnTopicName);
         button.setText(topicDetails.getTopicName());

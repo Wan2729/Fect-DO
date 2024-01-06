@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,8 +18,6 @@ import com.example.fectdo.utils.Constants;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -37,7 +34,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
     @NonNull
     @Override
     public ChatListAdapter.ChatListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.chat_list_layout,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_check_list,parent,false);
         return  new ChatListViewHolder(view);
     }
 

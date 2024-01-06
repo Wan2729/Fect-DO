@@ -4,16 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/btn_welcome"
     tools:context=".course.Activity.AddCourse">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Course Title"
-        android:textSize="20sp"
-        android:fontFamily="@font/inter_semibold"
+        android:textSize="25sp"
+        android:fontFamily="@font/mukta_semibold"
         android:textColor="@color/black"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,14 +29,13 @@
 
     <EditText
         android:id="@+id/etCourseTitle"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Enter course name"
         android:inputType="text"
-        android:background="@drawable/edit_text_box"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv1"/>
+        app:layout_constraintEnd_toStartOf="@+id/guideline95H"
+        app:layout_constraintStart_toStartOf="@+id/guideline5H"
+        app:layout_constraintTop_toBottomOf="@id/tv1" />
 
     <TextView
         android:id="@+id/tv2"
@@ -37,72 +43,117 @@
         android:layout_height="wrap_content"
         android:text="Course topics"
         android:textSize="20sp"
-        android:fontFamily="@font/inter_semibold"
+        android:fontFamily="@font/mukta_semibold"
         android:textColor="@color/black"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etCourseTitle"/>
 
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewRoot"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1:1.4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline95H"
+        app:layout_constraintStart_toStartOf="@+id/guideline5H"
         app:layout_constraintTop_toBottomOf="@id/tv2">
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
+        <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" />
+            app:layout_constraintDimensionRatio="1:1.4"
+            app:layout_constraintEnd_toStartOf="@+id/guideline95H"
+            app:layout_constraintStart_toStartOf="@+id/guideline5H"
+            app:layout_constraintTop_toBottomOf="@id/tv2">
 
-    </ScrollView>
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
 
-    <Button
-        android:id="@+id/btnAddTopic"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/btn_round_exam"
-        android:text="add topic"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btnDeleteTopic"
-        app:layout_constraintTop_toBottomOf="@id/scrollView"/>
+        </ScrollView>
+
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/btnDeleteTopic"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_round_exam"
-        android:text="delete topic"
+        android:fontFamily="@font/mukta_regular"
+        android:text="Delete topic"
+        android:textAllCaps="false"
         android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnAddTopic"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scrollView"/>
+        app:layout_constraintStart_toStartOf="@+id/guideline5H"
+        app:layout_constraintTop_toBottomOf="@id/cardViewRoot"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <Button
+        android:id="@+id/btnAddTopic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_round_exam"
+        android:fontFamily="@font/mukta_regular"
+        android:text="Add topic"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline95H"
+        app:layout_constraintStart_toEndOf="@id/btnDeleteTopic"
+        app:layout_constraintTop_toBottomOf="@id/cardViewRoot"
+        app:layout_constraintVertical_bias="0.05" />
 
     <Button
         android:id="@+id/btnDone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="done"
-        android:textColor="@color/white"
         android:background="@drawable/btn_round_exam"
+        android:text="Done"
+        android:textSize="16sp"
+        android:fontFamily="@font/mukta_regular"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline95H"
         app:layout_constraintStart_toEndOf="@id/btnCancel"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/btnAddTopic"
+        app:layout_constraintVertical_bias="0.9" />
 
     <Button
         android:id="@+id/btnCancel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="cancel"
-        android:textColor="@color/white"
         android:background="@drawable/btn_round_exam"
+        android:text="Cancel"
+        android:textSize="16sp"
+        android:fontFamily="@font/mukta_regular"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnDone"/>
+        app:layout_constraintEnd_toStartOf="@id/btnDone"
+        app:layout_constraintStart_toStartOf="@+id/guideline5H"
+        app:layout_constraintTop_toBottomOf="@+id/btnDeleteTopic"
+        app:layout_constraintVertical_bias="0.9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline95H"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintGuide_percent=".95"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5H"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintGuide_percent=".05"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

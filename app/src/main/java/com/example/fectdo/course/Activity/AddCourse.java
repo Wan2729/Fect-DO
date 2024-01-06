@@ -89,9 +89,6 @@ public class AddCourse extends AppCompatActivity {
         });
     }
 
-    private void save(){
-    }
-
     private void addCourse(){
         String courseTitle = editTitle.getText().toString();
         topicList = new ArrayList<>();
@@ -128,6 +125,7 @@ public class AddCourse extends AppCompatActivity {
             TopicModel topic = new TopicModel();
             topic.setTopicName(entry.getKey());
             topic.setVideoLink(YouTubeLinkConverter.convertToEmbedLink(entry.getValue()));
+            topic.setTopicNum(topicList.size()+1);
 
             topicCollectionReference.add(topic).addOnCompleteListener(task -> {
                 if(task.isSuccessful()){
@@ -160,7 +158,7 @@ public class AddCourse extends AppCompatActivity {
 
     void addTopicCard(){
         deleteTopic.setEnabled(true);
-        View view = getLayoutInflater().inflate(R.layout.add_topic_card, null);
+        View view = getLayoutInflater().inflate(R.layout.layout_add_topic_form, null);
         viewList.add(view);
 
         TextView topicIndex = view.findViewById(R.id.textView);

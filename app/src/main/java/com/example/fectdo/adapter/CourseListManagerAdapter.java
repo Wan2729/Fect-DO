@@ -33,7 +33,7 @@ public class CourseListManagerAdapter extends RecyclerView.Adapter<CourseListMan
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.course_list_card, parent, false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.layout_course_list, parent, false));
     }
 
     @Override
