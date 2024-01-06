@@ -2,15 +2,20 @@ package com.example.fectdo.course.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.fectdo.R;
+import com.example.fectdo.Soalan.QuizManager;
+import com.example.fectdo.course.Fragment.AddQuizForm;
 import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.models.TopicModel;
 import com.example.fectdo.utils.AndroidUtil;
@@ -35,6 +40,8 @@ public class AddCourse extends AppCompatActivity {
     List<String> topicList;
 
     List<View> viewList;
+    List<QuizManager> quizManagerList;
+    AddQuizForm fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +54,8 @@ public class AddCourse extends AppCompatActivity {
         editTitle = findViewById(R.id.etCourseTitle);
         topicLayout = findViewById(R.id.linearLayout);
         viewList = new ArrayList<>();
+        quizManagerList = new ArrayList<>();
+        fragment = new AddQuizForm();
 
         addTopic = findViewById(R.id.btnAddTopic);
         addTopic.setOnClickListener(new View.OnClickListener() {
@@ -160,15 +169,24 @@ public class AddCourse extends AppCompatActivity {
         deleteTopic.setEnabled(true);
         View view = getLayoutInflater().inflate(R.layout.layout_add_topic_form, null);
         viewList.add(view);
+        quizManagerList.add(new QuizManager());
 
         TextView topicIndex = view.findViewById(R.id.textView);
-
         topicIndex.setText("Topic " +viewList.size());
+
+        view.findViewById(R.id.btnAddQuiz).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment).commit();
+            }
+        });
+
         topicLayout.addView(view);
     }
 
     void removeTopicCard(){
         topicLayout.removeView(viewList.remove(viewList.size()-1));
+        quizManagerList.remove(quizManagerList.size() - 1);
         if(viewList.size() == 0){
             deleteTopic.setEnabled(false);
         }
