@@ -109,10 +109,11 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="146dp"
+        android:layout_width="192dp"
         android:layout_height="50dp"
         android:layout_marginTop="60dp"
         android:background="@color/white"
+        android:drawableRight="@drawable/down_arrow"
         android:gravity=""
         android:onClick="showPopup"
         android:text="Scheduled"
