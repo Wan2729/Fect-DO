@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.R;
 import com.example.fectdo.models.EnrollmentModel;
@@ -47,6 +48,13 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
         String courseID = course.getDocumentID();
 
         holder.courseTitle.setText(course.getCourseName());
+
+        if(course.getImageUrl() != null){
+            Glide.with(holder.itemView)
+                    .load(course.getImageUrl())
+                    .fitCenter()
+                    .into(holder.icon);
+        }
 
         FirebaseUtil.getCollection("enrollment")
                 .whereEqualTo("userID", userID)

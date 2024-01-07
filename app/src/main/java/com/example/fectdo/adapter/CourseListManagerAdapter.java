@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.fectdo.course.Activity.VideoPage;
 import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.R;
@@ -42,6 +43,13 @@ public class CourseListManagerAdapter extends RecyclerView.Adapter<CourseListMan
 
         holder.courseTitle.setText(course.getCourseName());
 
+        if(course.getImageUrl() != null){
+            Glide.with(holder.itemView)
+                    .load(course.getImageUrl())
+                    .fitCenter()
+                    .into(holder.icon);
+        }
+
         holder.viewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +70,7 @@ public class CourseListManagerAdapter extends RecyclerView.Adapter<CourseListMan
         ImageView icon;
         TextView courseTitle;
         Button viewButton;
+        View view;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,6 +78,7 @@ public class CourseListManagerAdapter extends RecyclerView.Adapter<CourseListMan
             icon = itemView.findViewById(com.example.fectdo.R.id.ibCourseIcon);
             courseTitle = itemView.findViewById(com.example.fectdo.R.id.tvCourseName);
             viewButton = itemView.findViewById(R.id.btnManage);
+            view = itemView;
 
             viewButton.setText("View Course");
         }
