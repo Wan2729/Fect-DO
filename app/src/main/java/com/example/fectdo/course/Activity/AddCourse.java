@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.example.fectdo.InternalStorageManager.TextFileManager;
 import com.example.fectdo.R;
-import com.example.fectdo.Soalan.CourseManager;
 import com.example.fectdo.Soalan.QuizManager;
 import com.example.fectdo.course.Fragment.AddQuizForm;
 import com.example.fectdo.models.CourseModel;
@@ -86,7 +85,7 @@ public class AddCourse extends AppCompatActivity implements AddQuizForm.OnDataPa
             public void onClick(View v) {
                 if(getIntent().getBooleanExtra(NEW_COURSE, true)){
                     addCourse();
-                    saveToFile();
+                    finish();
                 }
             }
         });

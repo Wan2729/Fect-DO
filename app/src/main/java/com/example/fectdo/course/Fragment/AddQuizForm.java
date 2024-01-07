@@ -84,7 +84,6 @@ public class AddQuizForm extends Fragment implements View.OnClickListener {
         thisView = inflater.inflate(R.layout.fragment_add_quiz_form, container, false);
         quizManager = new QuizManager();
         layout = thisView.findViewById(R.id.layout);
-        correctAnswer = new ArrayList<>();
         viewList = new ArrayList<>();
         quizManager = new QuizManager();
 
@@ -128,7 +127,8 @@ public class AddQuizForm extends Fragment implements View.OnClickListener {
     private void addQuestionForm(){
         View view = getLayoutInflater().inflate(R.layout.layout_quiz_form, null);
         int index = viewList.size();
-        correctAnswer.add(index, "");
+//        correctAnswer.add(index, "");
+        quizManager.addCorrectAnswer(index);
 
         TextView title = view.findViewById(R.id.tvTitle);
         title.setText("Question " +(index+1));
@@ -165,7 +165,7 @@ public class AddQuizForm extends Fragment implements View.OnClickListener {
                         choiceButtons[j].setActivated(j == clickedBtnIndex);
                     }
 
-                    correctAnswer.set(index, choices[clickedBtnIndex].getText().toString());
+                    quizManager.setCorrectAnswer(index, choices[clickedBtnIndex].getText().toString());
                     String message = "Choices: " +choices[clickedBtnIndex].getText().toString();
                     choice.setText(message);
                 }
@@ -174,7 +174,7 @@ public class AddQuizForm extends Fragment implements View.OnClickListener {
     }
 
     private void deleteQuestionForm(){
-        correctAnswer.remove(viewList.size()-1);
+        quizManager.removeCorrectAnswer(viewList.size()-1);
         layout.removeView(viewList.remove(viewList.size()-1));
     }
 
@@ -225,6 +225,7 @@ public class AddQuizForm extends Fragment implements View.OnClickListener {
     public void finish(){
         // Inside the fragment
         getApplicationContext().enableActivity();
+        getApplicationContext().getFragmentManager().popBackStack();
         FragmentTransaction transaction = requireFragmentManager().beginTransaction();
         transaction.remove(this);
         transaction.commit();

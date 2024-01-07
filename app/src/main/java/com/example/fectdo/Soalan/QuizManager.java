@@ -37,6 +37,46 @@ public class QuizManager {
         this.videoLink = videoLink;
     }
 
+    public void setCorrectAnswer(List<String> correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
+
+    public void setCorrectAnswer(int index, String correctAnswer) {
+        this.correctAnswer.set(index, correctAnswer);
+    }
+
+    public void addCorrectAnswer(int index){
+        correctAnswer.add(index, "");
+    }
+
+    public void removeCorrectAnswer(int index){
+        correctAnswer.remove(index);
+    }
+
+    public void setQuestion(List<String> question) {
+        this.question = question;
+    }
+
+    public void setChoiceA(List<String> choiceA) {
+        this.choiceA = choiceA;
+    }
+
+    public void setChoiceB(List<String> choiceB) {
+        this.choiceB = choiceB;
+    }
+
+    public void setChoiceC(List<String> choiceC) {
+        this.choiceC = choiceC;
+    }
+
+    public void setChoiceD(List<String> choiceD) {
+        this.choiceD = choiceD;
+    }
+
+    public void setChoice(List<String[]> choice) {
+        this.choice = choice;
+    }
+
     public List<String> getCorrectAnswer() {
         return correctAnswer;
     }

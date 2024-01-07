@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.fectdo.R;
 import com.example.fectdo.Soalan.PengurusSoalan;
+import com.example.fectdo.Soalan.QuizManager;
 import com.example.fectdo.models.QuestionModel;
 import com.example.fectdo.utils.AndroidUtil;
 import com.example.fectdo.utils.Navigation;
@@ -24,12 +25,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.List;
+
 public class Exam extends AppCompatActivity implements View.OnClickListener {
     FirebaseFirestore database;
     CollectionReference questions;
     QuestionModel questionModel;
 
     PengurusSoalan senaraiSoalan;
+    QuizManager quizManager;
     TextView ruanganSoalan;
     Button jawapanA, jawapanB, jawapanC, jawapanD, nextBtn;
     int currentQuestion, marks;
@@ -46,6 +50,14 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
 
         database = FirebaseFirestore.getInstance();
         questions = database.collection("questions");
+
+        quizManager = new QuizManager();
+        quizManager.setQuestion((List<String>) getIntent().getStringArrayListExtra("questionList"));
+        quizManager.setCorrectAnswer((List<String>) getIntent().getStringArrayListExtra("correctAnswer"));
+        quizManager.setChoiceA((List<String>) getIntent().getStringArrayListExtra("choiceA"));
+        quizManager.setChoiceB((List<String>) getIntent().getStringArrayListExtra("choiceB"));
+        quizManager.setChoiceC((List<String>) getIntent().getStringArrayListExtra("choiceC"));
+        quizManager.setChoiceD((List<String>) getIntent().getStringArrayListExtra("choiceD"));
 
         currentQuestion = 0;
         marks = 0;
@@ -82,10 +94,12 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
         Button btn = (Button) v;
 
         if(btn.getId() == nextBtn.getId()){
-            if(choice.equals(senaraiSoalan.getJawapan(currentQuestion)))
+//            if(choice.equals(senaraiSoalan.getJawapan(currentQuestion)))
+//                marks++;
+            if(choice.equals(quizManager.getCorrectAnswer(currentQuestion)))
                 marks++;
 
-            if(currentQuestion < senaraiSoalan.getJumlahSoalan() - 1){
+            if(currentQuestion < quizManager.getSize() - 1){
                 currentQuestion++;
                 loadNewQuestion();
             }
@@ -102,11 +116,17 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
     private void loadNewQuestion(){
 //        String[] questionList = questionModel.getAnswerList(currentQuestion);
 
-        ruanganSoalan.setText(senaraiSoalan.getSenaraiSoalan(currentQuestion));
-        jawapanA.setText(senaraiSoalan.getSenaraiJawapan(currentQuestion)[0]);
-        jawapanB.setText(senaraiSoalan.getSenaraiJawapan(currentQuestion)[1]);
-        jawapanC.setText(senaraiSoalan.getSenaraiJawapan(currentQuestion)[2]);
-        jawapanD.setText(senaraiSoalan.getSenaraiJawapan(currentQuestion)[3]);
+//        ruanganSoalan.setText(senaraiSoalan.getSenaraiSoalan(currentQuestion));
+//        jawapanA.setText(senaraiSoalan.getSenaraiJawapan(currentQuestion)[0]);
+//        jawapanB.setText(senaraiSoalan.getSenaraiJawapan(currentQuestion)[1]);
+//        jawapanC.setText(senaraiSoalan.getSenaraiJawapan(currentQuestion)[2]);
+//        jawapanD.setText(senaraiSoalan.getSenaraiJawapan(currentQuestion)[3]);
+
+        ruanganSoalan.setText(quizManager.getQuestion(currentQuestion));
+        jawapanA.setText(quizManager.getChoiceA().get(currentQuestion));
+        jawapanB.setText(quizManager.getChoiceB().get(currentQuestion));
+        jawapanC.setText(quizManager.getChoiceC().get(currentQuestion));
+        jawapanD.setText(quizManager.getChoiceD().get(currentQuestion));
     }
 
     void loadQuestionFromFirebase(){
@@ -126,7 +146,7 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
     void finishQuiz(){
         new AlertDialog.Builder(this)
                 .setTitle("Markah anda")
-                .setMessage("Tahniah anda berjaya mendapat " + marks +" daripada " +senaraiSoalan.getJumlahSoalan())
+                .setMessage("Tahniah anda berjaya mendapat " + marks +" daripada " +quizManager.getSize())
                 .setPositiveButton("Selesai", ((dialog, which) -> endQuiz()))
                 .setCancelable(false)
                 .show();

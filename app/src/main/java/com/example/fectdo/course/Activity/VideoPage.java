@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.fectdo.R;
+import com.example.fectdo.Soalan.QuizManager;
 import com.example.fectdo.models.CourseModel;
 import com.example.fectdo.models.TopicModel;
 import com.example.fectdo.utils.AndroidUtil;
@@ -36,10 +37,12 @@ public class VideoPage extends AppCompatActivity {
 String videoLink;
 List<TopicModel> topicList;
 DocumentReference courseDetails;
+Button quizButton, Examchem;
 
 TextView title;
 WebView webView;
 LinearLayout topicLayout;
+QuizManager quizManager;
 
 private Navigation navigation;
     @Override
@@ -47,8 +50,10 @@ private Navigation navigation;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_page);
 
-        final Button Examchem = findViewById(R.id.ExamButtonChem);
+        Examchem = findViewById(R.id.examButton);
+        quizButton = findViewById(R.id.quizButton);
 
+        quizManager = new QuizManager();
         topicList = new ArrayList<>();
         title = findViewById(R.id.tvCourseTitle);
         topicLayout = findViewById(R.id.linearLayout);
@@ -61,14 +66,19 @@ private Navigation navigation;
 //                LetsgoExam();
             }
         });
+
+        quizButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                gotoQuiz();
+            }
+        });
 //        loadInitialImage();
-
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        disableQuizButton();
 
         courseDetails.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -112,6 +122,23 @@ private Navigation navigation;
         });
     }
 
+    void gotoQuiz(){
+        Intent intent = new Intent(getApplicationContext(), Exam.class);
+//        intent.putExtra("questionList", quizManager.getQuestion().toArray());
+//        intent.putExtra("correctAnswer", quizManager.getCorrectAnswer().toArray());
+//        intent.putExtra("choiceA", quizManager.getChoiceA().toArray());
+//        intent.putExtra("choiceB", quizManager.getChoiceB().toArray());
+//        intent.putExtra("choiceC", quizManager.getChoiceC().toArray());
+//        intent.putExtra("choiceD", quizManager.getChoiceD().toArray());
+        intent.putStringArrayListExtra("questionList", (ArrayList<String>) quizManager.getQuestion());
+        intent.putStringArrayListExtra("correctAnswer", (ArrayList<String>) quizManager.getCorrectAnswer());
+        intent.putStringArrayListExtra("choiceA", (ArrayList<String>) quizManager.getChoiceA());
+        intent.putStringArrayListExtra("choiceB", (ArrayList<String>) quizManager.getChoiceB());
+        intent.putStringArrayListExtra("choiceC", (ArrayList<String>) quizManager.getChoiceC());
+        intent.putStringArrayListExtra("choiceD", (ArrayList<String>) quizManager.getChoiceD());
+        startActivity(intent);
+    }
+
     void addCard(TopicModel topicDetails){
         View view = getLayoutInflater().inflate(R.layout.layout_topiclist_button, null);
 
@@ -121,7 +148,15 @@ private Navigation navigation;
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                enableQuizButton();
                 loadVideo(topicDetails.getVideoLink());
+                quizManager.setTopicName(topicDetails.getTopicName());
+                quizManager.setQuestion(topicDetails.getQuestion());
+                quizManager.setCorrectAnswer(topicDetails.getCorrectAnswer());
+                quizManager.setChoiceA(topicDetails.getChoiceA());
+                quizManager.setChoiceB(topicDetails.getChoiceB());
+                quizManager.setChoiceC(topicDetails.getChoiceC());
+                quizManager.setChoiceD(topicDetails.getChoiceD());
             }
         });
 
@@ -190,5 +225,15 @@ private Navigation navigation;
 
     private void showToast(String message){
         AndroidUtil.showToast(getApplicationContext(), message);
+    }
+
+    private void disableQuizButton(){
+        quizButton.setEnabled(false);
+        Examchem.setEnabled(false);
+    }
+
+    private void enableQuizButton(){
+        quizButton.setEnabled(true);
+        Examchem.setEnabled(true);
     }
 }
