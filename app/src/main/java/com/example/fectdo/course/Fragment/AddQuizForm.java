@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -41,7 +42,6 @@ public class AddQuizForm extends Fragment implements View.OnClickListener {
     private OnDataPassListener onDataPassListener;
     private QuizManager quizManager;
     LinearLayout layout;
-    List<String> correctAnswer;
     List<View> viewList;
     View thisView;
 
@@ -92,6 +92,9 @@ public class AddQuizForm extends Fragment implements View.OnClickListener {
         deleteButton = thisView.findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(this::onClick);
 
+        TextView topicName = thisView.findViewById(R.id.topicNameText);
+        topicName.setText("Topic: " +getApplicationContext().getTopicName());
+
         doneButton = thisView.findViewById(R.id.endButton);
         doneButton.setOnClickListener(this::onClick);
 
@@ -102,12 +105,24 @@ public class AddQuizForm extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.endButton){
-            saveData();
-            if (onDataPassListener != null) {
-                onDataPassListener.onDataPass(quizManager);
-            }
-            Toast.makeText(getApplicationContext(), "Question uploaded", Toast.LENGTH_SHORT).show();
-            finish();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+            builder.setTitle("Leaving page")
+                    .setMessage("Are you confirm to save this change? \n" +
+                            "You cannot edit this afterward")
+                    .setPositiveButton("Yes", (dialog, which) -> {saveData();
+                        if (onDataPassListener != null) {
+                            onDataPassListener.onDataPass(quizManager);
+                        }
+                        Toast.makeText(getApplicationContext(), "Question uploaded", Toast.LENGTH_SHORT).show();
+                        finish();
+                    })
+                    .setNegativeButton("No", (dialog, which) -> {
+                        return;
+                    })
+                    .setCancelable(true);
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
         }
         else if(v.getId() == R.id.addButton){
             addQuestionForm();
@@ -127,15 +142,13 @@ public class AddQuizForm extends Fragment implements View.OnClickListener {
     private void addQuestionForm(){
         View view = getLayoutInflater().inflate(R.layout.layout_quiz_form, null);
         int index = viewList.size();
-//        correctAnswer.add(index, "");
-        quizManager.addCorrectAnswer(index);
+        quizManager.addQuestion(index);
 
         TextView title = view.findViewById(R.id.tvTitle);
         title.setText("Question " +(index+1));
 
         TextView choice = view.findViewById(R.id.tvCorrectChoice);
         choice.setText("Please choose you correct answer");
-        TextView question = view.findViewById(R.id.etQuestion);
 
         Button[] choiceButtons = new Button[]{
                 view.findViewById(R.id.choice1).findViewById(R.id.choiceButton),
@@ -174,7 +187,7 @@ public class AddQuizForm extends Fragment implements View.OnClickListener {
     }
 
     private void deleteQuestionForm(){
-        quizManager.removeCorrectAnswer(viewList.size()-1);
+        quizManager.removeQuestion(viewList.size()-1);
         layout.removeView(viewList.remove(viewList.size()-1));
     }
 
@@ -182,11 +195,10 @@ public class AddQuizForm extends Fragment implements View.OnClickListener {
         View currentView;
         EditText choices;
         String[] choicesAns;
-        TextView question, choice;
+        TextView question;
         for(int i=0 ; i<viewList.size() ; i++){
             currentView = viewList.get(i);
             question = currentView.findViewById(R.id.etQuestion);
-            choice = currentView.findViewById(R.id.tvCorrectChoice);
             choicesAns = new String[4];
 
             //choice A
@@ -205,9 +217,8 @@ public class AddQuizForm extends Fragment implements View.OnClickListener {
             choices = currentView.findViewById(R.id.choice4).findViewById(R.id.editText);
             choicesAns[3] = choices.getText().toString();
 
-            quizManager.addQuestion(i,
+            quizManager.setQuestion(i,
                     question.getText().toString(),
-                    choice.getText().toString(),
                     choicesAns);
         }
     }
@@ -225,14 +236,10 @@ public class AddQuizForm extends Fragment implements View.OnClickListener {
     public void finish(){
         // Inside the fragment
         getApplicationContext().enableActivity();
-        getApplicationContext().getFragmentManager().popBackStack();
+        getApplicationContext().popFragment();
         FragmentTransaction transaction = requireFragmentManager().beginTransaction();
         transaction.remove(this);
         transaction.commit();
-    }
-
-    public QuizManager getQuizManager() {
-        return quizManager;
     }
 
     public interface OnDataPassListener{

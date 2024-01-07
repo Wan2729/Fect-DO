@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,6 +42,7 @@ public class AddCourse extends AppCompatActivity implements AddQuizForm.OnDataPa
     List<QuizManager> quizManagerList;
     AddQuizForm fragment;
     int currentQuizIndex;
+    String currentTopicName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +85,20 @@ public class AddCourse extends AppCompatActivity implements AddQuizForm.OnDataPa
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(getIntent().getBooleanExtra(NEW_COURSE, true)){
-                    addCourse();
-                    finish();
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddCourse.this);
+                builder.setTitle("Leaving page")
+                        .setMessage("Are you confirm to save this change? \n" +
+                                "You cannot edit this afterward")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            addCourse();
+                        })
+                        .setNegativeButton("No", (dialog, which) -> {
+                            return;
+                        })
+                        .setCancelable(true);
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
 
@@ -136,7 +148,6 @@ public class AddCourse extends AppCompatActivity implements AddQuizForm.OnDataPa
 
         for(int i=0 ; i<quizManagerList.size() ; i++){
             TopicModel topicModel = new TopicModel();
-            quizManagerList.get(i).loadChoice();
             topicModel.setTopicName(quizManagerList.get(i).getTopicName());
             topicModel.setVideoLink(
                     YouTubeLinkConverter.convertToEmbedLink(quizManagerList.get(i).getVideoLink())
@@ -176,27 +187,32 @@ public class AddCourse extends AppCompatActivity implements AddQuizForm.OnDataPa
             }
         });
         showToast(courseTitle + " course is successfully added");
+        finish();
     }
 
     void addTopicForm(){
         View view = getLayoutInflater().inflate(R.layout.layout_add_topic_form, null);
         int index = viewList.size();
 
-
         deleteTopic.setEnabled(true);
-        viewList.add(view);
-
         quizManagerList.add(new QuizManager());
+        viewList.add(view);
 
         TextView topicNumber = view.findViewById(R.id.topicNumberText);
         topicNumber.setText("Topic " +viewList.size());
+
+        TextView topicName = view.findViewById(R.id.topicNameInput);
 
         view.findViewById(R.id.btnAddQuiz).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 currentQuizIndex = index;
+                currentTopicName = topicName.getText().toString();
                 disableActivity();
-                getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, fragment).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragmentContainer, fragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
@@ -246,7 +262,7 @@ public class AddCourse extends AppCompatActivity implements AddQuizForm.OnDataPa
                     .setMessage("Are you sure want to discard without saving?")
                     .setPositiveButton("Yes", (dialog, which) -> {
                         enableActivity();
-                        getSupportFragmentManager().popBackStack();
+                        popFragment();
                     })
                     .setNegativeButton("No", (dialog, which) -> {
                         return;
@@ -257,7 +273,19 @@ public class AddCourse extends AppCompatActivity implements AddQuizForm.OnDataPa
             alertDialog.show();
         }
         else{
-            super.onBackPressed();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Leaving page")
+                    .setMessage("Are you sure want to discard without saving?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        super.onBackPressed();
+                    })
+                    .setNegativeButton("No", (dialog, which) -> {
+                        return;
+                    })
+                    .setCancelable(true).show();
+
+//            AlertDialog alertDialog = builder.create();
+//            alertDialog.show();
         }
     }
 
@@ -272,5 +300,13 @@ public class AddCourse extends AppCompatActivity implements AddQuizForm.OnDataPa
         for(int i=0 ; i<quizManagerList.size() ; i++){
             TextFileManager.saveToFile(getApplicationContext(), "quizList", quizManagerList.get(i));
         }
+    }
+
+    public String getTopicName(){
+        return currentTopicName;
+    }
+
+    public void popFragment(){
+        getSupportFragmentManager().popBackStack();
     }
 }

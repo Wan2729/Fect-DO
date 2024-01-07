@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_checked="true">
+    <item android:state_activated="true">
         <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
             <!-- Outer circle -->
@@ -23,10 +23,10 @@
         </layer-list>
     </item>
 
-    <item android:state_checked="false">
+    <item android:state_focused="false">
         <shape android:shape="oval">
             <solid android:color="@color/white"/>
-            <stroke android:width="2dp" android:color="@color/common_google_signin_btn_text_light_disabled"/>
+            <stroke android:width="2dp" android:color="@color/light_grey"/>
             <size android:width="20dp" android:height="20dp"/>
         </shape>
     </item>

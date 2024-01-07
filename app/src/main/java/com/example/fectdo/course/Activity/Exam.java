@@ -26,13 +26,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
+import java.util.Random;
 
 public class Exam extends AppCompatActivity implements View.OnClickListener {
-    FirebaseFirestore database;
-    CollectionReference questions;
-    QuestionModel questionModel;
+    Random random;
 
-    PengurusSoalan senaraiSoalan;
     QuizManager quizManager;
     TextView ruanganSoalan;
     Button jawapanA, jawapanB, jawapanC, jawapanD, nextBtn;
@@ -45,11 +43,9 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam);
 
-        senaraiSoalan = new PengurusSoalan();
-        senaraiSoalan.setSoalanLalai();
-
-        database = FirebaseFirestore.getInstance();
-        questions = database.collection("questions");
+        random = new Random();
+        currentQuestion = 0;
+        marks = 0;
 
         quizManager = new QuizManager();
         quizManager.setQuestion((List<String>) getIntent().getStringArrayListExtra("questionList"));
@@ -58,9 +54,6 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
         quizManager.setChoiceB((List<String>) getIntent().getStringArrayListExtra("choiceB"));
         quizManager.setChoiceC((List<String>) getIntent().getStringArrayListExtra("choiceC"));
         quizManager.setChoiceD((List<String>) getIntent().getStringArrayListExtra("choiceD"));
-
-        currentQuestion = 0;
-        marks = 0;
 
         ruanganSoalan = findViewById(R.id.soalan);
         jawapanA = findViewById(R.id.btnAnswerA);
@@ -75,15 +68,11 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
         jawapanD.setOnClickListener(this);
         nextBtn.setOnClickListener(this);
 
-//        loadQuestionFromFirebase();
         loadNewQuestion();
         navigation = new Navigation(this);
-
         navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
     }
 
-
-    @SuppressLint("ResourceAsColor")
     @Override
     public void onClick(View v) {
         jawapanA.setEnabled(true);
@@ -94,12 +83,14 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
         Button btn = (Button) v;
 
         if(btn.getId() == nextBtn.getId()){
-//            if(choice.equals(senaraiSoalan.getJawapan(currentQuestion)))
-//                marks++;
             if(choice.equals(quizManager.getCorrectAnswer(currentQuestion)))
                 marks++;
 
-            if(currentQuestion < quizManager.getSize() - 1){
+            if(quizManager.getSize() > 10){
+                currentQuestion = random.nextInt(quizManager.getSize());
+                loadNewQuestion();
+            }
+            else if(currentQuestion < quizManager.getSize() - 1){
                 currentQuestion++;
                 loadNewQuestion();
             }
@@ -110,37 +101,14 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
             choice = btn.getText().toString();
             btn.setEnabled(false);
         }
-
     }
 
     private void loadNewQuestion(){
-//        String[] questionList = questionModel.getAnswerList(currentQuestion);
-
-//        ruanganSoalan.setText(senaraiSoalan.getSenaraiSoalan(currentQuestion));
-//        jawapanA.setText(senaraiSoalan.getSenaraiJawapan(currentQuestion)[0]);
-//        jawapanB.setText(senaraiSoalan.getSenaraiJawapan(currentQuestion)[1]);
-//        jawapanC.setText(senaraiSoalan.getSenaraiJawapan(currentQuestion)[2]);
-//        jawapanD.setText(senaraiSoalan.getSenaraiJawapan(currentQuestion)[3]);
-
         ruanganSoalan.setText(quizManager.getQuestion(currentQuestion));
         jawapanA.setText(quizManager.getChoiceA().get(currentQuestion));
         jawapanB.setText(quizManager.getChoiceB().get(currentQuestion));
         jawapanC.setText(quizManager.getChoiceC().get(currentQuestion));
         jawapanD.setText(quizManager.getChoiceD().get(currentQuestion));
-    }
-
-    void loadQuestionFromFirebase(){
-        questions.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {String m="";
-                for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
-                    questionModel = documentSnapshot.toObject(QuestionModel.class);
-                    m = documentSnapshot.get("totalQuestions").toString();
-                }
-                AndroidUtil.showToast(Exam.this, m);
-            }
-        });
-
     }
 
     void finishQuiz(){

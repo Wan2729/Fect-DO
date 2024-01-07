@@ -23,10 +23,33 @@ public class QuizManager {
         choiceD = new ArrayList<>();
     }
 
-    public void addQuestion(int index, String question, String correctAnswer, String[] choice){
-        this.question.add(index,question);
-        this.correctAnswer.add(index, correctAnswer);
-        this.choice.add(index, choice);
+    public void addQuestion(int index){
+        this.question.add(index,"");
+        this.correctAnswer.add(index, "");
+        this.choice.add(index, new String[4]);
+        choiceA.add(index, "");
+        choiceB.add(index, "");
+        choiceC.add(index, "");
+        choiceD.add(index, "");
+    }
+
+    public void removeQuestion(int index){
+        this.question.remove(index);
+        this.correctAnswer.remove(index);
+        this.choice.remove(index);
+        choiceA.remove(index);
+        choiceB.remove(index);
+        choiceC.remove(index);
+        choiceD.remove(index);
+    }
+
+    public void setQuestion(int index, String question, String[] choice){
+        this.question.set(index,question);
+        this.choice.set(index, choice);
+        choiceA.set(index, choice[0]);
+        choiceB.set(index, choice[1]);
+        choiceC.set(index, choice[2]);
+        choiceD.set(index, choice[3]);
     }
 
     public void setTopicName(String topicName) {
