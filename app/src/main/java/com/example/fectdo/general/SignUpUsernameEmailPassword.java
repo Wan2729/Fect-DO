@@ -82,9 +82,6 @@ SignUpUsernameEmailPassword extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         firebaseAuth = FirebaseAuth.getInstance();
         fileStorage = FirebaseStorage.getInstance().getReference().child("images");
-
-
-
     }
 
     public void signUpButton(View view){

@@ -31,9 +31,36 @@
         app:layout_constraintTop_toBottomOf="@id/text1" />
 
     <TextView
+        android:id="@+id/text3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Course image"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:fontFamily="@font/mukta_semibold"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/etCourseTitle"
+        app:layout_constraintEnd_toStartOf="@+id/guideline95H"
+        app:layout_constraintStart_toStartOf="@+id/guideline5H" />
+
+    <ImageButton
+        android:id="@+id/uploadImageButton"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:onClick="pickImage"
+        android:background="@color/transparent"
+        android:src="@drawable/placeholder_image"
+        android:scaleType="fitXY"
+        app:layout_constraintDimensionRatio="16:9"
+        app:layout_constraintTop_toBottomOf="@+id/text3"
+        app:layout_constraintEnd_toStartOf="@+id/guideline95H"
+        app:layout_constraintStart_toStartOf="@+id/guideline5H" />
+
+    <TextView
         android:id="@+id/text2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:text="Course topics"
         android:textSize="20sp"
         android:fontFamily="@font/mukta_semibold"
@@ -41,13 +68,13 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etCourseTitle"/>
+        app:layout_constraintTop_toBottomOf="@id/uploadImageButton"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewRoot"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1:1.4"
+        app:layout_constraintDimensionRatio="1:1.25"
         app:layout_constraintEnd_toStartOf="@+id/guideline95H"
         app:layout_constraintStart_toStartOf="@+id/guideline5H"
         app:layout_constraintTop_toBottomOf="@id/text2">
@@ -55,11 +82,7 @@
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintDimensionRatio="1:1.4"
-            app:layout_constraintEnd_toStartOf="@+id/guideline95H"
-            app:layout_constraintStart_toStartOf="@+id/guideline5H"
-            app:layout_constraintTop_toBottomOf="@id/text2">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:id="@+id/linearLayout"

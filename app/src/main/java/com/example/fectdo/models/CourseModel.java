@@ -6,7 +6,7 @@ import com.google.firebase.firestore.Exclude;
 import java.util.List;
 
 public class CourseModel {
-    String courseName, creatorID, documentID;
+    String courseName, creatorID, documentID, imageUrl;
     List<String> ExamQuestion, ExamChoice, ExamAnswer;
     List<String> topics;
 
@@ -58,6 +58,10 @@ public class CourseModel {
         return topics;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
@@ -80,5 +84,9 @@ public class CourseModel {
 
     public void setTopics(List<String> topics) {
         this.topics = topics;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

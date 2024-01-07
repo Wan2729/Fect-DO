@@ -1,18 +1,27 @@
 package com.example.fectdo.course.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.fectdo.InternalStorageManager.TextFileManager;
 import com.example.fectdo.R;
 import com.example.fectdo.Soalan.QuizManager;
@@ -26,9 +35,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class AddCourse extends AppCompatActivity implements AddQuizForm.OnDataPassListener{
     final static String COURSE_PATH = "COURSE_PATH_REF", USER_ID = "USER_ID", NEW_COURSE = "NEW_COURSE";
@@ -43,6 +56,7 @@ public class AddCourse extends AppCompatActivity implements AddQuizForm.OnDataPa
     AddQuizForm fragment;
     int currentQuizIndex;
     String currentTopicName;
+    Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +120,7 @@ public class AddCourse extends AppCompatActivity implements AddQuizForm.OnDataPa
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
     }
@@ -172,16 +186,50 @@ public class AddCourse extends AppCompatActivity implements AddQuizForm.OnDataPa
                 topicList.add(documentReference.getId());
 
                 if(topicList.size() == totalTopic){
-                    CourseModel course = new CourseModel(courseTitle);
-                    course.setCreatorID(getIntent().getStringExtra(USER_ID));
-                    course.setTopics(topicList);
-                    courseCollectionReference.add(course).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentReference> task) {
-                            DocumentReference document = task.getResult();
-                            document.update("documentID", document.getId());
-                        }
-                    });
+
+                    if(imageUri != null){
+                        FirebaseStorage storage = FirebaseStorage.getInstance();
+                        StorageReference storageRef = storage.getReference();
+
+                        // Create a unique filename for the image
+                        String fileName = "images/" + UUID.randomUUID().toString();
+
+                        // Create a reference to the image in Firestore Storage
+                        StorageReference imageRef = storageRef.child(fileName);
+
+                        // Upload the image to Firestore Storage
+                        UploadTask uploadTask = imageRef.putFile(imageUri);
+
+                        // Listen for the success or failure of the upload task
+                        uploadTask.addOnCompleteListener(doUpload -> {
+                            if (doUpload.isSuccessful()) {
+                                // Image uploaded successfully
+                                // You can get the download URL if needed
+                                imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                                    String imageUrl = uri.toString();
+                                    // Now you can save this URL to Firestore or do whatever you need
+                                    CourseModel course = new CourseModel(courseTitle);
+                                    course.setCreatorID(getIntent().getStringExtra(USER_ID));
+                                    course.setTopics(topicList);
+                                    course.setImageUrl(imageUrl);
+                                    courseCollectionReference.add(course).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                                            DocumentReference document = task.getResult();
+                                            document.update("documentID", document.getId());
+                                        }
+                                    });
+                                });
+                            } else {
+                                // Handle the failure
+                                Exception exception = doUpload.getException();
+                                // Handle the exception accordingly
+                            }
+                        });
+                    }
+                    else{
+
+                    }
                     showToast(courseTitle + " course is successfully added");
                 }
             }
@@ -299,6 +347,30 @@ public class AddCourse extends AppCompatActivity implements AddQuizForm.OnDataPa
         TextFileManager.deleteFile(getApplicationContext(), "quizList");
         for(int i=0 ; i<quizManagerList.size() ; i++){
             TextFileManager.saveToFile(getApplicationContext(), "quizList", quizManagerList.get(i));
+        }
+    }
+
+    public void pickImage(View view){
+        //check either user has permission to access file or not
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, 101);
+        } else {
+            // Request permission
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 102);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 101 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imageUri = data.getData();
+            ImageButton showImage = findViewById(R.id.uploadImageButton);
+            Glide.with(this)
+                    .load(imageUri)
+                    .into(showImage);
         }
     }
 
