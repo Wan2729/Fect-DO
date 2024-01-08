@@ -15,4 +15,10 @@ public class NodeNames {
     public static final String CHATS = "Chats";
 
     public static final String TIME_STAMP = "timestamp";
+    public static final Object MESSAGE_ID = "messageId";
+    public static final Object MESSAGE = "message";
+    public static final Object MESSAGE_TYPE = "messageType";
+    public static final Object MESSAGE_FROM = "messageFrom";
+    public static final Object MESSAGE_TIME = "messageTime";
+    public static final String MESSAGES = "Messages";
 }

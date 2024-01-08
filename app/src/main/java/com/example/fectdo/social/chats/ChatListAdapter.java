@@ -1,6 +1,7 @@
 package com.example.fectdo.social.chats;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.fectdo.R;
 import com.example.fectdo.utils.Constants;
+import com.example.fectdo.utils.Extras;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -54,6 +56,15 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
                         .placeholder(R.drawable.default_profile)
                         .error(R.drawable.default_profile)
                         .into(holder.ivProfile);
+            }
+        });
+
+        holder.llChatList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ChatActivity.class);
+                intent.putExtra(Extras.USER_KEY,chatListModel.getUserId());
+                context.startActivity(intent);
             }
         });
 
