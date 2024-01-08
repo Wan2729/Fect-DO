@@ -45,4 +45,8 @@ public class PostModel {
     public String getPostDescription() {
         return postDescription;
     }
+
+    public void setLike(int like) {
+        this.like = like;
+    }
 }

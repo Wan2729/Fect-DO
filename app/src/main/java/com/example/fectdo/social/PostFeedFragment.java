@@ -18,12 +18,16 @@ import android.widget.Toast;
 import com.example.fectdo.R;
 import com.example.fectdo.adapter.PostFeedAdapter;
 import com.example.fectdo.models.PostModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEvent;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,6 +44,7 @@ public class PostFeedFragment extends Fragment {
     DatabaseReference dbRef;
     ProgressBar progressBar;
     View view;
+    FirebaseAuth mAuth;
 
     public PostFeedFragment() {
 
@@ -62,6 +67,46 @@ public class PostFeedFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         postFeedAdapter = new PostFeedAdapter(postList,getContext());
         recyclerView.setAdapter(postFeedAdapter);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemDoubleTap(int position) {
+                PostModel likedPost = postList.get(position);
+                String postId = likedPost.getPostId();
+                DatabaseReference childLikedPost = FirebaseDatabase.getInstance().getReference("LikedPost").child(postId);
+                if (mAuth.getUid()!=null) {
+                    childLikedPost.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            boolean postLiked = false;
+                            for (DataSnapshot ds : snapshot.getChildren()) {
+                                String value = ds.getKey();
+                                Log.d("SEE USERNAME",value.toString());
+                                if (value.equals(mAuth.getUid())) {
+                                    postLiked = true;
+                                    break;
+                                }
+                            }
+                            if (!postLiked) {
+                                likedPost.setLike(likedPost.getLike()+1);
+                                FirebaseDatabase.getInstance().getReference("Posts").child(likedPost.getUserId()).child(likedPost.getPostId()).setValue(likedPost);
+                                childLikedPost.child(mAuth.getUid()).setValue("");
+                                postFeedAdapter.notifyItemChanged(position);
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+
+            }
+        },recyclerView));
 
         if(firstArrive) {
             updateRecyclerView();
