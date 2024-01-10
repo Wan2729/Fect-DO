@@ -165,4 +165,28 @@ public class QuizManager {
             choiceD.add(choice.get(i)[3]);
         }
     }
+
+    public void addQuestions(List<String> questions) {
+        question.addAll(questions);
+    }
+
+    public void addCorrectAnswer(List<String> correctAnswers){
+        correctAnswer.addAll(correctAnswers);
+    }
+
+    public void addChoiceA(List<String> choices){
+        choiceA.addAll(choices);
+    }
+
+    public void addChoiceB(List<String> choices){
+        choiceB.addAll(choices);
+    }
+
+    public void addChoiceC(List<String> choices){
+        choiceC.addAll(choices);
+    }
+
+    public void addChoiceD(List<String> choices){
+        choiceD.addAll(choices);
+    }
 }

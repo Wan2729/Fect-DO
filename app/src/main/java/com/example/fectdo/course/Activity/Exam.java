@@ -34,8 +34,8 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
     QuizManager quizManager;
     TextView ruanganSoalan;
     Button jawapanA, jawapanB, jawapanC, jawapanD, nextBtn;
-    int currentQuestion, marks;
-    String choice;
+    int currentQuestion, marks, i;
+    String choice = "";
     private Navigation navigation;
 
     @Override
@@ -46,6 +46,7 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
         random = new Random();
         currentQuestion = 0;
         marks = 0;
+        i = 0;
 
         quizManager = new QuizManager();
         quizManager.setQuestion((List<String>) getIntent().getStringArrayListExtra("questionList"));
@@ -86,8 +87,9 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
             if(choice.equals(quizManager.getCorrectAnswer(currentQuestion)))
                 marks++;
 
-            if(quizManager.getSize() > 10){
+            if(quizManager.getSize() > 10 && i < 50 && i < quizManager.getSize() - 1){
                 currentQuestion = random.nextInt(quizManager.getSize());
+                i++;
                 loadNewQuestion();
             }
             else if(currentQuestion < quizManager.getSize() - 1){

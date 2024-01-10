@@ -1,42 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
     android:layout_height="wrap_content"
     android:background="@color/transparent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
+    <ImageButton
+        android:id="@+id/ibCourseIcon"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:padding="10dp"
+
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/tvCourseName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/transparent"
-        android:background="@color/transparent"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_below="@+id/ibCourseIcon"
+        android:layout_alignStart="@+id/ibCourseIcon"
+        android:text="Course"
+        android:textAlignment="textStart"
+        android:textSize="14sp" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageButton
-                android:id="@+id/ibCourseIcon"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerHorizontal="true"/>
-
-            <TextView
-                android:id="@+id/tvCourseName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ibCourseIcon"
-                android:layout_alignStart="@+id/ibCourseIcon"
-                android:text="Course"
-                android:textAlignment="textStart"
-                android:textSize="14sp" />
-
-        </RelativeLayout>
-
-    </androidx.cardview.widget.CardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
