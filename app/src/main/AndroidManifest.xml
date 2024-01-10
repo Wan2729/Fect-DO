@@ -10,7 +10,6 @@
 
     <application
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/icon_logo_fd"
@@ -18,7 +17,11 @@
         android:roundIcon="@drawable/icon_logo_fd"
         android:supportsRtl="true"
         android:theme="@style/Theme.FectDo"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".career.job_career.JobActivity"
+            android:exported="false" />
         <activity
             android:name=".career.study.UPUActivity"
             android:exported="true" />

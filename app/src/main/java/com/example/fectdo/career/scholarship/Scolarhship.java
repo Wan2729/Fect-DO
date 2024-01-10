@@ -5,60 +5,65 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.example.fectdo.R;
 import com.example.fectdo.HomePage;
 import com.example.fectdo.career.CareerMain;
+import com.example.fectdo.career.study.SpmAtauStpm;
 import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.edit.SettingActivity;
+import com.example.fectdo.utils.Navigation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Scolarhship extends AppCompatActivity {
-
+    private Navigation navigation;
+    private WebView mywebView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scolarhship);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
-
-        // Set up a listener for BottomNavigationView item clicks
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        // Handle item selection
-                        switch (item.getItemId()) {
-                            case R.id.navigation_home:
-                                // Intent for Home
-                                Intent homeIntent = new Intent(Scolarhship.this, HomePage.class);
-                                startActivity(homeIntent);
-                                return true;
-                            case R.id.navigation_setting:
-                                // Intent for Setting
-                                Intent settingIntent = new Intent(Scolarhship.this, SettingActivity.class);
-                                startActivity(settingIntent);
-                                return true;
-                            case R.id.navigation_profile:
-                                // Intent for Profile
-                                Intent profileIntent = new Intent(Scolarhship.this, ProfileActivity.class);
-                                startActivity(profileIntent);
-                                return true;
-                            default:
-                                return false;
-                        }
-                    }
-                }
-        );
+        navigation = new Navigation(this);
+        navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
+        mywebView=(WebView) findViewById(R.id.scholarWeb);
+        mywebView.setWebViewClient(new mywebClient());
+        mywebView.loadUrl("https://www.malaysiascholarships.my/");
+        //
+        WebSettings webSettings=mywebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
     }
+
+    public class mywebClient extends WebViewClient {
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view,url,favicon);
+        }
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
+
+    }
+    @Override
+    public void onBackPressed() {
+        if (mywebView.canGoBack()) {
+            mywebView.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

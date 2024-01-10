@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.example.fectdo.R;
 import com.example.fectdo.HomePage;
+import com.example.fectdo.career.job_career.JobActivity;
 import com.example.fectdo.career.scholarship.Scolarhship;
 import com.example.fectdo.career.study.SpmAtauStpm;
 import com.example.fectdo.utils.Navigation;
@@ -33,6 +34,12 @@ public class CareerMain extends AppCompatActivity {
 
     public void goToStudy(View view){
         Intent intent = new Intent(CareerMain.this, SpmAtauStpm.class);
+        startActivity(intent);
+
+    }
+
+    public void goToJob(View view){
+        Intent intent = new Intent(CareerMain.this, JobActivity.class);
         startActivity(intent);
 
     }
