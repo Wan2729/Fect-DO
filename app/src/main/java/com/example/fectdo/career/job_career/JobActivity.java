@@ -52,11 +52,11 @@ public class JobActivity extends AppCompatActivity {
             switch (spinner.getSelectedItem().toString()){
                 case "Job Street":link="https://www.jobstreet.com.my/jobs";
                     break;
-                case "Hiredly":link="https://my.hiredly.com/jobs?utm_source=google&utm_medium=cpc&utm_campaign=13713354462&utm_content=530820539177&utm_term=job&gad_source=1&gclid=CjwKCAiA-vOsBhAAEiwAIWR0TSF2f7jif6QSHyuesXsQIBpbsZhqzgFNeUVOWNNMFPBGCfLFNYJPbBoC9psQAvD_BwE";
+                case "Jora":link="https://my.jora.com/";
                     break;
-                case "Kabel":link="https://www.kabel.my/";
+                case "MyFutureJobs":link="https://candidates.myfuturejobs.gov.my/search-jobs/description?jobId=98691089b4e0417a8fc2f33f8987db51";
                     break;
-                case "Linkedin":link="https://www.linkedin.com/feed/";
+                case "Indeed":link="https://malaysia.indeed.com/";
                     break;
 
             }

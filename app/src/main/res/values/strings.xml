@@ -8,9 +8,9 @@
     <string-array name="job_website">
         <item>Choose</item>
         <item>Job Street</item>
-        <item>Hiredly</item>
-        <item>Kabel</item>
-        <item>Linkedin</item>
+        <item>Jora</item>
+        <item>MyFutureJobs</item>
+        <item>Indeed</item>
     </string-array>
 
 </resources>
