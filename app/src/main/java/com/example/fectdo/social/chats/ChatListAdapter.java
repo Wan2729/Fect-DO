@@ -87,7 +87,6 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
             llChatList = itemView.findViewById(R.id.llChatList);
             tvName = itemView.findViewById(R.id.tvName);
             tvLastMessageTime = itemView.findViewById(R.id.tvLastMessageTime);
-            tvUnreadCount = itemView.findViewById(R.id.tvUnreadCount);
             ivProfile = itemView.findViewById(R.id.ivProfile);
         }
     }

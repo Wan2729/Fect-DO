@@ -24,19 +24,10 @@ import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.fectdo.R;
-import com.example.fectdo.career.CareerMain;
-import com.example.fectdo.course.Activity.HomePage;
+import com.example.fectdo.HomePage;
 import com.example.fectdo.general.LoginEmailPassword;
-import com.example.fectdo.general.SignUpUsernameEmailPassword;
-import com.example.fectdo.general.WelcomePage;
 import com.example.fectdo.utils.Navigation;
 import com.example.fectdo.utils.NodeNames;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,7 +38,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 

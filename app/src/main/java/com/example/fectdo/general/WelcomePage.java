@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.fectdo.R;
-import com.example.fectdo.course.Activity.HomePage;
+import com.example.fectdo.HomePage;
 import com.example.fectdo.utils.FirebaseUtil;
 
 public class WelcomePage extends AppCompatActivity {

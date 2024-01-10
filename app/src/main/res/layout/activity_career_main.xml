@@ -25,24 +25,26 @@
         app:menu="@menu/bottom_menu" />
 
     <ImageButton
-        android:id="@+id/btnScholar"
+        android:id="@+id/btnBukanSemasa"
         android:layout_width="270dp"
         android:layout_height="113dp"
         android:layout_marginTop="80dp"
         android:background="@drawable/btn_scolarship"
+        android:onClick="goToScholarship"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <ImageButton
-        android:id="@+id/btnStudy"
+        android:id="@+id/btnSemasa"
         android:layout_width="270dp"
         android:layout_height="113dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/btn_study_path"
+        android:onClick="goToStudy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnScholar" />
+        app:layout_constraintTop_toBottomOf="@+id/btnBukanSemasa" />
 
     <ImageButton
         android:id="@+id/btnJob"
@@ -52,6 +54,6 @@
         android:background="@drawable/btn_job_career"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnStudy" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSemasa" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

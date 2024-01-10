@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.fectdo.R;
-import com.example.fectdo.course.Activity.HomePage;
+import com.example.fectdo.HomePage;
 import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.edit.SettingActivity;
 import com.example.fectdo.social.chats.ChatFragment;

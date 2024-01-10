@@ -4,4 +4,22 @@
     <string name="edittext_hint"><font size="15">Write Your Answer Here</font></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="stpm_types">
+        <item>Choose</item>
+        <item>STPM SAINS</item>
+        <item>STPM SASTERA</item>
+        <item>ASASI SAINS</item>
+        <item>PERAKAUNAN</item>
+        <item>TESL</item>
+        <item>LAW</item>
+        <item>ASASI KEJUTERAAN</item>
+        <item>MATRIKULASI KUJUTERAAN</item>
+    </string-array>
+
+    <string-array name="spm_types">
+        <item>Choose</item>
+        <item>SPM SEMASA</item>
+        <item>SPM BUKAN SEMASA</item>
+    </string-array>
 </resources>

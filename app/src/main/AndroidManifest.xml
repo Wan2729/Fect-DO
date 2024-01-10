@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.fectdo">
 
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- Permission for internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
+        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/icon_logo_fd"
@@ -18,6 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FectDo"
         tools:targetApi="31">
+        <activity
+            android:name=".career.study.UPUActivity"
+            android:exported="true" />
+        <activity
+            android:name=".career.study.SpmAtauStpm"
+            android:exported="false" />
         <activity
             android:name=".social.chats.ChatActivity"
             android:exported="false" />
@@ -32,7 +39,7 @@
             android:name=".course.Activity.CourseListPage"
             android:exported="false" />
         <activity
-            android:name=".career.Scolarhship"
+            android:name=".career.scholarship.Scolarhship"
             android:exported="false" />
         <activity
             android:name=".career.CareerMain"
@@ -59,7 +66,7 @@
             android:name=".course.Activity.ExamMainPage"
             android:exported="false" />
         <activity
-            android:name=".course.Activity.HomePage"
+            android:name=".HomePage"
             android:exported="false"
             android:windowSoftInputMode="adjustNothing" />
         <activity

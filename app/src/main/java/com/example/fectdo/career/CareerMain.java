@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.fectdo.R;
-import com.example.fectdo.course.Activity.HomePage;
+import com.example.fectdo.HomePage;
+import com.example.fectdo.career.scholarship.Scolarhship;
+import com.example.fectdo.career.study.SpmAtauStpm;
 import com.example.fectdo.utils.Navigation;
 
 public class CareerMain extends AppCompatActivity {
@@ -22,6 +25,16 @@ public class CareerMain extends AppCompatActivity {
         navigation = new Navigation(this);
 
         navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
+    }
+    public void goToScholarship(View view){
+        Intent intent = new Intent(CareerMain.this, Scolarhship.class);
+        startActivity(intent);
+    }
+
+    public void goToStudy(View view){
+        Intent intent = new Intent(CareerMain.this, SpmAtauStpm.class);
+        startActivity(intent);
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -46,4 +59,5 @@ public class CareerMain extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
+
 }

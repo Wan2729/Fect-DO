@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.fectdo.R;
 import com.example.fectdo.utils.NodeNames;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.FirebaseAuth;  // Import FirebaseAuth
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,8 +41,6 @@ public class ChatFragment extends Fragment {
     private FirebaseUser currentUser;
     private ChildEventListener childEventListener;
     private Query query;
-
-
 
     public ChatFragment() {
         // Required empty public constructor
@@ -84,32 +83,37 @@ public class ChatFragment extends Fragment {
 
         query = databaseReferenceChats.orderByChild(NodeNames.TIME_STAMP);
 
+        // Initialize currentUser
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
         childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                updateList(snapshot,true,snapshot.getKey());
+                updateList(snapshot, true, snapshot.getKey());
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                // Implement if needed
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
+                // Implement if needed
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                // Implement if needed
             }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Implement onCancelled method
+                Toast.makeText(getActivity(), "Error in fetching messages: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+                tvEmptyChatList.setVisibility(View.VISIBLE);
             }
-
         };
         query.addChildEventListener(childEventListener);
 
@@ -117,37 +121,40 @@ public class ChatFragment extends Fragment {
         tvEmptyChatList.setVisibility(View.VISIBLE);
     }
 
-    private void updateList(DataSnapshot dataSnapshot,boolean isNew,String userId){
+    private void updateList(DataSnapshot dataSnapshot, boolean isNew, String userId) {
         progressBar.setVisibility(View.GONE);
         tvEmptyChatList.setVisibility(View.GONE);
-        final String lastMessage,lastMessageTime,unreadCount;
 
-        lastMessage = "";
-        lastMessageTime = "";
-        unreadCount = "";
+        // Check if the user ID is the same as the current user's ID
+        if (currentUser != null && !userId.equals(currentUser.getUid())) {
+            final String lastMessage, lastMessageTime, unreadCount;
 
-        databaseReferenceUsers.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-               String fullName = snapshot.child(NodeNames.NAME).getValue() != null?
-                    snapshot.child(NodeNames.NAME).getValue().toString() : "";
+            lastMessage = "";
+            lastMessageTime = "";
+            unreadCount = "";
 
-               String photoName = snapshot.child(NodeNames.PHOTO).getValue() != null?
-                        snapshot.child(NodeNames.PHOTO).getValue().toString() : "";
+            databaseReferenceUsers.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String fullName = snapshot.child(NodeNames.NAME).getValue() != null ?
+                            snapshot.child(NodeNames.NAME).getValue().toString() : "";
 
-               ChatListModel chatListModel = new ChatListModel(userId,fullName,photoName,unreadCount,lastMessage,lastMessageTime);
+                    String photoName = snapshot.child(NodeNames.PHOTO).getValue() != null ?
+                            snapshot.child(NodeNames.PHOTO).getValue().toString() : "";
 
-               chatListModelList.add(chatListModel);
+                    ChatListModel chatListModel = new ChatListModel(userId, fullName, photoName, unreadCount, lastMessage, lastMessageTime);
 
-               chatListAdapter.notifyDataSetChanged();
+                    chatListModelList.add(chatListModel);
 
-            }
+                    chatListAdapter.notifyDataSetChanged();
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), "Failed to fectch message: "+error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(getActivity(), "Failed to fetch message: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     @Override
