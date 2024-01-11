@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,8 +27,11 @@ import com.bumptech.glide.Glide;
 import com.example.fectdo.R;
 import com.example.fectdo.HomePage;
 import com.example.fectdo.general.LoginEmailPassword;
+import com.example.fectdo.models.UserModel;
 import com.example.fectdo.utils.Navigation;
 import com.example.fectdo.utils.NodeNames;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,6 +39,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -53,6 +58,8 @@ public class ProfileActivity extends AppCompatActivity {
     private StorageReference fileStorage;
     private Uri localFileUri, serverFileUri;
     private FirebaseAuth firebaseAuth;
+    TextView levelTextView;
+    long userLevel;
 
 
 
@@ -68,6 +75,7 @@ public class ProfileActivity extends AppCompatActivity {
         etName = findViewById(R.id.etName);
         etBio = findViewById(R.id.etBio);
         ivProfile = findViewById(R.id.ivProfile);
+        levelTextView = findViewById(R.id.levelTextView);
         fileStorage = FirebaseStorage.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -99,6 +107,33 @@ public class ProfileActivity extends AppCompatActivity {
             }).addOnFailureListener(e -> {
                 etBio.setText("");
             });
+
+            //To set the Level Text View and Handle if the level not yet been initialized
+            DocumentReference userRef = FirebaseFirestore.getInstance().collection("users").document(firebaseUser.getUid());
+            userRef.get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if(task.isSuccessful()){
+                                DocumentSnapshot ds = task.getResult();
+                                if(ds.exists()){
+                                    Long longNullTest = ds.getLong("level");
+                                    if(longNullTest==null){
+                                        userRef.update("level",0);
+                                        levelTextView.setText("0");
+                                    } else {
+                                        int level = longNullTest.intValue();
+                                        levelTextView.setText(Integer.toString(level));
+                                    }
+                                } else {
+                                    Log.d("PR EXIST", "onComplete: Ds not exist");
+                                }
+                            } else {
+                                Log.d("PR TASK", "onComplete: Task is not succeed");
+                            }
+                        }
+                    });
+
         }
 
     }

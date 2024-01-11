@@ -8,8 +8,7 @@ public class UserModel {
     private String username;
     private String emailAddress;
     private String description;
-
-
+    private long level;
     private String photo;
     private String online;
 
@@ -19,6 +18,7 @@ public class UserModel {
         this.online = online;
         this.photo = photo;
         this.description = description;
+        this.level = 0;
     }
 
     public String getUsername() {
@@ -60,5 +60,13 @@ public class UserModel {
 
     public void setOnline(String online) {
         this.online = online;
+    }
+
+    public long getLevel() {
+        return level;
+    }
+
+    public void setLevel(long level) {
+        this.level = level;
     }
 }
