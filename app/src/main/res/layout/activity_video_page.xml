@@ -61,23 +61,23 @@
         android:id="@+id/examButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="100dp"
         android:background="@drawable/exambutton"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintEnd_toStartOf="@+id/quizButton"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/quizButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="100dp"
         android:background="@drawable/quizbutton"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.929"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
