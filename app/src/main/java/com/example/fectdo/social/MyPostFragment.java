@@ -20,6 +20,7 @@ import com.example.fectdo.models.PostModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +36,7 @@ import java.util.List;
 
 public class MyPostFragment extends Fragment {
 
-    TextView descriptionTextView,usernameTextView;
+    TextView descriptionTextView,usernameTextView,levelTextView;
     String username,description;
     RecyclerView recyclerView;
     FirebaseAuth mAuth;
@@ -55,6 +56,7 @@ public class MyPostFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycleView);
         usernameTextView = view.findViewById(R.id.usernameTextView);
         descriptionTextView = view.findViewById(R.id.descriptiontextView);
+        levelTextView = view.findViewById(R.id.levelTextView);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -68,6 +70,32 @@ public class MyPostFragment extends Fragment {
         if(mAuth==null){
             return null;
         }
+
+        //To set the Level Text View and Handle if the level not yet been initialized
+        DocumentReference userRef = FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getUid());
+        userRef.get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()){
+                            DocumentSnapshot ds = task.getResult();
+                            if(ds.exists()){
+                                Long longNullTest = ds.getLong("level");
+                                if(longNullTest==null){
+                                    userRef.update("level",0);
+                                    levelTextView.setText("0");
+                                } else {
+                                    int level = longNullTest.intValue();
+                                    levelTextView.setText(Integer.toString(level));
+                                }
+                            } else {
+                                Log.d("PR EXIST", "onComplete: Ds not exist");
+                            }
+                        } else {
+                            Log.d("PR TASK", "onComplete: Task is not succeed");
+                        }
+                    }
+                });
 
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Posts").child(mAuth.getUid());
         dbRef.addValueEventListener(new ValueEventListener() {

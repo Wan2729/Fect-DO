@@ -370,6 +370,7 @@ public class AddCourse extends AppCompatActivity implements AddQuizForm.OnDataPa
             ImageButton showImage = findViewById(R.id.uploadImageButton);
             Glide.with(this)
                     .load(imageUri)
+                    .centerCrop()
                     .into(showImage);
         }
     }

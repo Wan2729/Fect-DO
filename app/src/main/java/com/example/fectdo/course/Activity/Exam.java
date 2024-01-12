@@ -1,11 +1,13 @@
 package com.example.fectdo.course.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,8 +21,13 @@ import com.example.fectdo.Soalan.QuizManager;
 import com.example.fectdo.models.QuestionModel;
 import com.example.fectdo.utils.AndroidUtil;
 import com.example.fectdo.utils.Navigation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -34,18 +41,26 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
     QuizManager quizManager;
     TextView ruanganSoalan;
     Button jawapanA, jawapanB, jawapanC, jawapanD, nextBtn;
-    int currentQuestion, marks;
-    String choice;
+    int currentQuestion, marks, i;
+    String choice = "";
     private Navigation navigation;
+    FirebaseAuth mAuth;
+    DocumentReference userRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam);
 
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getUid()!=null) {
+            userRef = FirebaseFirestore.getInstance().collection("users").document(mAuth.getUid());
+        }
+
         random = new Random();
         currentQuestion = 0;
         marks = 0;
+        i = 0;
 
         quizManager = new QuizManager();
         quizManager.setQuestion((List<String>) getIntent().getStringArrayListExtra("questionList"));
@@ -86,8 +101,9 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
             if(choice.equals(quizManager.getCorrectAnswer(currentQuestion)))
                 marks++;
 
-            if(quizManager.getSize() > 10){
+            if(quizManager.getSize() > 10 && i < 50 && i < quizManager.getSize() - 1){
                 currentQuestion = random.nextInt(quizManager.getSize());
+                i++;
                 loadNewQuestion();
             }
             else if(currentQuestion < quizManager.getSize() - 1){
@@ -118,6 +134,32 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
                 .setPositiveButton("Selesai", ((dialog, which) -> endQuiz()))
                 .setCancelable(false)
                 .show();
+        if (userRef!=null){
+            if(marks==quizManager.getSize()) {
+                userRef.get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot ds = task.getResult();
+                                    if (ds.exists()) {
+                                        Long longlevel = ds.getLong("level");
+                                        if (longlevel == null) {
+                                            userRef.update("level", 1);
+                                        } else {
+                                            int level = longlevel.intValue();
+                                            userRef.update("level", ++level);
+                                        }
+                                    } else {
+                                        Log.d("QUIZ", "onComplete: ");
+                                    }
+                                } else {
+                                    Log.d("QUIZ", "onComplete: ");
+                                }
+                            }
+                        });
+            }
+        }
     }
 
     void endQuiz(){

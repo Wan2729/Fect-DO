@@ -47,7 +47,7 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
         if(course.getImageUrl() != null){
             Glide.with(holder.itemView)
                     .load(course.getImageUrl())
-                    .fitCenter()
+                    .centerCrop()
                     .into(holder.icon);
         }
 

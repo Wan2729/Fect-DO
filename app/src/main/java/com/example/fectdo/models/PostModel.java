@@ -9,6 +9,7 @@ public class PostModel {
     String timestamp;//I will use yyyyMMMMddHHmm format so it can be sort easily
     String postDescription;
     int like;
+    int level;
 
     public PostModel() {
     }

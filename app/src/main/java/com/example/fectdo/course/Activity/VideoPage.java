@@ -1,11 +1,11 @@
 package com.example.fectdo.course.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -43,7 +43,7 @@ Button quizButton, Examchem;
 TextView title;
 WebView webView;
 LinearLayout topicLayout;
-QuizManager quizManager;
+QuizManager quizManager, examManager;
 
 private Navigation navigation;
     @Override
@@ -64,7 +64,20 @@ private Navigation navigation;
 
         Examchem.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-//                LetsgoExam();
+                AlertDialog.Builder builder = new AlertDialog.Builder(VideoPage.this);
+                builder.setTitle("Leaving page")
+                        .setMessage("Are you confirm to save this change? \n" +
+                                "You cannot edit this afterward")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            letsgoExam();
+                        })
+                        .setNegativeButton("No", (dialog, which) -> {
+                            return;
+                        })
+                        .setCancelable(true);
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
 
@@ -73,14 +86,15 @@ private Navigation navigation;
                 gotoQuiz();
             }
         });
-//        loadInitialImage();
+        loadInitialImage();
+        disableQuizButton();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        disableQuizButton();
 
+        examManager = new QuizManager();
         courseDetails.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -109,8 +123,14 @@ private Navigation navigation;
                 if(task.isSuccessful()){
                     DocumentSnapshot documentSnapshot = task.getResult();
                     if(documentSnapshot.exists()){
-//                        topicList.add(documentSnapshot.toObject(TopicModel.class));
-                        addCard(documentSnapshot.toObject(TopicModel.class));
+                        TopicModel topic = documentSnapshot.toObject(TopicModel.class);
+                        examManager.addQuestions(topic.getQuestion());
+                        examManager.addCorrectAnswer(topic.getCorrectAnswer());
+                        examManager.addChoiceA(topic.getChoiceA());
+                        examManager.addChoiceB(topic.getChoiceB());
+                        examManager.addChoiceC(topic.getChoiceC());
+                        examManager.addChoiceD(topic.getChoiceD());
+                        addCard(topic);
                     }
                     else{
                         showToast("There is no topic in this course");
@@ -125,12 +145,6 @@ private Navigation navigation;
 
     void gotoQuiz(){
         Intent intent = new Intent(getApplicationContext(), Exam.class);
-//        intent.putExtra("questionList", quizManager.getQuestion().toArray());
-//        intent.putExtra("correctAnswer", quizManager.getCorrectAnswer().toArray());
-//        intent.putExtra("choiceA", quizManager.getChoiceA().toArray());
-//        intent.putExtra("choiceB", quizManager.getChoiceB().toArray());
-//        intent.putExtra("choiceC", quizManager.getChoiceC().toArray());
-//        intent.putExtra("choiceD", quizManager.getChoiceD().toArray());
         intent.putStringArrayListExtra("questionList", (ArrayList<String>) quizManager.getQuestion());
         intent.putStringArrayListExtra("correctAnswer", (ArrayList<String>) quizManager.getCorrectAnswer());
         intent.putStringArrayListExtra("choiceA", (ArrayList<String>) quizManager.getChoiceA());
@@ -140,12 +154,22 @@ private Navigation navigation;
         startActivity(intent);
     }
 
+    void letsgoExam(){
+        Intent intent=new Intent(this, Exam.class);
+        intent.putStringArrayListExtra("questionList", (ArrayList<String>) examManager.getQuestion());
+        intent.putStringArrayListExtra("correctAnswer", (ArrayList<String>) examManager.getCorrectAnswer());
+        intent.putStringArrayListExtra("choiceA", (ArrayList<String>) examManager.getChoiceA());
+        intent.putStringArrayListExtra("choiceB", (ArrayList<String>) examManager.getChoiceB());
+        intent.putStringArrayListExtra("choiceC", (ArrayList<String>) examManager.getChoiceC());
+        intent.putStringArrayListExtra("choiceD", (ArrayList<String>) examManager.getChoiceD());
+        startActivity(intent);
+    }
+
     void addCard(TopicModel topicDetails){
         View view = getLayoutInflater().inflate(R.layout.layout_topiclist_button, null);
 
         Button button = view.findViewById(R.id.btnTopicName);
         button.setText(topicDetails.getTopicName());
-        Log.d("Test sini, delete nanti", topicDetails.getTopicName());
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,26 +196,19 @@ private Navigation navigation;
         webView.setWebChromeClient(new WebChromeClient());
     }
 
-    void LetsgoExam(){
-        Intent ExamChem=new Intent(this, ExamMainPage.class);
-        startActivity(ExamChem);
-    }
-
     private void loadInitialImage() {
         WebView webView = findViewById(R.id.videoViewChem);
 
-        String imageUrl = "https://img.freepik.com/free-vector/hand-drawn-colorful-science-education-background_23-2148489231.jpg?w=1380&t=st=1702145884~exp=1702146484~hmac=593b895309c4887dae9791a3b79bc134b247851749d94c12165bd2f5cf3abdbe";
+        String imageUrl = "https://firebasestorage.googleapis.com/v0/b/fect-do-174ff.appspot.com/o/images%2FScreenshot%202024-01-11%20031401.png?alt=media&token=4321b313-b7a2-46f4-b2d7-951bc5268f3c";
 
-        String imageHtml = "<html><body style=\"margin: 0; padding: 0;\"><img width=\"100%\" height=\"100%\" src=\"" + imageUrl + "\"></body></html>";
+        // Load and display the image in WebView with fitxy behavior
+        String imageHtml = "<html><head><style>img { max-width: 100%; height: auto; }</style></head><body style=\"margin: 0; padding: 0;\"><img width=\"100%\" height=\"100%\" src=\"" + imageUrl + "\"></body></html>";
 
-        webView.loadData(imageHtml, "text/html", "utf-8");
+        webView.loadDataWithBaseURL(null, imageHtml, "text/html", "UTF-8", null);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new WebChromeClient());
-
-        navigation = new Navigation(this);
-
-        navigation.setToolbarAndBottomNavigation(R.id.toolbar, R.id.nav_view);
     }
+
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -214,14 +231,6 @@ private Navigation navigation;
         Intent intent = new Intent(VideoPage.this, HomePage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-    }
-
-    public void chapter1ChemClick(View view){
-        WebView webView = findViewById(R.id.videoViewChem);
-        videoLink = "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/qRa74ODgUlA?si=SVG7rW67cA7X4RKj\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
-        webView.loadData(videoLink,"text/html","utf-8");
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebChromeClient(new WebChromeClient());
     }
 
     private void showToast(String message){
