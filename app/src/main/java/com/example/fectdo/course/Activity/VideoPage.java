@@ -145,6 +145,7 @@ private Navigation navigation;
 
     void gotoQuiz(){
         Intent intent = new Intent(getApplicationContext(), Exam.class);
+        intent.putExtra("questionType","Quiz");
         intent.putStringArrayListExtra("questionList", (ArrayList<String>) quizManager.getQuestion());
         intent.putStringArrayListExtra("correctAnswer", (ArrayList<String>) quizManager.getCorrectAnswer());
         intent.putStringArrayListExtra("choiceA", (ArrayList<String>) quizManager.getChoiceA());
@@ -156,6 +157,7 @@ private Navigation navigation;
 
     void letsgoExam(){
         Intent intent=new Intent(this, Exam.class);
+        intent.putExtra("questionType","Exam");
         intent.putStringArrayListExtra("questionList", (ArrayList<String>) examManager.getQuestion());
         intent.putStringArrayListExtra("correctAnswer", (ArrayList<String>) examManager.getCorrectAnswer());
         intent.putStringArrayListExtra("choiceA", (ArrayList<String>) examManager.getChoiceA());

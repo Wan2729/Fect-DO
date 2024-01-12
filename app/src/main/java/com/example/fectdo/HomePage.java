@@ -1,6 +1,11 @@
 package com.example.fectdo;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +30,7 @@ import com.example.fectdo.career.study.SpmAtauStpm;
 import com.example.fectdo.course.Activity.AddCourse;
 import com.example.fectdo.course.Activity.CourseListPage;
 import com.example.fectdo.course.Activity.ManageCoursePage;
+import com.example.fectdo.course.NotificationScheduler;
 import com.example.fectdo.edit.ProfileActivity;
 import com.example.fectdo.edit.SettingActivity;
 import com.example.fectdo.models.CourseModel;
@@ -46,6 +53,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class HomePage extends AppCompatActivity {
@@ -73,6 +81,7 @@ public class HomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        createNotificationChannel();
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         courseCollectionRef = FirebaseFirestore.getInstance().collection(COURSE_KEY);
@@ -156,6 +165,25 @@ public class HomePage extends AppCompatActivity {
             startActivity(intent);
         });
 
+        Intent intent = new Intent(this, NotificationScheduler.class);
+        intent.putExtra("userID",currentUser.getUid());
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,23,intent,PendingIntent.FLAG_IMMUTABLE);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        long timeAtButtonClick = System.currentTimeMillis();
+
+        Random random = new Random();
+        int minMilis = 1 * 60 * 60 * 1000;
+        int maxMilis = 4 * 60 * 60 * 1000;
+        long milisRandom = random.nextInt(maxMilis-minMilis) + minMilis;
+
+        Toast.makeText(this, "Always Prepare For Quiz", Toast.LENGTH_SHORT).show();
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP,
+                timeAtButtonClick+3*1000,
+                pendingIntent
+        );
 
     }
 
@@ -231,5 +259,22 @@ public class HomePage extends AppCompatActivity {
 
     public void goToCommunity(View view) {
         startActivity(new Intent(HomePage.this, SocialActivity.class));
+    }
+
+    private void createNotificationChannel(){
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
+            CharSequence name = "FectDOChannel";
+            String description = "Channel to test";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel notificationChannel = new NotificationChannel("notifyMe",name,importance);
+            notificationChannel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(notificationChannel);
+
+        }
+
     }
 }

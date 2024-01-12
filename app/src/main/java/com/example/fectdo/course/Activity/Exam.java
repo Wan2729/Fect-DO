@@ -147,8 +147,14 @@ public class Exam extends AppCompatActivity implements View.OnClickListener {
                                         if (longlevel == null) {
                                             userRef.update("level", 1);
                                         } else {
-                                            int level = longlevel.intValue();
-                                            userRef.update("level", ++level);
+                                            if(getIntent().getStringExtra("questionType").equals("Quiz")){
+                                                int level = longlevel.intValue();
+                                                userRef.update("level", ++level);
+                                            } else if (getIntent().getStringExtra("questionType").equals("Exam")) {
+                                                int level = longlevel.intValue();
+                                                level += 5;
+                                                userRef.update("level", level);
+                                            }
                                         }
                                     } else {
                                         Log.d("QUIZ", "onComplete: ");

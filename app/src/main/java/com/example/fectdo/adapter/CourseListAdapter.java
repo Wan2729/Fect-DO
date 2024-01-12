@@ -77,7 +77,6 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
             @Override
             public void onClick(View v) {
                 EnrollmentModel enroll = new EnrollmentModel(FirebaseUtil.currentUserId(), course.getDocumentID());
-
                 FirebaseUtil.getCollection("enrollment").add(enroll);
                 holder.enrollButton.setText("Enrolled");
                 holder.enrollButton.setEnabled(false);
