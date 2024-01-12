@@ -81,8 +81,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
-        android:layout_width="391dp"
-        android:layout_height="197dp"
+        android:layout_width="390dp"
+        android:layout_height="280dp"
         android:layout_marginTop="70dp"
         android:background="@drawable/profile_background"
         app:layout_constraintEnd_toEndOf="parent"
@@ -93,26 +93,21 @@
             android:id="@+id/ivProfile"
             android:layout_width="108dp"
             android:layout_height="105dp"
-            android:layout_marginTop="-60dp"
-            android:layout_marginBottom="-60dp"
+            android:layout_marginTop="20dp"
             android:onClick="pickImage"
             android:src="@drawable/default_profile"
-            app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
-            app:layout_constraintVertical_bias="0.378" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
-            android:layout_width="292dp"
-            android:layout_height="43dp"
-            android:layout_marginStart="-10dp"
-            android:layout_marginBottom="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="279dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivProfile">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etBio"
@@ -134,32 +129,35 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/ic_star_level"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_star_level"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <LinearLayout
+            android:layout_width="95dp"
+            android:layout_height="33dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/whitebox"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.449"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-            app:tint="@color/blue_soft" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
-        <TextView
-            android:id="@+id/levelTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/red_circle"
-            android:backgroundTint="@color/blue_soft"
-            android:text="Level"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.065"
-            app:layout_constraintStart_toEndOf="@+id/ic_star_level"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+            <TextView
+                android:id="@+id/levelTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/red_circle"
+                android:backgroundTint="@color/blue_soft"
+                android:text="Level"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/ic_star_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star_level"
+                app:tint="@color/blue_soft" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
