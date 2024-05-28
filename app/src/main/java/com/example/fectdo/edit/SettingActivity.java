@@ -94,15 +94,12 @@ public class SettingActivity extends AppCompatActivity implements PopupMenu.OnMe
         boolean savedSwitchState1 = sharedPreferences.getBoolean(switchStateKey1, false);
         Switch1.setChecked(savedSwitchState1);
 
-        // Retrieve the switch state when you need it (e.g., in onCreate)
         boolean savedSwitchState2 = sharedPreferences.getBoolean(switchStateKey2, false);
         Switch2.setChecked(savedSwitchState2);
 
-        // Retrieve the switch state when you need it (e.g., in onCreate)
         boolean savedSwitchState3 = sharedPreferences.getBoolean(switchStateKey3, false);
         Switch3.setChecked(savedSwitchState3);
 
-        // Retrieve the switch state when you need it (e.g., in onCreate)
         boolean savedSwitchState4 = sharedPreferences.getBoolean(switchStateKey4, false);
         Switch4.setChecked(savedSwitchState4);
 
